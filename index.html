@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="IdeA1">
+  <meta name="description" content="IdeA1 — Begin Making Better. Pusat ekosistem digital Solo.">
+  <title>IdeA1 — Begin Making Better</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       RESET & TOKENS
+    ============================================ */
+    *, *::before, *::after {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    :root {
+      --bg:     #080808;
+      --bg2:    #111111;
+      --bg3:    #1c1c1c;
+      --orange: #FF6500;
+      --amber:  #FFB800;
+      --grad:   linear-gradient(135deg, #FF6500 0%, #FFB800 100%);
+      --glass:  rgba(255,255,255,0.04);
+      --glass-b:rgba(255,255,255,0.08);
+      --white:  #FFFFFF;
+      --w70:    rgba(255,255,255,0.70);
+      --w40:    rgba(255,255,255,0.40);
+      --w20:    rgba(255,255,255,0.20);
+      --green:  #22c55e;
+      --red:    #ef4444;
+      --indigo: #818cf8;
+      --r24: 24px; --r16: 16px; --r12: 12px;
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --safe-b: env(safe-area-inset-bottom, 0px);
+    }
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+    * { scrollbar-width: none; }
+    *::-webkit-scrollbar { display: none; }
+
+    /* ============================================
+       SCREEN SYSTEM
+    ============================================ */
+    .screen {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+      background: var(--bg);
+    }
+    .screen.active { opacity: 1; pointer-events: all; }
+    .screen.slide-in { animation: slideIn 0.35s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .scroll-area {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(80px + var(--safe-b));
+    }
+
+    /* ============================================
+       LOGO SVG
+    ============================================ */
+    .logo-svg { overflow: visible; }
+
+    /* ============================================
+       SPLASH
+    ============================================ */
+    #splash {
+      align-items: center; justify-content: center;
+      background: #000; z-index: 100;
+    }
+    .splash-content {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 24px;
+      animation: splashIn 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes splashIn {
+      from { opacity: 0; transform: scale(0.8) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .splash-icon-wrap { position: relative; }
+    .splash-icon-wrap .glow {
+      position: absolute; inset: -20px;
+      background: radial-gradient(circle, rgba(255,101,0,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { opacity: 0.6; transform: scale(1); }
+      50%      { opacity: 1; transform: scale(1.1); }
+    }
+    .splash-logomark { width: 110px; height: 110px; }
+    .brand { font-size: 40px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; }
+    .brand .ide { color: var(--white); }
+    .brand .a1 {
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .tagline { font-size: 12px; color: var(--w40); letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; text-align: center; }
+    .splash-loader {
+      position: absolute; bottom: 52px; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;
+    }
+    .splash-loader-fill {
+      height: 100%; width: 0%; background: var(--grad); border-radius: 999px;
+      animation: loadFill 2.4s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    @keyframes loadFill { 0%{width:0%} 60%{width:75%} 100%{width:100%} }
+    .splash-version { position: absolute; bottom: 28px; font-size: 11px; color: var(--w20); letter-spacing: 1px; }
+
+    /* ============================================
+       TOP BAR
+    ============================================ */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px 14px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-b);
+      flex-shrink: 0; position: sticky; top: 0; z-index: 10;
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 9px; }
+    .topbar-brand svg { width: 26px; height: 26px; }
+    .topbar-name { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .topbar-name .ide { color: var(--white); }
+    .topbar-name .a1 { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .topbar-actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: var(--r12);
+      background: var(--glass); border: 1px solid var(--glass-b);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .icon-btn:active { background: rgba(255,255,255,0.1); }
+
+    /* ============================================
+       SUB HEADER
+    ============================================ */
+    .sub-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px; border-bottom: 1px solid var(--glass-b);
+      flex-shrink: 0;
+    }
+    .back-btn {
+      width: 36px; height: 36px; border-radius: var(--r12);
+      background: var(--glass); border: 1px solid var(--glass-b);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; color: var(--white);
+    }
+    .sub-title { font-size: 17px; font-weight: 700; }
+
+    /* ============================================
+       FORM COMPONENTS (Sprint 2)
+    ============================================ */
+    .auth-screen {
+      background: var(--bg);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .auth-wrap {
+      min-height: 100%;
+      display: flex; flex-direction: column;
+      padding: 0 24px calc(40px + var(--safe-b));
+    }
+    .auth-logo-area {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 48px 0 32px;
+      gap: 12px;
+    }
+    .auth-logo-area svg { width: 52px; height: 52px; }
+    .auth-logo-name { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+
+    .auth-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .auth-sub   { font-size: 13px; color: var(--w40); margin-bottom: 28px; line-height: 1.5; }
+
+    .input-group { margin-bottom: 16px; }
+    .input-label { font-size: 12px; font-weight: 600; color: var(--w70); margin-bottom: 6px; display: block; letter-spacing: 0.3px; }
+    .input-wrap  { position: relative; }
+    .input-field {
+      width: 100%; padding: 14px 16px;
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: var(--r16); color: var(--white);
+      font-family: var(--font); font-size: 14px; font-weight: 500;
+      outline: none; transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .input-field::placeholder { color: var(--w20); }
+    .input-field:focus { border-color: var(--orange); }
+    .input-field.has-toggle { padding-right: 48px; }
+    .input-toggle {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: var(--w40); cursor: pointer;
+      font-size: 16px; padding: 4px;
+    }
+    .input-error { font-size: 11px; color: var(--red); margin-top: 5px; display: none; }
+    .input-error.show { display: block; }
+
+    .form-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .checkbox-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--w70); cursor: pointer;
+    }
+    .checkbox-label input { accent-color: var(--orange); width: 16px; height: 16px; }
+    .link-text { font-size: 12px; color: var(--orange); font-weight: 600; cursor: pointer; background: none; border: none; }
+
+    .btn-primary {
+      width: 100%; padding: 15px;
+      background: var(--grad); border: none; border-radius: var(--r16);
+      color: white; font-family: var(--font); font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+      margin-bottom: 16px;
+    }
+    .btn-primary:active { opacity: 0.85; transform: scale(0.99); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-secondary {
+      width: 100%; padding: 14px;
+      background: var(--glass); border: 1px solid var(--glass-b); border-radius: var(--r16);
+      color: var(--white); font-family: var(--font); font-size: 14px; font-weight: 600;
+      cursor: pointer; margin-bottom: 16px;
+    }
+
+    .auth-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px; color: var(--w20); font-size: 12px;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--glass-b);
+    }
+
+    .auth-footer { text-align: center; font-size: 13px; color: var(--w40); }
+    .auth-footer span { color: var(--orange); font-weight: 600; cursor: pointer; }
+
+    .alert-box {
+      padding: 12px 16px; border-radius: var(--r12);
+      font-size: 13px; margin-bottom: 16px; display: none;
+    }
+    .alert-box.error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+    .alert-box.success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #86efac; }
+    .alert-box.show { display: block; }
+
+    /* ============================================
+       PROFILE SCREEN (Sprint 2)
+    ============================================ */
+    .profile-header {
+      padding: 28px 20px 20px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 12px; border-bottom: 1px solid var(--glass-b);
+    }
+    .avatar-circle {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 800; color: white;
+      box-shadow: 0 4px 20px rgba(255,101,0,0.3);
+      position: relative;
+    }
+    .avatar-edit {
+      position: absolute; bottom: 0; right: 0;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--bg3); border: 2px solid var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; cursor: pointer;
+    }
+    .profile-name  { font-size: 20px; font-weight: 800; }
+    .profile-email { font-size: 13px; color: var(--w40); }
+    .profile-role  {
+      padding: 4px 12px; border-radius: 999px;
+      background: rgba(255,101,0,0.12); border: 1px solid rgba(255,101,0,0.2);
+      font-size: 11px; font-weight: 700; color: var(--orange);
+    }
+
+    .profile-stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 10px; margin: 16px 20px;
+    }
+    .pstat-box {
+      background: var(--glass); border: 1px solid var(--glass-b);
+      border-radius: var(--r16); padding: 14px 8px; text-align: center;
+    }
+    .pstat-num {
+      display: block; font-size: 20px; font-weight: 800;
+      background: var(--grad); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .pstat-lbl { display: block; font-size: 10px; color: var(--w40); margin-top: 3px; }
+
+    .menu-section { margin: 0 20px 20px; }
+    .menu-title { font-size: 12px; font-weight: 600; color: var(--w40); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+    .menu-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; background: var(--bg2);
+      border: 1px solid var(--glass-b); border-radius: var(--r16);
+      margin-bottom: 8px; cursor: pointer; transition: background 0.15s;
+    }
+    .menu-item:active { background: var(--bg3); }
+    .menu-item-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+    .menu-item-body { flex: 1; }
+    .menu-item-title { font-size: 14px; font-weight: 600; }
+    .menu-item-sub   { font-size: 11px; color: var(--w40); margin-top: 1px; }
+    .menu-item-arrow { color: var(--w20); font-size: 18px; }
+
+    .btn-logout {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: calc(100% - 40px); margin: 0 20px;
+      padding: 14px; border-radius: var(--r16);
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2);
+      color: #fca5a5; font-family: var(--font); font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .btn-logout:active { background: rgba(239,68,68,0.2); }
+
+    /* ============================================
+       HOME COMPONENTS
+    ============================================ */
+    .hero-card {
+      margin: 16px 20px 14px; padding: 22px 20px;
+      border-radius: var(--r24);
+      background: linear-gradient(135deg, rgba(255,101,0,0.12) 0%, rgba(255,184,0,0.06) 50%, transparent 100%);
+      border: 1px solid rgba(255,101,0,0.18); position: relative; overflow: hidden;
+    }
+    .hero-card::after {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(255,101,0,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow { font-size: 12px; color: var(--w40); letter-spacing: 0.5px; margin-bottom: 4px; }
+    .hero-title   { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 2px; }
+    .hero-sub     { font-size: 13px; font-weight: 600; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; }
+    .hero-bio     { font-size: 13px; color: var(--w70); line-height: 1.65; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin: 0 20px 22px; }
+    .stat-box  { background: var(--glass); border: 1px solid var(--glass-b); border-radius: var(--r16); padding: 13px 6px; text-align: center; }
+    .stat-num  { display: block; font-size: 18px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 4px; }
+    .stat-lbl  { display: block; font-size: 9px; color: var(--w40); font-weight: 500; }
+
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin: 0 20px 14px; }
+    .section-head h2 { font-size: 15px; font-weight: 700; }
+    .see-all { font-size: 12px; font-weight: 600; color: var(--orange); background: none; border: none; cursor: pointer; }
+
+    .proj-grid { display: flex; flex-direction: column; gap: 12px; margin: 0 20px 22px; }
+    .proj-card {
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: var(--r24); padding: 18px;
+      cursor: pointer; transition: transform 0.15s;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .proj-card:active { transform: scale(0.98); }
+    .proj-card.c-wargaku { border-color: rgba(239,68,68,0.15); }
+    .proj-card.c-fidu    { border-color: rgba(34,197,94,0.15); }
+    .proj-card.c-school  { border-color: rgba(99,102,241,0.15); }
+    .proj-card.c-vedu    { border-color: rgba(59,130,246,0.15); }
+    .proj-icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .proj-body { flex: 1; min-width: 0; }
+    .proj-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .proj-desc { font-size: 12px; color: var(--w40); line-height: 1.55; margin-bottom: 10px; }
+    .proj-footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+    .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .badge.live   { background: rgba(34,197,94,0.12);  color: var(--green);  border: 1px solid rgba(34,197,94,0.2); }
+    .badge.dev    { background: rgba(255,101,0,0.12);  color: var(--orange); border: 1px solid rgba(255,101,0,0.2); }
+    .badge.plan   { background: rgba(99,102,241,0.12); color: var(--indigo); border: 1px solid rgba(99,102,241,0.2); }
+
+    .btn-open { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 10px; background: var(--grad); color: white; font-size: 11px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; }
+
+    .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .tech-tag  { padding: 3px 9px; background: var(--glass); border: 1px solid var(--glass-b); border-radius: 8px; font-size: 10px; color: var(--w70); font-weight: 500; }
+
+    .ai-card {
+      margin: 0 20px 24px; padding: 18px 20px; border-radius: var(--r24);
+      background: linear-gradient(135deg, #130a2a 0%, #0a1530 100%);
+      border: 1px solid rgba(139,92,246,0.2);
+      display: flex; align-items: center; gap: 14px; cursor: pointer;
+    }
+    .ai-card:active { transform: scale(0.98); }
+    .ai-icon { width: 48px; height: 48px; border-radius: 15px; background: linear-gradient(135deg,#7c3aed,#2563eb); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .ai-body .ai-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .ai-body .ai-sub   { font-size: 11px; color: rgba(139,92,246,0.75); }
+    .ai-arrow { color: var(--w40); font-size: 20px; margin-left: auto; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 20px 24px; }
+    .contact-btn {
+      display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+      background: var(--glass); border: 1px solid var(--glass-b); border-radius: var(--r16);
+      cursor: pointer; text-decoration: none; color: var(--white);
+      font-size: 13px; font-weight: 600;
+    }
+    .contact-icon { font-size: 18px; }
+
+    /* Detail page */
+    .detail-hero { padding: 20px; display: flex; gap: 16px; align-items: center; border-bottom: 1px solid var(--glass-b); }
+    .detail-icon { width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; }
+    .detail-info h1 { font-size: 22px; font-weight: 800; margin-bottom: 3px; }
+    .detail-tagline { font-size: 13px; color: var(--w70); margin-bottom: 8px; }
+    .detail-body { padding: 20px; }
+    .detail-desc { font-size: 14px; color: var(--w70); line-height: 1.7; margin-bottom: 20px; }
+    .detail-sub  { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--w70); line-height: 1.5; }
+    .feature-list li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .btn-full { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; border-radius: var(--r16); background: var(--grad); color: white; font-size: 14px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; margin-bottom: 12px; }
+
+    /* ============================================
+       BOTTOM NAVIGATION
+    ============================================ */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: calc(68px + var(--safe-b)); padding-bottom: var(--safe-b);
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid var(--glass-b);
+      display: flex; align-items: flex-start; padding-top: 6px; z-index: 20;
+    }
+    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; cursor: pointer; border-radius: 12px; }
+    .nav-ico { font-size: 20px; color: var(--w40); transition: color 0.2s; line-height: 1; }
+    .nav-lbl { font-size: 10px; color: var(--w40); font-weight: 600; transition: color 0.2s; }
+    .nav-item.active .nav-ico, .nav-item.active .nav-lbl { color: var(--orange); }
+    .nav-ai {
+      width: 48px; height: 48px; border-radius: 15px; background: var(--grad);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+      flex-shrink: 0; margin: -4px 12px 0;
+      box-shadow: 0 4px 20px rgba(255,101,0,0.35); cursor: pointer;
+    }
+    .nav-ai:active { transform: scale(0.95); }
+
+    /* ============================================
+       LOADING SPINNER
+    ============================================ */
+    .spinner {
+      width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white; border-radius: 50%;
+      animation: spin 0.7s linear infinite; display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- ==========================================
+     SPLASH SCREEN
+========================================== -->
+<div id="splash" class="screen active">
+  <div class="splash-content">
+    <div class="splash-icon-wrap">
+      <div class="glow"></div>
+      <svg class="splash-logomark" viewBox="0 0 160 150" fill="none">
+        <defs>
+          <linearGradient id="og1" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF6500"/>
+            <stop offset="100%" stop-color="#FFB800"/>
+          </linearGradient>
+        </defs>
+        <polygon points="62,12 14,128 40,128 62,74 84,128 110,128 62,12" fill="white"/>
+        <rect x="114" y="18" width="14" height="14" rx="3" fill="white"/>
+        <rect x="114" y="38" width="14" height="90" rx="3" fill="white"/>
+        <path d="M18,138 Q80,162 148,58" stroke="url(#og1)" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <polygon points="141,40 160,62 146,70" fill="#FFB800"/>
+        <rect x="55" y="78" width="14" height="50" rx="3" fill="url(#og1)"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand"><span class="ide">Ide</span><span class="a1">A1</span></div>
+      <div class="tagline">Begin Making Better</div>
+    </div>
+  </div>
+  <div class="splash-loader"><div class="splash-loader-fill"></div></div>
+  <div class="splash-version">v2.0 · 2026</div>
+</div>
+
+
+<!-- ==========================================
+     LOGIN SCREEN
+========================================== -->
+<div id="login" class="screen auth-screen">
+  <div class="auth-wrap">
+    <div class="auth-logo-area">
+      <svg width="52" height="52" viewBox="0 0 160 150" fill="none">
+        <defs>
+          <linearGradient id="og-l" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF6500"/>
+            <stop offset="100%" stop-color="#FFB800"/>
+          </linearGradient>
+        </defs>
+        <polygon points="62,12 14,128 40,128 62,74 84,128 110,128 62,12" fill="white"/>
+        <rect x="114" y="18" width="14" height="14" rx="3" fill="white"/>
+        <rect x="114" y="38" width="14" height="90" rx="3" fill="white"/>
+        <path d="M18,138 Q80,162 148,58" stroke="url(#og-l)" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <polygon points="141,40 160,62 146,70" fill="#FFB800"/>
+        <rect x="55" y="78" width="14" height="50" rx="3" fill="url(#og-l)"/>
+      </svg>
+      <div class="auth-logo-name"><span class="ide">Ide</span><span class="a1" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">A1</span></div>
+    </div>
+
+    <div class="auth-title">Selamat Datang 👋</div>
+    <div class="auth-sub">Masuk untuk mengakses semua proyek dan fitur IdeA1.</div>
+
+    <div id="login-alert" class="alert-box error"></div>
+
+    <div class="input-group">
+      <label class="input-label">Email</label>
+      <input id="login-email" class="input-field" type="email" placeholder="email@kamu.com" autocomplete="email">
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Password</label>
+      <div class="input-wrap">
+        <input id="login-pass" class="input-field has-toggle" type="password" placeholder="Masukkan password" autocomplete="current-password">
+        <button class="input-toggle" onclick="togglePass('login-pass', this)">👁️</button>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="checkbox-label">
+        <input type="checkbox" id="remember-me"> Ingat saya
+      </label>
+      <button class="link-text" onclick="showScreen('forgot')">Lupa password?</button>
+    </div>
+
+    <button class="btn-primary" id="btn-login" onclick="doLogin()">Masuk</button>
+
+    <div class="auth-divider">atau</div>
+
+    <div class="auth-footer">
+      Belum punya akun? <span onclick="showScreen('register')">Daftar sekarang</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     REGISTER SCREEN
+========================================== -->
+<div id="register" class="screen auth-screen">
+  <div class="auth-wrap">
+    <div style="padding-top: 20px; margin-bottom: 8px;">
+      <button class="back-btn" onclick="showScreen('login')" style="background:var(--glass);border:1px solid var(--glass-b);">←</button>
+    </div>
+
+    <div class="auth-title" style="margin-top:16px;">Buat Akun Baru ✨</div>
+    <div class="auth-sub">Bergabunglah dengan ekosistem IdeA1 dan mulai perjalananmu.</div>
+
+    <div id="register-alert" class="alert-box error"></div>
+
+    <div class="input-group">
+      <label class="input-label">Nama Lengkap</label>
+      <input id="reg-name" class="input-field" type="text" placeholder="Nama kamu" autocomplete="name">
+      <div class="input-error" id="err-name">Nama tidak boleh kosong</div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Email</label>
+      <input id="reg-email" class="input-field" type="email" placeholder="email@kamu.com" autocomplete="email">
+      <div class="input-error" id="err-email">Format email tidak valid</div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Password</label>
+      <div class="input-wrap">
+        <input id="reg-pass" class="input-field has-toggle" type="password" placeholder="Minimal 6 karakter" autocomplete="new-password">
+        <button class="input-toggle" onclick="togglePass('reg-pass', this)">👁️</button>
+      </div>
+      <div class="input-error" id="err-pass">Password minimal 6 karakter</div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Konfirmasi Password</label>
+      <div class="input-wrap">
+        <input id="reg-pass2" class="input-field has-toggle" type="password" placeholder="Ulangi password" autocomplete="new-password">
+        <button class="input-toggle" onclick="togglePass('reg-pass2', this)">👁️</button>
+      </div>
+      <div class="input-error" id="err-pass2">Password tidak cocok</div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <label class="checkbox-label">
+        <input type="checkbox" id="agree-terms">
+        Saya setuju dengan <span style="color:var(--orange);font-weight:600;">Syarat & Ketentuan</span>
+      </label>
+    </div>
+
+    <button class="btn-primary" id="btn-register" onclick="doRegister()">Daftar</button>
+
+    <div class="auth-footer">
+      Sudah punya akun? <span onclick="showScreen('login')">Masuk</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     FORGOT PASSWORD SCREEN
+========================================== -->
+<div id="forgot" class="screen auth-screen">
+  <div class="auth-wrap">
+    <div style="padding-top: 20px; margin-bottom: 8px;">
+      <button class="back-btn" onclick="showScreen('login')" style="background:var(--glass);border:1px solid var(--glass-b);">←</button>
+    </div>
+
+    <div class="auth-title" style="margin-top:16px;">Lupa Password 🔑</div>
+    <div class="auth-sub">Masukkan email kamu dan kami akan kirim link reset password.</div>
+
+    <div id="forgot-alert" class="alert-box success"></div>
+
+    <div class="input-group">
+      <label class="input-label">Email</label>
+      <input id="forgot-email" class="input-field" type="email" placeholder="email@kamu.com">
+    </div>
+
+    <button class="btn-primary" onclick="doForgot()">Kirim Link Reset</button>
+
+    <div class="auth-footer">
+      Ingat password? <span onclick="showScreen('login')">Kembali masuk</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     HOME SCREEN
+========================================== -->
+<div id="home" class="screen">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <svg viewBox="0 0 160 150" fill="none">
+        <defs>
+          <linearGradient id="og-h" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF6500"/>
+            <stop offset="100%" stop-color="#FFB800"/>
+          </linearGradient>
+        </defs>
+        <polygon points="62,12 14,128 40,128 62,74 84,128 110,128 62,12" fill="white"/>
+        <rect x="114" y="18" width="14" height="14" rx="3" fill="white"/>
+        <rect x="114" y="38" width="14" height="90" rx="3" fill="white"/>
+        <path d="M18,138 Q80,162 148,58" stroke="url(#og-h)" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <polygon points="141,40 160,62 146,70" fill="#FFB800"/>
+        <rect x="55" y="78" width="14" height="50" rx="3" fill="url(#og-h)"/>
+      </svg>
+      <div class="topbar-name"><span class="ide">Ide</span><span class="a1">A1</span></div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" aria-label="Cari">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Notifikasi">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="scroll-area">
+    <div class="hero-card">
+      <div class="hero-eyebrow" id="home-greeting">👋 Selamat datang di</div>
+      <div class="hero-title" id="home-name">IdeA1 Hub</div>
+      <div class="hero-sub">Ekosistem Digital Solo</div>
+      <div class="hero-bio">Satu platform untuk semua proyek inovatif — dari manajemen komunitas warga, pencarian sekolah, hingga platform pembelajaran digital.</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-num">4</span><span class="stat-lbl">Proyek</span></div>
+      <div class="stat-box"><span class="stat-num">1</span><span class="stat-lbl">Live</span></div>
+      <div class="stat-box"><span class="stat-num">Solo</span><span class="stat-lbl">Lokasi</span></div>
+      <div class="stat-box"><span class="stat-num">2026</span><span class="stat-lbl">Tahun</span></div>
+    </div>
+
+    <div class="section-head">
+      <h2>🚀 Proyek Kami</h2>
+      <button class="see-all" onclick="showScreen('projects')">Lihat Semua →</button>
+    </div>
+
+    <div class="proj-grid">
+      <div class="proj-card c-wargaku" onclick="showDetail('wargaku')">
+        <div class="proj-icon" style="background:rgba(239,68,68,0.12);">🏘️</div>
+        <div class="proj-body">
+          <div class="proj-name">WargaKu</div>
+          <div class="proj-desc">Aplikasi manajemen RT/RW digital untuk warga Kartasura, Solo.</div>
+          <div class="proj-footer">
+            <span class="badge live"><span class="badge-dot"></span>Live</span>
+            <a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card c-fidu" onclick="showDetail('fidu')">
+        <div class="proj-icon" style="background:rgba(34,197,94,0.10);">🏫</div>
+        <div class="proj-body">
+          <div class="proj-name">FIDU</div>
+          <div class="proj-desc">Temukan sekolah TK & PAUD terbaik di Kota Solo.</div>
+          <div class="proj-footer"><span class="badge dev"><span class="badge-dot"></span>Development</span></div>
+        </div>
+      </div>
+      <div class="proj-card c-school" onclick="showDetail('schoolid')">
+        <div class="proj-icon" style="background:rgba(99,102,241,0.10);">🎓</div>
+        <div class="proj-body">
+          <div class="proj-name">SchoolID</div>
+          <div class="proj-desc">Asisten digital manajemen sekolah modern Indonesia.</div>
+          <div class="proj-footer"><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
+        </div>
+      </div>
+      <div class="proj-card c-vedu" onclick="showDetail('vedu')">
+        <div class="proj-icon" style="background:rgba(59,130,246,0.10);">📚</div>
+        <div class="proj-body">
+          <div class="proj-name">VEDU</div>
+          <div class="proj-desc">Platform pembelajaran digital dengan AI Tutor & sertifikat.</div>
+          <div class="proj-footer"><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-card" onclick="alert('AI Assistant — Segera hadir!')">
+      <div class="ai-icon">✨</div>
+      <div class="ai-body">
+        <div class="ai-title">AI Assistant</div>
+        <div class="ai-sub">Chat · Proposal · Resume · Translate · Code</div>
+      </div>
+      <div class="ai-arrow">›</div>
+    </div>
+
+    <div class="section-head"><h2>📬 Hubungi Kami</h2></div>
+    <div class="contact-grid">
+      <a href="https://wa.me/6281134567890" target="_blank" class="contact-btn"><span class="contact-icon">💬</span> WhatsApp</a>
+      <a href="mailto:idea1@email.com" class="contact-btn"><span class="contact-icon">✉️</span> Email</a>
+      <a href="https://github.com" target="_blank" class="contact-btn"><span class="contact-icon">🐙</span> GitHub</a>
+      <a href="https://instagram.com" target="_blank" class="contact-btn"><span class="contact-icon">📸</span> Instagram</a>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="setNav(this,'home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
+    <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
+  </nav>
+</div>
+
+
+<!-- ==========================================
+     PROJECTS SCREEN
+========================================== -->
+<div id="projects" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('home')">←</button>
+      <span class="sub-title">Semua Proyek</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:20px 20px 0;">
+    <div class="proj-card c-wargaku" style="margin-bottom:12px;" onclick="showDetail('wargaku')">
+      <div class="proj-icon" style="background:rgba(239,68,68,0.12);">🏘️</div>
+      <div class="proj-body">
+        <div class="proj-name">WargaKu</div>
+        <div class="proj-desc">Kelola RT/RW digital. Firebase Auth & Firestore, citizen dashboard, admin panel, iuran, arsip digital.</div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+        <div class="tech-tags"><span class="tech-tag">Firebase</span><span class="tech-tag">Firestore</span><span class="tech-tag">PWA</span><span class="tech-tag">Netlify</span></div>
+      </div>
+    </div>
+    <div class="proj-card c-fidu" style="margin-bottom:12px;" onclick="showDetail('fidu')">
+      <div class="proj-icon" style="background:rgba(34,197,94,0.10);">🏫</div>
+      <div class="proj-body">
+        <div class="proj-name">FIDU — Find Education</div>
+        <div class="proj-desc">Platform pencarian sekolah TK & PAUD di Solo. Koneksi orang tua dengan sekolah terpercaya.</div>
+        <div class="proj-footer"><span class="badge dev"><span class="badge-dot"></span>Development</span></div>
+        <div class="tech-tags"><span class="tech-tag">Supabase</span><span class="tech-tag">PWA</span><span class="tech-tag">Vercel</span></div>
+      </div>
+    </div>
+    <div class="proj-card c-school" style="margin-bottom:12px;" onclick="showDetail('schoolid')">
+      <div class="proj-icon" style="background:rgba(99,102,241,0.10);">🎓</div>
+      <div class="proj-body">
+        <div class="proj-name">SchoolID</div>
+        <div class="proj-desc">Asisten digital sekolah Indonesia. Dashboard guru, siswa, orang tua, absensi, laporan harian.</div>
+        <div class="proj-footer"><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
+        <div class="tech-tags"><span class="tech-tag">Supabase</span><span class="tech-tag">PWA</span><span class="tech-tag">AI</span></div>
+      </div>
+    </div>
+    <div class="proj-card c-vedu" style="margin-bottom:12px;" onclick="showDetail('vedu')">
+      <div class="proj-icon" style="background:rgba(59,130,246,0.10);">📚</div>
+      <div class="proj-body">
+        <div class="proj-name">VEDU</div>
+        <div class="proj-desc">Platform e-learning modern. Video, kuis, sertifikat, dan AI Tutor personal.</div>
+        <div class="proj-footer"><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
+        <div class="tech-tags"><span class="tech-tag">Video</span><span class="tech-tag">AI Tutor</span><span class="tech-tag">PWA</span></div>
+      </div>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
+    <div class="nav-item active"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
+  </nav>
+</div>
+
+
+<!-- ==========================================
+     PROFILE SCREEN
+========================================== -->
+<div id="profile" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('home')">←</button>
+      <span class="sub-title">Profil Saya</span>
+    </div>
+  </div>
+  <div class="scroll-area">
+    <div class="profile-header">
+      <div class="avatar-circle" id="profile-avatar">
+        <span id="avatar-initials">?</span>
+        <div class="avatar-edit">✏️</div>
+      </div>
+      <div class="profile-name"  id="profile-name">Nama Pengguna</div>
+      <div class="profile-email" id="profile-email">email@pengguna.com</div>
+      <div class="profile-role">Member IdeA1</div>
+    </div>
+
+    <div class="profile-stats">
+      <div class="pstat-box"><span class="pstat-num">4</span><span class="pstat-lbl">Proyek</span></div>
+      <div class="pstat-box"><span class="pstat-num" id="profile-joined">2026</span><span class="pstat-lbl">Bergabung</span></div>
+      <div class="pstat-box"><span class="pstat-num">Solo</span><span class="pstat-lbl">Kota</span></div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-title">Akun</div>
+      <div class="menu-item">
+        <div class="menu-item-icon" style="background:rgba(255,101,0,0.1);">👤</div>
+        <div class="menu-item-body">
+          <div class="menu-item-title">Edit Profil</div>
+          <div class="menu-item-sub">Ubah nama, foto, dan bio</div>
+        </div>
+        <span class="menu-item-arrow">›</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon" style="background:rgba(99,102,241,0.1);">🔒</div>
+        <div class="menu-item-body">
+          <div class="menu-item-title">Ubah Password</div>
+          <div class="menu-item-sub">Perbarui keamanan akun</div>
+        </div>
+        <span class="menu-item-arrow">›</span>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-title">Lainnya</div>
+      <div class="menu-item">
+        <div class="menu-item-icon" style="background:rgba(34,197,94,0.1);">ℹ️</div>
+        <div class="menu-item-body">
+          <div class="menu-item-title">Tentang IdeA1</div>
+          <div class="menu-item-sub">Versi 2.0 · Begin Making Better</div>
+        </div>
+        <span class="menu-item-arrow">›</span>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon" style="background:rgba(255,184,0,0.1);">⭐</div>
+        <div class="menu-item-body">
+          <div class="menu-item-title">Beri Rating</div>
+          <div class="menu-item-sub">Bantu kami berkembang lebih baik</div>
+        </div>
+        <span class="menu-item-arrow">›</span>
+      </div>
+    </div>
+
+    <button class="btn-logout" onclick="doLogout()">🚪 Keluar dari Akun</button>
+    <div style="height: 20px;"></div>
+  </div>
+  <nav class="bottom-nav">
+    <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
+    <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item active"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
+  </nav>
+</div>
+
+
+<!-- ==========================================
+     PROJECT DETAILS
+========================================== -->
+<div id="detail-wargaku" class="screen">
+  <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
+  <div class="scroll-area">
+    <div class="detail-hero">
+      <div class="detail-icon" style="background:rgba(239,68,68,0.12);">🏘️</div>
+      <div class="detail-info"><h1>WargaKu</h1><div class="detail-tagline">Milik warga, oleh warga, untuk warga</div><span class="badge live"><span class="badge-dot"></span>Live</span></div>
+    </div>
+    <div class="detail-body">
+      <p class="detail-desc">WargaKu adalah aplikasi manajemen RT/RW digital untuk warga RT 02 RW 11, Kampung Masjid, Kelurahan Kartasura, Solo. Dibangun sebagai PWA dengan Firebase backend.</p>
+      <p class="detail-sub">✦ Fitur Unggulan</p>
+      <ul class="feature-list"><li>Dashboard warga dan admin terpisah</li><li>Profil keluarga dengan foto</li><li>Pengelolaan iuran & kas RT</li><li>Arsip digital surat dan dokumen</li><li>Statistik populasi real-time</li><li>Pengumuman & aspirasi warga</li></ul>
+      <div class="tech-tags" style="margin-bottom:24px;"><span class="tech-tag">Firebase Auth</span><span class="tech-tag">Firestore</span><span class="tech-tag">PWA</span><span class="tech-tag">Netlify</span></div>
+      <a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-full">🌐 Buka WargaKu</a>
+    </div>
+  </div>
+</div>
+
+<div id="detail-fidu" class="screen">
+  <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
+  <div class="scroll-area">
+    <div class="detail-hero">
+      <div class="detail-icon" style="background:rgba(34,197,94,0.10);">🏫</div>
+      <div class="detail-info"><h1>FIDU</h1><div class="detail-tagline">Find Education — Temukan Sekolah Terbaik</div><span class="badge dev"><span class="badge-dot"></span>Development</span></div>
+    </div>
+    <div class="detail-body">
+      <p class="detail-desc">FIDU menghubungkan orang tua dengan sekolah TK dan PAUD terbaik di Kota Solo secara digital.</p>
+      <p class="detail-sub">✦ Fitur Unggulan</p>
+      <ul class="feature-list"><li>Pencarian sekolah berdasarkan lokasi & filter</li><li>Profil lengkap sekolah dengan galeri foto</li><li>Rating dan ulasan orang tua</li><li>Form pendaftaran online</li><li>Dashboard admin sekolah</li></ul>
+      <div class="tech-tags" style="margin-bottom:24px;"><span class="tech-tag">Supabase</span><span class="tech-tag">PWA</span><span class="tech-tag">Vercel</span></div>
+      <button class="btn-full" onclick="alert('FIDU sedang dalam pengembangan!')">🔧 Dalam Pengembangan</button>
+    </div>
+  </div>
+</div>
+
+<div id="detail-schoolid" class="screen">
+  <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
+  <div class="scroll-area">
+    <div class="detail-hero">
+      <div class="detail-icon" style="background:rgba(99,102,241,0.10);">🎓</div>
+      <div class="detail-info"><h1>SchoolID</h1><div class="detail-tagline">Asisten Digital Sekolah Indonesia</div><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
+    </div>
+    <div class="detail-body">
+      <p class="detail-desc">SchoolID adalah platform manajemen sekolah modern untuk seluruh Indonesia — guru, siswa, orang tua, dan admin dalam satu ekosistem.</p>
+      <p class="detail-sub">✦ Fitur Direncanakan</p>
+      <ul class="feature-list"><li>Dashboard multi-role</li><li>Absensi digital</li><li>Penilaian & laporan harian</li><li>AI Teacher</li><li>Integrasi kurikulum Merdeka</li></ul>
+      <div class="tech-tags" style="margin-bottom:24px;"><span class="tech-tag">Supabase</span><span class="tech-tag">AI</span><span class="tech-tag">PWA</span></div>
+      <button class="btn-full" style="opacity:0.6;" onclick="alert('SchoolID dalam perencanaan.')">📅 Segera Hadir</button>
+    </div>
+  </div>
+</div>
+
+<div id="detail-vedu" class="screen">
+  <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
+  <div class="scroll-area">
+    <div class="detail-hero">
+      <div class="detail-icon" style="background:rgba(59,130,246,0.10);">📚</div>
+      <div class="detail-info"><h1>VEDU</h1><div class="detail-tagline">Platform Pembelajaran Digital Modern</div><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
+    </div>
+    <div class="detail-body">
+      <p class="detail-desc">VEDU menggabungkan video interaktif, kuis adaptif, sertifikat digital, dan AI Tutor personal dalam satu platform e-learning.</p>
+      <p class="detail-sub">✦ Fitur Direncanakan</p>
+      <ul class="feature-list"><li>Kelas video berkualitas tinggi</li><li>Kuis interaktif</li><li>Sertifikat digital terverifikasi</li><li>Pelacakan progres</li><li>AI Tutor 24 jam</li></ul>
+      <div class="tech-tags" style="margin-bottom:24px;"><span class="tech-tag">Video</span><span class="tech-tag">AI Tutor</span><span class="tech-tag">PWA</span></div>
+      <button class="btn-full" style="opacity:0.6;" onclick="alert('VEDU dalam perencanaan.')">📅 Segera Hadir</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+<script>
+/* ============================================
+   AUTH SYSTEM (localStorage)
+============================================ */
+const auth = {
+  getUsers() {
+    return JSON.parse(localStorage.getItem('idea1_users') || '[]');
+  },
+  saveUsers(users) {
+    localStorage.setItem('idea1_users', JSON.stringify(users));
+  },
+  getSession() {
+    const key = localStorage.getItem('idea1_remember') === 'true'
+      ? 'idea1_session_perm' : 'idea1_session';
+    return JSON.parse(localStorage.getItem('idea1_session_perm') || localStorage.getItem('idea1_session') || 'null');
+  },
+  saveSession(user, remember) {
+    const data = JSON.stringify(user);
+    sessionStorage.setItem('idea1_session', data);
+    if (remember) localStorage.setItem('idea1_session_perm', data);
+    localStorage.setItem('idea1_remember', remember ? 'true' : 'false');
+  },
+  clearSession() {
+    sessionStorage.removeItem('idea1_session');
+    localStorage.removeItem('idea1_session_perm');
+    localStorage.removeItem('idea1_remember');
+  },
+  login(email, pass, remember) {
+    const users = this.getUsers();
+    const user = users.find(u => u.email === email.trim().toLowerCase());
+    if (!user) return { ok: false, msg: 'Email tidak terdaftar' };
+    if (user.password !== pass) return { ok: false, msg: 'Password salah' };
+    this.saveSession(user, remember);
+    return { ok: true, user };
+  },
+  register(name, email, pass) {
+    const users = this.getUsers();
+    if (users.find(u => u.email === email.trim().toLowerCase())) {
+      return { ok: false, msg: 'Email sudah terdaftar, silakan masuk' };
+    }
+    const user = {
+      id: Date.now(),
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      password: pass,
+      joined: new Date().toLocaleDateString('id-ID', { year:'numeric', month:'short' })
+    };
+    users.push(user);
+    this.saveUsers(users);
+    this.saveSession(user, false);
+    return { ok: true, user };
+  },
+  logout() { this.clearSession(); }
+};
+
+/* ============================================
+   NAVIGATION
+============================================ */
+let prevScreen = 'home';
+
+function showScreen(id, anim = true) {
+  const current = document.querySelector('.screen.active');
+  if (current) { prevScreen = current.id; current.classList.remove('active'); }
+  const next = document.getElementById(id);
+  if (next) {
+    next.classList.add('active');
+    if (anim) next.classList.add('slide-in');
+    setTimeout(() => next.classList.remove('slide-in'), 400);
+  }
+}
+
+function setNav(el, screenId) {
+  const nav = el.closest('.bottom-nav');
+  nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  showScreen(screenId, false);
+}
+
+function goToProfile() {
+  const user = auth.getSession();
+  if (user) { updateProfileUI(user); showScreen('profile'); }
+  else showScreen('login');
+}
+
+function showDetail(id) {
+  prevScreen = document.querySelector('.screen.active')?.id || 'home';
+  showScreen('detail-' + id);
+}
+
+/* ============================================
+   AUTH ACTIONS
+============================================ */
+function doLogin() {
+  const email    = document.getElementById('login-email').value;
+  const pass     = document.getElementById('login-pass').value;
+  const remember = document.getElementById('remember-me').checked;
+  const alert    = document.getElementById('login-alert');
+  const btn      = document.getElementById('btn-login');
+
+  if (!email || !pass) { showAlert(alert,'error','Lengkapi email dan password'); return; }
+
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    const res = auth.login(email, pass, remember);
+    btn.innerHTML = 'Masuk';
+    btn.disabled = false;
+    if (res.ok) {
+      alert.classList.remove('show');
+      updateHomeGreeting(res.user);
+      showScreen('home', false);
+    } else {
+      showAlert(alert, 'error', res.msg);
+    }
+  }, 800);
+}
+
+function doRegister() {
+  const name  = document.getElementById('reg-name').value;
+  const email = document.getElementById('reg-email').value;
+  const pass  = document.getElementById('reg-pass').value;
+  const pass2 = document.getElementById('reg-pass2').value;
+  const agree = document.getElementById('agree-terms').checked;
+  const alert = document.getElementById('register-alert');
+  const btn   = document.getElementById('btn-register');
+
+  // Validasi
+  let valid = true;
+  if (!name)  { showFieldError('err-name', true);  valid = false; } else showFieldError('err-name', false);
+  if (!email || !email.includes('@')) { showFieldError('err-email', true); valid = false; } else showFieldError('err-email', false);
+  if (pass.length < 6) { showFieldError('err-pass', true); valid = false; } else showFieldError('err-pass', false);
+  if (pass !== pass2)  { showFieldError('err-pass2', true); valid = false; } else showFieldError('err-pass2', false);
+  if (!agree) { showAlert(alert,'error','Setujui syarat & ketentuan terlebih dahulu'); return; }
+  if (!valid) return;
+
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    const res = auth.register(name, email, pass);
+    btn.innerHTML = 'Daftar';
+    btn.disabled = false;
+    if (res.ok) {
+      updateHomeGreeting(res.user);
+      showScreen('home', false);
+    } else {
+      showAlert(alert, 'error', res.msg);
+    }
+  }, 900);
+}
+
+function doForgot() {
+  const email = document.getElementById('forgot-email').value;
+  const alert = document.getElementById('forgot-alert');
+  if (!email || !email.includes('@')) {
+    showAlert(alert, 'error', 'Masukkan email yang valid');
+    alert.classList.remove('success'); alert.classList.add('error','show');
+    return;
+  }
+  alert.className = 'alert-box success show';
+  alert.textContent = '✅ Link reset telah dikirim ke ' + email + ' (simulasi)';
+}
+
+function doLogout() {
+  if (confirm('Yakin ingin keluar dari akun?')) {
+    auth.logout();
+    document.getElementById('home-greeting').textContent = '👋 Selamat datang di';
+    document.getElementById('home-name').textContent = 'IdeA1 Hub';
+    showScreen('login', false);
+  }
+}
+
+/* ============================================
+   UI HELPERS
+============================================ */
+function togglePass(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+  else { input.type = 'password'; btn.textContent = '👁️'; }
+}
+
+function showAlert(el, type, msg) {
+  el.className = 'alert-box ' + type + ' show';
+  el.textContent = type === 'error' ? '⚠️ ' + msg : '✅ ' + msg;
+}
+
+function showFieldError(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show', show);
+}
+
+function getInitials(name) {
+  return name.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase();
+}
+
+function updateHomeGreeting(user) {
+  const hour = new Date().getHours();
+  const greet = hour < 11 ? 'Selamat Pagi' : hour < 15 ? 'Selamat Siang' : hour < 18 ? 'Selamat Sore' : 'Selamat Malam';
+  const el = document.getElementById('home-greeting');
+  const nameEl = document.getElementById('home-name');
+  if (el) el.textContent = '👋 ' + greet + ',';
+  if (nameEl) nameEl.textContent = user.name + ' !';
+}
+
+function updateProfileUI(user) {
+  document.getElementById('profile-name').textContent    = user.name;
+  document.getElementById('profile-email').textContent   = user.email;
+  document.getElementById('profile-joined').textContent  = user.joined || '2026';
+  document.getElementById('avatar-initials').textContent = getInitials(user.name);
+}
+
+/* ============================================
+   APP INIT
+============================================ */
+setTimeout(() => {
+  document.getElementById('splash').classList.remove('active');
+  const user = auth.getSession();
+  if (user) {
+    updateHomeGreeting(user);
+    showScreen('home', false);
+  } else {
+    showScreen('login', false);
+  }
+}, 2700);
+
+/* PWA */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
