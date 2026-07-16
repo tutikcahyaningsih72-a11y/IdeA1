@@ -445,6 +445,156 @@
     .nav-ai:active { transform: scale(0.95); }
 
     /* ============================================
+       BLOG STYLES (Sprint 3)
+    ============================================ */
+    .blog-search-wrap {
+      padding: 12px 20px 0;
+    }
+    .blog-search {
+      width: 100%; padding: 12px 16px 12px 42px;
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: var(--r16); color: var(--white);
+      font-family: var(--font); font-size: 14px;
+      outline: none; transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .blog-search:focus { border-color: var(--orange); }
+    .blog-search::placeholder { color: var(--w20); }
+    .blog-search-wrap { position: relative; padding: 12px 20px 0; }
+    .blog-search-ico {
+      position: absolute; left: 32px; top: 50%;
+      transform: translateY(-50%); color: var(--w40);
+      pointer-events: none; margin-top: 6px;
+    }
+
+    .cat-tabs {
+      display: flex; gap: 8px;
+      padding: 14px 20px 4px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    .cat-tab {
+      padding: 7px 16px; border-radius: 999px;
+      background: var(--glass); border: 1px solid var(--glass-b);
+      color: var(--w70); font-size: 12px; font-weight: 600;
+      white-space: nowrap; cursor: pointer; transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .cat-tab.active {
+      background: var(--grad); border-color: transparent; color: white;
+    }
+
+    .blog-list { padding: 14px 20px 0; display: flex; flex-direction: column; gap: 14px; }
+
+    .blog-card {
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: var(--r24); overflow: hidden;
+      cursor: pointer; transition: transform 0.15s, border-color 0.2s;
+    }
+    .blog-card:active { transform: scale(0.98); }
+    .blog-card:hover  { border-color: rgba(255,101,0,0.2); }
+
+    .blog-card-thumb {
+      width: 100%; height: 140px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px; position: relative; overflow: hidden;
+    }
+    .blog-card-body { padding: 16px; }
+    .blog-cat-badge {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 999px; font-size: 10px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .blog-cat-badge.teknologi { background: rgba(99,102,241,0.15); color: var(--indigo); border: 1px solid rgba(99,102,241,0.2); }
+    .blog-cat-badge.bisnis    { background: rgba(255,101,0,0.15);  color: var(--orange); border: 1px solid rgba(255,101,0,0.2); }
+    .blog-cat-badge.edukasi   { background: rgba(34,197,94,0.15);  color: var(--green);  border: 1px solid rgba(34,197,94,0.2); }
+
+    .blog-card-title { font-size: 15px; font-weight: 700; line-height: 1.4; margin-bottom: 6px; }
+    .blog-card-excerpt { font-size: 12px; color: var(--w40); line-height: 1.6; margin-bottom: 10px; }
+    .blog-card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .blog-meta-left { display: flex; align-items: center; gap: 8px; }
+    .blog-date { font-size: 11px; color: var(--w40); }
+    .blog-read { font-size: 11px; color: var(--w40); }
+    .blog-bookmark {
+      background: none; border: none; font-size: 18px;
+      cursor: pointer; padding: 4px; line-height: 1;
+    }
+
+    /* Blog featured (card besar) */
+    .blog-featured {
+      background: var(--bg2); border: 1px solid rgba(255,101,0,0.15);
+      border-radius: var(--r24); overflow: hidden;
+      cursor: pointer; transition: transform 0.15s;
+      margin-bottom: 14px;
+    }
+    .blog-featured:active { transform: scale(0.98); }
+    .blog-featured-thumb {
+      width: 100%; height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 72px;
+    }
+    .blog-featured-body { padding: 18px; }
+    .blog-featured-label {
+      font-size: 10px; font-weight: 700; color: var(--orange);
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .blog-featured-title { font-size: 18px; font-weight: 800; line-height: 1.3; margin-bottom: 8px; }
+    .blog-featured-excerpt { font-size: 13px; color: var(--w70); line-height: 1.6; margin-bottom: 12px; }
+
+    /* Blog Detail */
+    .blog-detail-hero {
+      width: 100%; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px; position: relative;
+    }
+    .blog-detail-body { padding: 20px; }
+    .blog-detail-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px; flex-wrap: wrap;
+    }
+    .blog-detail-title { font-size: 22px; font-weight: 800; line-height: 1.35; margin-bottom: 16px; }
+    .blog-author {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 16px; background: var(--glass);
+      border: 1px solid var(--glass-b); border-radius: var(--r16);
+      margin-bottom: 20px;
+    }
+    .author-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--grad); display: flex; align-items: center;
+      justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0;
+    }
+    .author-name { font-size: 13px; font-weight: 700; }
+    .author-role { font-size: 11px; color: var(--w40); }
+    .blog-content { font-size: 14px; color: var(--w70); line-height: 1.85; }
+    .blog-content h3 { font-size: 16px; font-weight: 700; color: var(--white); margin: 20px 0 10px; }
+    .blog-content p  { margin-bottom: 14px; }
+    .blog-content ul { padding-left: 18px; margin-bottom: 14px; }
+    .blog-content li { margin-bottom: 6px; }
+    .blog-content strong { color: var(--white); font-weight: 700; }
+
+    .blog-share {
+      display: flex; gap: 10px; margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid var(--glass-b);
+    }
+    .share-btn {
+      flex: 1; padding: 12px; border-radius: var(--r12);
+      background: var(--glass); border: 1px solid var(--glass-b);
+      color: var(--white); font-size: 12px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: 6px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 48px 20px;
+      color: var(--w40);
+    }
+    .empty-state .empty-ico { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+
+    /* ============================================
        LOADING SPINNER
     ============================================ */
     .spinner {
@@ -748,7 +898,7 @@
     <div class="nav-item active" onclick="setNav(this,'home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
     <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
     <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
-    <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item" onclick="openBlog()"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
 </div>
@@ -959,6 +1109,114 @@
       <ul class="feature-list"><li>Kelas video berkualitas tinggi</li><li>Kuis interaktif</li><li>Sertifikat digital terverifikasi</li><li>Pelacakan progres</li><li>AI Tutor 24 jam</li></ul>
       <div class="tech-tags" style="margin-bottom:24px;"><span class="tech-tag">Video</span><span class="tech-tag">AI Tutor</span><span class="tech-tag">PWA</span></div>
       <button class="btn-full" style="opacity:0.6;" onclick="alert('VEDU dalam perencanaan.')">📅 Segera Hadir</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     BLOG LIST SCREEN (Sprint 3)
+========================================== -->
+<div id="blog" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('home')">←</button>
+      <span class="sub-title">Blog</span>
+    </div>
+    <button class="icon-btn" onclick="showScreen('bookmarks')" title="Bookmark">
+      🔖
+    </button>
+  </div>
+
+  <!-- Search -->
+  <div class="blog-search-wrap">
+    <span class="blog-search-ico">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </span>
+    <input class="blog-search" type="text" placeholder="Cari artikel..." id="blog-search-input" oninput="filterBlog()">
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="cat-tabs" id="cat-tabs">
+    <div class="cat-tab active" onclick="setCategory('semua', this)">Semua</div>
+    <div class="cat-tab" onclick="setCategory('teknologi', this)">🤖 Teknologi</div>
+    <div class="cat-tab" onclick="setCategory('bisnis', this)">💼 Bisnis</div>
+    <div class="cat-tab" onclick="setCategory('edukasi', this)">📚 Edukasi</div>
+  </div>
+
+  <div class="scroll-area" style="padding-bottom: calc(80px + var(--safe-b));">
+    <div class="blog-list" id="blog-list">
+      <!-- Diisi oleh JavaScript -->
+    </div>
+    <div class="empty-state" id="blog-empty" style="display:none;">
+      <div class="empty-ico">🔍</div>
+      <p>Artikel tidak ditemukan</p>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
+    <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-item active"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
+  </nav>
+</div>
+
+
+<!-- ==========================================
+     BLOG DETAIL SCREEN (Sprint 3)
+========================================== -->
+<div id="blog-detail" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('blog')">←</button>
+      <span class="sub-title">Artikel</span>
+    </div>
+    <button class="icon-btn" id="detail-bookmark-btn" onclick="toggleDetailBookmark()">🔖</button>
+  </div>
+
+  <div class="scroll-area">
+    <div id="blog-detail-thumb" class="blog-detail-hero"></div>
+    <div class="blog-detail-body">
+      <div class="blog-detail-meta">
+        <span class="blog-cat-badge" id="detail-cat-badge"></span>
+        <span class="blog-date" id="detail-date"></span>
+        <span class="blog-read" id="detail-read"></span>
+      </div>
+      <div class="blog-detail-title" id="detail-title"></div>
+      <div class="blog-author">
+        <div class="author-avatar" id="detail-author-avatar">MF</div>
+        <div>
+          <div class="author-name" id="detail-author-name">Muhammad Febriyanto</div>
+          <div class="author-role">Founder IdeA1 · Solopreneur</div>
+        </div>
+      </div>
+      <div class="blog-content" id="detail-content"></div>
+      <div class="blog-share">
+        <button class="share-btn" onclick="shareBlog()">📤 Bagikan</button>
+        <button class="share-btn" id="detail-bm-btn2" onclick="toggleDetailBookmark()">🔖 Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     BOOKMARKS SCREEN (Sprint 3)
+========================================== -->
+<div id="bookmarks" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('blog')">←</button>
+      <span class="sub-title">Artikel Tersimpan</span>
+    </div>
+  </div>
+  <div class="scroll-area">
+    <div class="blog-list" id="bookmark-list" style="padding-top:14px;"></div>
+    <div class="empty-state" id="bookmark-empty">
+      <div class="empty-ico">🔖</div>
+      <p>Belum ada artikel yang disimpan.<br>Tap 🔖 di artikel untuk menyimpannya.</p>
     </div>
   </div>
 </div>
@@ -1180,6 +1438,359 @@ function updateProfileUI(user) {
 }
 
 /* ============================================
+   BLOG DATA (Sprint 3)
+============================================ */
+const ARTICLES = [
+  {
+    id: 1,
+    title: 'AI dalam Pendidikan: Peluang dan Tantangan di Era Modern',
+    excerpt: 'Kecerdasan buatan mulai merambah dunia pendidikan. Apa dampaknya bagi guru, siswa, dan orang tua di Indonesia?',
+    category: 'teknologi',
+    emoji: '🤖',
+    bg: 'linear-gradient(135deg, #1a0a2e, #0d1a3a)',
+    date: '12 Jun 2026',
+    read: '5 mnt baca',
+    featured: true,
+    content: `
+      <p>Kecerdasan buatan (AI) telah menjadi bagian tak terpisahkan dari kehidupan modern. Kini, AI mulai merambah sektor yang sangat vital: <strong>pendidikan</strong>.</p>
+      <h3>Peluang yang Terbuka Lebar</h3>
+      <p>AI membuka berbagai peluang baru dalam dunia pendidikan:</p>
+      <ul>
+        <li>Pembelajaran yang dipersonalisasi sesuai kemampuan tiap siswa</li>
+        <li>Feedback instan dan otomatis untuk tugas siswa</li>
+        <li>Deteksi dini kesulitan belajar</li>
+        <li>Asisten mengajar 24 jam untuk guru</li>
+      </ul>
+      <h3>Tantangan yang Harus Dihadapi</h3>
+      <p>Namun, ada tantangan nyata yang tidak bisa diabaikan. Kesenjangan digital masih menjadi hambatan besar, terutama di daerah terpencil Indonesia. Tidak semua sekolah memiliki akses internet yang stabil, apalagi perangkat yang memadai.</p>
+      <p>Selain itu, <strong>kesiapan guru</strong> juga menjadi faktor kunci. Tanpa pelatihan yang tepat, teknologi secanggih apapun tidak akan efektif di kelas.</p>
+      <h3>Kesimpulan</h3>
+      <p>AI bukan pengganti guru, melainkan alat bantu yang memperkuat kapasitas guru. Kuncinya adalah memastikan setiap guru mendapat pelatihan yang cukup dan setiap siswa mendapat akses yang setara.</p>
+    `
+  },
+  {
+    id: 2,
+    title: 'Tips Membangun Produk Digital dari Nol Tanpa Modal Besar',
+    excerpt: 'Banyak yang berpikir butuh modal besar untuk membangun produk digital. Padahal, dengan strategi yang tepat, kamu bisa mulai dari nol.',
+    category: 'bisnis',
+    emoji: '💡',
+    bg: 'linear-gradient(135deg, #1a0f00, #2a1500)',
+    date: '8 Jun 2026',
+    read: '7 mnt baca',
+    featured: false,
+    content: `
+      <p>Salah satu mitos terbesar dalam dunia startup adalah bahwa kamu butuh modal besar untuk memulai. Kenyataannya, banyak produk digital sukses yang lahir dari keterbatasan.</p>
+      <h3>1. Mulai dari Masalah Nyata</h3>
+      <p>Jangan membangun produk yang kamu <em>kira</em> dibutuhkan orang. Temukan masalah nyata di sekitarmu dan bangun solusinya. Ini menghemat waktu dan uang karena kamu tidak perlu menebak-nebak.</p>
+      <h3>2. Gunakan Tools Gratis</h3>
+      <p>Di era sekarang, banyak tools gratis berkualitas tinggi tersedia:</p>
+      <ul>
+        <li><strong>GitHub</strong> untuk hosting kode</li>
+        <li><strong>Vercel/Netlify</strong> untuk deploy gratis</li>
+        <li><strong>Supabase</strong> untuk database gratis</li>
+        <li><strong>Figma</strong> untuk desain UI</li>
+      </ul>
+      <h3>3. Bangun MVP Dulu</h3>
+      <p>MVP (Minimum Viable Product) adalah versi paling sederhana dari produkmu yang sudah bisa dipakai orang. Bangun ini dulu, dapatkan feedback, baru kembangkan lebih jauh.</p>
+      <h3>4. Distribusi adalah Kuncinya</h3>
+      <p>Produk terbaik pun tidak berguna jika tidak ada yang tahu keberadaannya. Investasikan waktu untuk membangun audiens sejak hari pertama.</p>
+    `
+  },
+  {
+    id: 3,
+    title: 'Manajemen Waktu untuk Solopreneur yang Produktif',
+    excerpt: 'Menjadi solopreneur artinya kamu adalah CEO, developer, marketer, dan customer service sekaligus. Bagaimana mengelola semuanya?',
+    category: 'bisnis',
+    emoji: '⏰',
+    bg: 'linear-gradient(135deg, #0a1a0a, #0a2a15)',
+    date: '3 Jun 2026',
+    read: '6 mnt baca',
+    featured: false,
+    content: `
+      <p>Menjadi solopreneur adalah pilihan yang penuh kebebasan sekaligus tantangan. Tanpa tim, setiap keputusan dan eksekusi ada di tanganmu sendiri.</p>
+      <h3>Time Blocking: Senjata Utama</h3>
+      <p>Time blocking adalah teknik di mana kamu mengalokasikan blok waktu tertentu untuk jenis pekerjaan tertentu. Misalnya, 07.00–09.00 untuk coding, 09.00–10.00 untuk email dan komunikasi.</p>
+      <h3>Aturan 3 Prioritas</h3>
+      <p>Setiap hari, tentukan hanya <strong>3 hal terpenting</strong> yang harus diselesaikan. Jika ketiga hal itu selesai, hari itu sudah sukses — apapun yang terjadi setelahnya adalah bonus.</p>
+      <h3>Istirahat adalah Produktivitas</h3>
+      <p>Banyak solopreneur yang terjebak dalam hustle culture yang toxic. Padahal, istirahat yang cukup justru meningkatkan kualitas kerja dan kreativitas secara signifikan.</p>
+      <ul>
+        <li>Tidur 7–8 jam setiap malam</li>
+        <li>Olahraga minimal 30 menit sehari</li>
+        <li>Ambil satu hari penuh libur per minggu</li>
+      </ul>
+    `
+  },
+  {
+    id: 4,
+    title: 'Mengapa Saya Memilih Jalur Solopreneur di Usia Muda',
+    excerpt: 'Banyak yang mempertanyakan keputusan saya meninggalkan karir corporate. Ini adalah cerita jujur di balik pilihan tersebut.',
+    category: 'edukasi',
+    emoji: '🛤️',
+    bg: 'linear-gradient(135deg, #0a0a1a, #1a0a2e)',
+    date: '28 Mei 2026',
+    read: '4 mnt baca',
+    featured: false,
+    content: `
+      <p>Ketika saya memutuskan untuk keluar dari jalur karir konvensional dan memilih menjadi solopreneur, banyak orang di sekitar saya yang mempertanyakan keputusan tersebut.</p>
+      <h3>Awal Mula</h3>
+      <p>Perjalanan ini dimulai dari sebuah keresahan sederhana: saya ingin menciptakan sesuatu yang berdampak nyata bagi masyarakat di sekitar saya, khususnya di Solo.</p>
+      <h3>Proyek Pertama: WargaKu</h3>
+      <p>WargaKu lahir dari kebutuhan nyata komunitas RT/RW di lingkungan saya. Aplikasi sederhana yang membantu pengelolaan administrasi warga secara digital. Dari proyek kecil inilah segalanya dimulai.</p>
+      <h3>Pelajaran Terbesar</h3>
+      <p>Jalur solopreneur mengajarkan saya bahwa <strong>kecepatan eksekusi lebih penting dari kesempurnaan</strong>. Lebih baik meluncurkan produk yang 80% sempurna daripada menunggu 100% yang tidak pernah datang.</p>
+      <p>Dan yang paling penting: <strong>dampak nyata tidak harus datang dari perusahaan besar</strong>. Bahkan dari Solo, dengan HP Android dan koneksi internet, kita bisa membangun sesuatu yang berarti.</p>
+    `
+  },
+  {
+    id: 5,
+    title: 'PWA vs Native App: Mana yang Lebih Baik untuk 2026?',
+    excerpt: 'Progressive Web App semakin powerful. Apakah sudah saatnya beralih dari native app ke PWA untuk menghemat biaya pengembangan?',
+    category: 'teknologi',
+    emoji: '📱',
+    bg: 'linear-gradient(135deg, #001a1a, #002a2a)',
+    date: '20 Mei 2026',
+    read: '8 mnt baca',
+    featured: false,
+    content: `
+      <p>Debat antara PWA dan native app terus berlanjut. Di tahun 2026, garis batasnya semakin tipis dengan kemampuan PWA yang terus berkembang pesat.</p>
+      <h3>Keunggulan PWA</h3>
+      <ul>
+        <li><strong>Satu codebase</strong> untuk semua platform (Android, iOS, Desktop)</li>
+        <li><strong>Tidak perlu</strong> diunduh dari app store</li>
+        <li><strong>Update otomatis</strong> tanpa perlu approval store</li>
+        <li><strong>Biaya pengembangan</strong> jauh lebih rendah</li>
+        <li><strong>SEO friendly</strong> karena bisa diindex mesin pencari</li>
+      </ul>
+      <h3>Keunggulan Native App</h3>
+      <ul>
+        <li>Akses penuh ke fitur hardware perangkat</li>
+        <li>Performa lebih optimal untuk aplikasi berat</li>
+        <li>Integrasi lebih dalam dengan sistem operasi</li>
+      </ul>
+      <h3>Kesimpulan untuk 2026</h3>
+      <p>Untuk 90% kasus penggunaan bisnis, <strong>PWA sudah lebih dari cukup</strong>. Terutama untuk startup dan solopreneur yang ingin bergerak cepat dengan biaya minimal.</p>
+    `
+  },
+  {
+    id: 6,
+    title: 'Cara Membangun Komunitas Digital yang Kuat dan Loyal',
+    excerpt: 'Komunitas yang kuat adalah aset terbesar sebuah produk digital. Ini strategi yang terbukti efektif untuk membangunnya dari nol.',
+    category: 'edukasi',
+    emoji: '🤝',
+    bg: 'linear-gradient(135deg, #001a0a, #0a2a1a)',
+    date: '15 Mei 2026',
+    read: '5 mnt baca',
+    featured: false,
+    content: `
+      <p>Di era digital, komunitas bukan sekadar fitur tambahan. Bagi banyak produk sukses, komunitas adalah <strong>inti dari segalanya</strong>.</p>
+      <h3>Mulai dari Nilai, Bukan Jumlah</h3>
+      <p>Banyak orang tergoda mengejar jumlah anggota komunitas. Padahal, 100 anggota yang aktif dan loyal jauh lebih berharga dari 10.000 anggota yang pasif.</p>
+      <h3>3 Pilar Komunitas Kuat</h3>
+      <ul>
+        <li><strong>Nilai bersama</strong> — anggota punya tujuan dan nilai yang sama</li>
+        <li><strong>Rasa memiliki</strong> — setiap anggota merasa menjadi bagian penting</li>
+        <li><strong>Konsistensi</strong> — konten dan interaksi yang rutin dan berkualitas</li>
+      </ul>
+      <h3>Contoh Nyata: WargaKu</h3>
+      <p>WargaKu bukan sekadar aplikasi. Ini adalah <strong>platform komunitas warga</strong>. Setiap fitur dirancang untuk memperkuat ikatan antar warga dan memudahkan partisipasi aktif dalam kehidupan komunitas.</p>
+      <p>Hasilnya? Warga yang aktif menggunakan WargaKu merasa lebih terhubung dengan lingkungannya dan lebih aktif berpartisipasi dalam kegiatan RT.</p>
+    `
+  }
+];
+
+/* ============================================
+   BLOG LOGIC (Sprint 3)
+============================================ */
+let currentCategory = 'semua';
+let currentArticleId = null;
+
+function getBookmarks() {
+  return JSON.parse(localStorage.getItem('idea1_bookmarks') || '[]');
+}
+
+function saveBookmarks(bm) {
+  localStorage.setItem('idea1_bookmarks', JSON.stringify(bm));
+}
+
+function isBookmarked(id) {
+  return getBookmarks().includes(id);
+}
+
+function toggleBookmark(id, btnEl) {
+  let bm = getBookmarks();
+  if (bm.includes(id)) {
+    bm = bm.filter(b => b !== id);
+    if (btnEl) btnEl.textContent = '🔖';
+  } else {
+    bm.push(id);
+    if (btnEl) btnEl.textContent = '❤️';
+  }
+  saveBookmarks(bm);
+}
+
+function toggleDetailBookmark() {
+  if (!currentArticleId) return;
+  toggleBookmark(currentArticleId, null);
+  const bm1 = document.getElementById('detail-bookmark-btn');
+  const bm2 = document.getElementById('detail-bm-btn2');
+  const saved = isBookmarked(currentArticleId);
+  if (bm1) bm1.textContent = saved ? '❤️' : '🔖';
+  if (bm2) bm2.textContent = saved ? '❤️ Tersimpan' : '🔖 Simpan';
+}
+
+function getCatColor(cat) {
+  if (cat === 'teknologi') return 'teknologi';
+  if (cat === 'bisnis')    return 'bisnis';
+  return 'edukasi';
+}
+
+function getCatLabel(cat) {
+  if (cat === 'teknologi') return '🤖 Teknologi';
+  if (cat === 'bisnis')    return '💼 Bisnis';
+  return '📚 Edukasi';
+}
+
+function renderBlogCard(article, container) {
+  const bm = isBookmarked(article.id);
+  const card = document.createElement('div');
+  card.className = 'blog-card';
+  card.innerHTML = `
+    <div class="blog-card-thumb" style="background:${article.bg};">${article.emoji}</div>
+    <div class="blog-card-body">
+      <span class="blog-cat-badge ${getCatColor(article.category)}">${getCatLabel(article.category)}</span>
+      <div class="blog-card-title">${article.title}</div>
+      <div class="blog-card-excerpt">${article.excerpt}</div>
+      <div class="blog-card-meta">
+        <div class="blog-meta-left">
+          <span class="blog-date">📅 ${article.date}</span>
+          <span class="blog-read">· ${article.read}</span>
+        </div>
+        <button class="blog-bookmark" onclick="event.stopPropagation(); toggleBookmark(${article.id}, this)">
+          ${bm ? '❤️' : '🔖'}
+        </button>
+      </div>
+    </div>
+  `;
+  card.addEventListener('click', () => openArticle(article.id));
+  container.appendChild(card);
+}
+
+function renderBlog(articles) {
+  const list  = document.getElementById('blog-list');
+  const empty = document.getElementById('blog-empty');
+  list.innerHTML = '';
+
+  if (!articles.length) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Featured artikel pertama
+  const featured = articles[0];
+  if (featured) {
+    const bm = isBookmarked(featured.id);
+    const fc = document.createElement('div');
+    fc.className = 'blog-featured';
+    fc.innerHTML = `
+      <div class="blog-featured-thumb" style="background:${featured.bg};">${featured.emoji}</div>
+      <div class="blog-featured-body">
+        <div class="blog-featured-label">✦ Artikel Pilihan</div>
+        <div class="blog-featured-title">${featured.title}</div>
+        <div class="blog-featured-excerpt">${featured.excerpt}</div>
+        <div class="blog-card-meta">
+          <div class="blog-meta-left">
+            <span class="blog-date">📅 ${featured.date}</span>
+            <span class="blog-read">· ${featured.read}</span>
+          </div>
+          <button class="blog-bookmark" onclick="event.stopPropagation(); toggleBookmark(${featured.id}, this)">
+            ${bm ? '❤️' : '🔖'}
+          </button>
+        </div>
+      </div>
+    `;
+    fc.addEventListener('click', () => openArticle(featured.id));
+    list.appendChild(fc);
+  }
+
+  // Artikel lainnya
+  articles.slice(1).forEach(a => renderBlogCard(a, list));
+}
+
+function setCategory(cat, el) {
+  currentCategory = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterBlog();
+}
+
+function filterBlog() {
+  const q = (document.getElementById('blog-search-input')?.value || '').toLowerCase();
+  let filtered = ARTICLES;
+  if (currentCategory !== 'semua') {
+    filtered = filtered.filter(a => a.category === currentCategory);
+  }
+  if (q) {
+    filtered = filtered.filter(a =>
+      a.title.toLowerCase().includes(q) ||
+      a.excerpt.toLowerCase().includes(q)
+    );
+  }
+  renderBlog(filtered);
+}
+
+function openArticle(id) {
+  const article = ARTICLES.find(a => a.id === id);
+  if (!article) return;
+  currentArticleId = id;
+
+  document.getElementById('blog-detail-thumb').style.background = article.bg;
+  document.getElementById('blog-detail-thumb').textContent = article.emoji;
+  document.getElementById('detail-cat-badge').className = 'blog-cat-badge ' + getCatColor(article.category);
+  document.getElementById('detail-cat-badge').textContent = getCatLabel(article.category);
+  document.getElementById('detail-date').textContent = '📅 ' + article.date;
+  document.getElementById('detail-read').textContent = '· ' + article.read;
+  document.getElementById('detail-title').textContent = article.title;
+  document.getElementById('detail-content').innerHTML = article.content;
+
+  const bm = isBookmarked(id);
+  document.getElementById('detail-bookmark-btn').textContent = bm ? '❤️' : '🔖';
+  document.getElementById('detail-bm-btn2').textContent = bm ? '❤️ Tersimpan' : '🔖 Simpan';
+
+  // Scroll to top
+  const sc = document.querySelector('#blog-detail .scroll-area');
+  if (sc) sc.scrollTop = 0;
+
+  showScreen('blog-detail');
+}
+
+function renderBookmarks() {
+  const bm   = getBookmarks();
+  const list  = document.getElementById('bookmark-list');
+  const empty = document.getElementById('bookmark-empty');
+  list.innerHTML = '';
+
+  const saved = ARTICLES.filter(a => bm.includes(a.id));
+  if (!saved.length) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  saved.forEach(a => renderBlogCard(a, list));
+}
+
+function shareBlog() {
+  const article = ARTICLES.find(a => a.id === currentArticleId);
+  if (!article) return;
+  if (navigator.share) {
+    navigator.share({ title: article.title, text: article.excerpt, url: window.location.href });
+  } else {
+    alert('Link disalin! ' + window.location.href);
+  }
+}
+
+/* ============================================
    APP INIT
 ============================================ */
 setTimeout(() => {
@@ -1192,6 +1803,20 @@ setTimeout(() => {
     showScreen('login', false);
   }
 }, 2700);
+
+/* Blog navigation */
+function openBlog() {
+  filterBlog();
+  showScreen('blog');
+}
+
+/* Bookmark screen */
+const _origShowScreen = showScreen;
+showScreen = function(id, anim) {
+  _origShowScreen(id, anim);
+  if (id === 'bookmarks') renderBookmarks();
+  if (id === 'blog') setTimeout(filterBlog, 50);
+};
 
 /* PWA */
 if ('serviceWorker' in navigator) {
