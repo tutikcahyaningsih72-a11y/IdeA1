@@ -595,6 +595,163 @@
     .empty-state p { font-size: 14px; }
 
     /* ============================================
+       AI ASSISTANT STYLES (Sprint 4)
+    ============================================ */
+    .ai-hub-header { padding: 20px 20px 0; text-align: center; }
+    .ai-hub-icon {
+      width: 72px; height: 72px; border-radius: 22px;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px; margin: 0 auto 12px;
+      box-shadow: 0 8px 32px rgba(124,58,237,0.4);
+    }
+    .ai-hub-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .ai-hub-sub   { font-size: 13px; color: var(--w40); margin-bottom: 20px; }
+    .ai-tools-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; padding: 0 20px 20px;
+    }
+    .ai-tool-card {
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: var(--r24); padding: 18px 16px;
+      cursor: pointer; transition: transform 0.15s;
+      text-align: center;
+    }
+    .ai-tool-card:active { transform: scale(0.97); }
+    .ai-tool-card.featured {
+      grid-column: span 2; display: flex;
+      align-items: center; gap: 16px; text-align: left;
+      background: linear-gradient(135deg, #130a2a, #0a1530);
+      border-color: rgba(124,58,237,0.3);
+    }
+    .ai-tool-icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0; margin: 0 auto 10px;
+    }
+    .ai-tool-card.featured .ai-tool-icon { margin: 0; }
+    .ai-tool-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .ai-tool-desc { font-size: 11px; color: var(--w40); line-height: 1.5; }
+    .ai-tool-card.featured .ai-tool-name { font-size: 16px; }
+    .ai-tool-badge {
+      display: inline-block; padding: 2px 8px;
+      background: rgba(124,58,237,0.2); color: #a78bfa;
+      border-radius: 999px; font-size: 10px; font-weight: 700; margin-top: 6px;
+    }
+
+    /* AI CHAT */
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .msg-row { display: flex; gap: 8px; align-items: flex-end; }
+    .msg-row.user { flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .msg-avatar.ai-av  { background: linear-gradient(135deg, #7c3aed, #2563eb); }
+    .msg-avatar.user-av{ background: var(--grad); font-size: 11px; font-weight: 800; }
+    .msg-bubble {
+      max-width: 78%; padding: 12px 14px;
+      border-radius: 18px; font-size: 13px; line-height: 1.6;
+    }
+    .msg-bubble.ai   { background: var(--bg2); border: 1px solid var(--glass-b); border-bottom-left-radius: 4px; }
+    .msg-bubble.user { background: var(--grad); border-bottom-right-radius: 4px; color: white; }
+    .typing-bubble {
+      display: flex; gap: 4px; padding: 14px 16px;
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: 18px; border-bottom-left-radius: 4px; width: fit-content;
+    }
+    .typing-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--w40);
+      animation: typingBounce 1.2s ease-in-out infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%,60%,100% { transform: translateY(0); opacity: 0.4; }
+      30%          { transform: translateY(-6px); opacity: 1; }
+    }
+    .quick-replies {
+      display: flex; gap: 8px; padding: 0 16px 10px;
+      overflow-x: auto; flex-shrink: 0;
+    }
+    .quick-reply {
+      padding: 7px 14px; background: var(--glass);
+      border: 1px solid rgba(124,58,237,0.3); border-radius: 999px;
+      font-size: 12px; color: #a78bfa; font-weight: 600;
+      white-space: nowrap; cursor: pointer; flex-shrink: 0;
+      font-family: var(--font);
+    }
+    .chat-input-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px calc(10px + var(--safe-b));
+      border-top: 1px solid var(--glass-b);
+      background: rgba(8,8,8,0.9); flex-shrink: 0;
+    }
+    .chat-input {
+      flex: 1; padding: 12px 16px; background: var(--bg2);
+      border: 1px solid var(--glass-b); border-radius: 999px;
+      color: var(--white); font-family: var(--font);
+      font-size: 14px; outline: none; -webkit-appearance: none;
+    }
+    .chat-input:focus { border-color: rgba(124,58,237,0.5); }
+    .chat-input::placeholder { color: var(--w20); }
+    .chat-send {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      border: none; display: flex; align-items: center;
+      justify-content: center; cursor: pointer; font-size: 18px;
+      box-shadow: 0 4px 14px rgba(124,58,237,0.4);
+    }
+    .chat-send:active { transform: scale(0.93); }
+
+    /* AI PROPOSAL */
+    .proposal-output {
+      background: var(--bg2); border: 1px solid rgba(124,58,237,0.2);
+      border-radius: var(--r16); padding: 16px; margin-top: 16px;
+      font-size: 13px; color: var(--w70); line-height: 1.8; display: none;
+    }
+    .proposal-output.show { display: block; }
+    .proposal-output h3 { color: var(--white); font-size: 15px; margin: 12px 0 6px; }
+    .proposal-output h3:first-child { margin-top: 0; }
+
+    /* AI TRANSLATE */
+    .translate-box {
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: var(--r16); padding: 16px; margin-bottom: 12px;
+    }
+    .translate-lang { font-size: 11px; color: var(--orange); font-weight: 700; margin-bottom: 8px; }
+    .translate-textarea {
+      width: 100%; min-height: 80px; background: none; border: none;
+      color: var(--white); font-family: var(--font);
+      font-size: 14px; line-height: 1.6; resize: none; outline: none;
+    }
+    .translate-textarea::placeholder { color: var(--w20); }
+    .translate-result {
+      background: var(--bg2); border: 1px solid rgba(124,58,237,0.2);
+      border-radius: var(--r16); padding: 16px; display: none;
+    }
+    .translate-result.show { display: block; }
+    .lang-toggle {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-bottom: 16px;
+    }
+    .lang-label {
+      padding: 8px 20px; border-radius: 999px;
+      background: var(--glass); border: 1px solid var(--glass-b);
+      font-size: 13px; font-weight: 700;
+    }
+    .lang-swap {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      border: none; font-size: 16px; cursor: pointer; color: white;
+    }
+
+    /* ============================================
        LOADING SPINNER
     ============================================ */
     .spinner {
@@ -897,7 +1054,7 @@
   <nav class="bottom-nav">
     <div class="nav-item active" onclick="setNav(this,'home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
     <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
-    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-ai" onclick="showScreen('ai')">✨</div>
     <div class="nav-item" onclick="openBlog()"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
@@ -955,7 +1112,7 @@
   <nav class="bottom-nav">
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
     <div class="nav-item active"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
-    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-ai" onclick="showScreen('ai')">✨</div>
     <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
@@ -1035,7 +1192,7 @@
   <nav class="bottom-nav">
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
     <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
-    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-ai" onclick="showScreen('ai')">✨</div>
     <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item active"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
@@ -1157,7 +1314,7 @@
   <nav class="bottom-nav">
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
     <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
-    <div class="nav-ai" onclick="alert('AI — Segera hadir!')">✨</div>
+    <div class="nav-ai" onclick="showScreen('ai')">✨</div>
     <div class="nav-item active"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
@@ -1218,6 +1375,210 @@
       <div class="empty-ico">🔖</div>
       <p>Belum ada artikel yang disimpan.<br>Tap 🔖 di artikel untuk menyimpannya.</p>
     </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     AI HUB SCREEN (Sprint 4)
+========================================== -->
+<div id="ai" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('home')">←</button>
+      <span class="sub-title">AI Assistant</span>
+    </div>
+  </div>
+  <div class="scroll-area">
+    <div class="ai-hub-header">
+      <div class="ai-hub-icon">✨</div>
+      <div class="ai-hub-title">IdeA1 AI</div>
+      <div class="ai-hub-sub">Asisten cerdas untuk produktivitas harianmu</div>
+    </div>
+
+    <div class="ai-tools-grid">
+      <!-- Featured: AI Chat -->
+      <div class="ai-tool-card featured" onclick="showScreen('ai-chat')">
+        <div class="ai-tool-icon" style="background:linear-gradient(135deg,#7c3aed,#2563eb);">💬</div>
+        <div>
+          <div class="ai-tool-name">AI Chat</div>
+          <div class="ai-tool-desc">Tanya apapun tentang IdeA1, pendidikan, bisnis, atau teknologi.</div>
+          <span class="ai-tool-badge">✦ Populer</span>
+        </div>
+      </div>
+
+      <!-- AI Proposal -->
+      <div class="ai-tool-card" onclick="showScreen('ai-proposal')">
+        <div class="ai-tool-icon" style="background:rgba(255,101,0,0.15);margin:0 auto 10px;">📋</div>
+        <div class="ai-tool-name">AI Proposal</div>
+        <div class="ai-tool-desc">Generate proposal proyek digital secara otomatis.</div>
+      </div>
+
+      <!-- AI Translate -->
+      <div class="ai-tool-card" onclick="showScreen('ai-translate')">
+        <div class="ai-tool-icon" style="background:rgba(34,197,94,0.12);margin:0 auto 10px;">🌐</div>
+        <div class="ai-tool-name">AI Translate</div>
+        <div class="ai-tool-desc">Terjemahkan teks Indonesia ↔ Inggris dengan cepat.</div>
+      </div>
+
+      <!-- AI Ide -->
+      <div class="ai-tool-card" onclick="showScreen('ai-ide')">
+        <div class="ai-tool-icon" style="background:rgba(255,184,0,0.12);margin:0 auto 10px;">💡</div>
+        <div class="ai-tool-name">AI Ide</div>
+        <div class="ai-tool-desc">Dapatkan inspirasi nama, slogan, dan ide bisnis baru.</div>
+      </div>
+
+      <!-- AI Resume -->
+      <div class="ai-tool-card" onclick="alert('AI Resume segera hadir!')">
+        <div class="ai-tool-icon" style="background:rgba(99,102,241,0.12);margin:0 auto 10px;">📄</div>
+        <div class="ai-tool-name">AI Resume</div>
+        <div class="ai-tool-desc">Buat CV profesional dalam hitungan detik.</div>
+      </div>
+
+      <!-- AI Code -->
+      <div class="ai-tool-card" onclick="alert('AI Code segera hadir!')">
+        <div class="ai-tool-icon" style="background:rgba(59,130,246,0.12);margin:0 auto 10px;">⌨️</div>
+        <div class="ai-tool-name">AI Code</div>
+        <div class="ai-tool-desc">Bantu debug, review, dan generate potongan kode.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     AI CHAT SCREEN (Sprint 4)
+========================================== -->
+<div id="ai-chat" class="screen" style="display:flex;flex-direction:column;">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('ai')">←</button>
+      <div>
+        <div style="font-size:15px;font-weight:700;">AI Chat</div>
+        <div style="font-size:11px;color:var(--green);">● Online</div>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="clearChat()" title="Hapus chat">🗑️</button>
+  </div>
+
+  <div class="chat-messages" id="chat-messages"></div>
+
+  <div class="quick-replies" id="quick-replies">
+    <button class="quick-reply" onclick="sendQuick('Apa itu IdeA1?')">Apa itu IdeA1?</button>
+    <button class="quick-reply" onclick="sendQuick('Ceritakan tentang WargaKu')">WargaKu</button>
+    <button class="quick-reply" onclick="sendQuick('Apa itu FIDU?')">FIDU</button>
+    <button class="quick-reply" onclick="sendQuick('Tips belajar coding')">Tips coding</button>
+    <button class="quick-reply" onclick="sendQuick('Cara deploy ke Vercel')">Deploy Vercel</button>
+  </div>
+
+  <div class="chat-input-bar">
+    <input class="chat-input" id="chat-input" type="text"
+      placeholder="Tulis pesanmu..."
+      onkeydown="if(event.key==='Enter') sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     AI PROPOSAL SCREEN (Sprint 4)
+========================================== -->
+<div id="ai-proposal" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('ai')">←</button>
+      <span class="sub-title">AI Proposal</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:20px;">
+    <div style="background:linear-gradient(135deg,#130a2a,#0a1530);border:1px solid rgba(124,58,237,0.2);border-radius:var(--r16);padding:16px;margin-bottom:20px;">
+      <div style="font-size:13px;color:#a78bfa;line-height:1.6;">✨ Isi form di bawah, AI akan generate proposal proyek digital yang profesional untuk kamu.</div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Nama Proyek</label>
+      <input id="prop-nama" class="input-field" type="text" placeholder="Contoh: AplikasiKu">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Deskripsi Singkat</label>
+      <input id="prop-desc" class="input-field" type="text" placeholder="Apa yang dilakukan aplikasi ini?">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Target Pengguna</label>
+      <input id="prop-target" class="input-field" type="text" placeholder="Contoh: Orang tua siswa TK di Solo">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Teknologi</label>
+      <input id="prop-tech" class="input-field" type="text" placeholder="Contoh: PWA, Supabase, Vercel">
+    </div>
+
+    <button class="btn-primary" onclick="generateProposal()">✨ Generate Proposal</button>
+
+    <div class="proposal-output" id="proposal-result"></div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     AI TRANSLATE SCREEN (Sprint 4)
+========================================== -->
+<div id="ai-translate" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('ai')">←</button>
+      <span class="sub-title">AI Translate</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:20px;">
+    <div class="lang-toggle">
+      <div class="lang-label" id="lang-from">🇮🇩 Indonesia</div>
+      <button class="lang-swap" onclick="swapLang()">⇄</button>
+      <div class="lang-label" id="lang-to">🇬🇧 English</div>
+    </div>
+
+    <div class="translate-box">
+      <div class="translate-lang" id="translate-from-label">BAHASA INDONESIA</div>
+      <textarea class="translate-textarea" id="translate-input"
+        placeholder="Ketik teks yang ingin diterjemahkan..."></textarea>
+    </div>
+
+    <button class="btn-primary" onclick="doTranslate()">🌐 Terjemahkan</button>
+
+    <div class="translate-result" id="translate-result">
+      <div class="translate-lang" id="translate-to-label">ENGLISH</div>
+      <div id="translate-output" style="font-size:14px;color:var(--white);line-height:1.7;"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     AI IDE SCREEN (Sprint 4)
+========================================== -->
+<div id="ai-ide" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('ai')">←</button>
+      <span class="sub-title">AI Ide Bisnis</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:20px;">
+    <div style="background:linear-gradient(135deg,#1a0f00,#2a1500);border:1px solid rgba(255,184,0,0.2);border-radius:var(--r16);padding:16px;margin-bottom:20px;">
+      <div style="font-size:13px;color:#fbbf24;line-height:1.6;">💡 Masukkan bidang atau kata kunci, AI akan generate ide nama produk, slogan, dan konsep bisnis untukmu.</div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Bidang / Kategori</label>
+      <input id="ide-bidang" class="input-field" type="text" placeholder="Contoh: pendidikan anak, kuliner, kesehatan">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Target Pasar</label>
+      <input id="ide-target" class="input-field" type="text" placeholder="Contoh: ibu rumah tangga di Solo">
+    </div>
+
+    <button class="btn-primary" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 4px 16px rgba(217,119,6,0.3);" onclick="generateIde()">💡 Generate Ide</button>
+
+    <div class="proposal-output" id="ide-result"></div>
   </div>
 </div>
 
@@ -1435,6 +1796,231 @@ function updateProfileUI(user) {
   document.getElementById('profile-email').textContent   = user.email;
   document.getElementById('profile-joined').textContent  = user.joined || '2026';
   document.getElementById('avatar-initials').textContent = getInitials(user.name);
+}
+
+/* ============================================
+   AI ASSISTANT LOGIC (Sprint 4)
+============================================ */
+let chatHistory = [];
+let isTyping = false;
+let translateMode = 'id-en';
+
+const AI_RESPONSES = {
+  greet: ['Halo! 👋 Saya AI Assistant IdeA1. Ada yang bisa saya bantu?', 'Hai! Saya siap membantu kamu. Mau tanya apa?', 'Selamat datang! Ada yang ingin kamu ketahui tentang IdeA1?'],
+  idea1: ['IdeA1 adalah Super App pusat ekosistem digital yang dibangun oleh Maskur Febrianto di Solo. Tagline-nya: **Begin Making Better**. 🚀\n\nIdeA1 menaungi beberapa proyek:\n• WargaKu — manajemen RT/RW\n• FIDU — pencarian sekolah TK/PAUD\n• SchoolID — manajemen sekolah\n• VEDU — platform belajar online'],
+  wargaku: ['WargaKu adalah aplikasi manajemen RT/RW digital untuk warga Kartasura, Solo. 🏘️\n\nFitur utama:\n• Dashboard warga & admin\n• Kelola iuran & kas RT\n• Arsip digital dokumen\n• Pengumuman real-time\n\nSudah live di: wargaku-apk.netlify.app ✅'],
+  fidu: ['FIDU (Find Education) adalah platform pencarian sekolah TK & PAUD di Solo. 🏫\n\nFitur:\n• Cari sekolah berdasarkan lokasi\n• Profil lengkap sekolah\n• Rating dari orang tua\n• Pendaftaran online\n\nStatus: sedang dalam pengembangan 🔧'],
+  schoolid: ['SchoolID adalah asisten digital manajemen sekolah Indonesia. 🎓\n\nDirancang untuk:\n• Guru — kelola kelas & absensi\n• Siswa — akses materi & nilai\n• Orang tua — pantau perkembangan\n• Admin — laporan & keuangan\n\nStatus: dalam perencanaan 📋'],
+  vedu: ['VEDU adalah platform pembelajaran digital modern. 📚\n\nFitur yang direncanakan:\n• Video pembelajaran berkualitas\n• Kuis interaktif & adaptif\n• Sertifikat digital terverifikasi\n• AI Tutor personal 24 jam\n\nStatus: dalam perencanaan 📋'],
+  coding: ['Beberapa tips belajar coding untuk pemula: 💻\n\n1. Mulai dari HTML, CSS, JavaScript\n2. Bangun proyek nyata dari awal\n3. Konsisten belajar minimal 1 jam/hari\n4. Jangan takut salah — error adalah guru terbaik\n5. Gunakan GitHub untuk simpan kode\n\nTools gratis: VS Code, GitHub, Vercel, Netlify 🚀'],
+  deploy: ['Cara deploy ke Vercel dari GitHub: 🚀\n\n1. Upload kode ke GitHub repo\n2. Buka vercel.com\n3. Login dengan akun GitHub\n4. Tap "New Project"\n5. Pilih repo kamu\n6. Atur preset ke "Other"\n7. Tap Deploy!\n\nVercel akan otomatis redeploy setiap kamu push ke GitHub ✅'],
+  pwa: ['PWA (Progressive Web App) adalah web app yang terasa seperti aplikasi native. 📱\n\nKeuntungan PWA:\n• Bisa diinstall di HP tanpa app store\n• Bisa diakses offline\n• Update otomatis\n• Satu kode untuk semua platform\n• Biaya pengembangan lebih murah\n\nIdeA1 sendiri dibangun sebagai PWA! ✅'],
+  solo: ['Solo (Surakarta) adalah kota budaya yang kini berkembang menjadi ekosistem digital yang menarik. 🌟\n\nBeberapa proyek IdeA1 berfokus di Solo:\n• WargaKu — komunitas warga Solo\n• FIDU — sekolah TK/PAUD di Solo\n• KosKu Solo — pencarian kos\n\nSolo adalah rumah sekaligus laboratorium nyata untuk semua inovasi IdeA1! 🏙️'],
+  default: ['Pertanyaan yang menarik! 🤔 Saya adalah AI Assistant IdeA1 yang khusus membantu seputar ekosistem IdeA1, pendidikan, teknologi, dan bisnis digital.\n\nCoba tanya:\n• "Apa itu WargaKu?"\n• "Tips belajar coding"\n• "Cara deploy ke Vercel"\n• "Apa itu PWA?"', 'Saya belum punya jawaban spesifik untuk itu, tapi saya bisa membantu seputar proyek IdeA1, teknologi web, dan tips solopreneur. Ada yang ingin kamu tahu? 😊']
+};
+
+function getAIResponse(msg) {
+  const m = msg.toLowerCase();
+  if (m.match(/halo|hai|hi|hello|selamat|pagi|siang|sore|malam/)) return AI_RESPONSES.greet[Math.floor(Math.random()*3)];
+  if (m.match(/idea1|ide a1|super app|ekosistem/)) return AI_RESPONSES.idea1[0];
+  if (m.match(/wargaku|warga ku|rt|rw|kelurahan|kartasura/)) return AI_RESPONSES.wargaku[0];
+  if (m.match(/fidu|find education|tk|paud|sekolah/)) return AI_RESPONSES.fidu[0];
+  if (m.match(/schoolid|school id|manajemen sekolah/)) return AI_RESPONSES.schoolid[0];
+  if (m.match(/vedu|platform belajar|e-learning|elearning/)) return AI_RESPONSES.vedu[0];
+  if (m.match(/coding|code|belajar program|javascript|html|css|python/)) return AI_RESPONSES.coding[0];
+  if (m.match(/deploy|vercel|netlify|github|upload/)) return AI_RESPONSES.deploy[0];
+  if (m.match(/pwa|progressive web|service worker|manifest/)) return AI_RESPONSES.pwa[0];
+  if (m.match(/solo|surakarta|jawa tengah/)) return AI_RESPONSES.solo[0];
+  return AI_RESPONSES.default[Math.floor(Math.random()*2)];
+}
+
+function getUserInitials() {
+  const user = auth.getSession();
+  return user ? getInitials(user.name) : '?';
+}
+
+function addMessage(role, text) {
+  const msgs = document.getElementById('chat-messages');
+  if (!msgs) return;
+  const time = new Date().toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'});
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + (role === 'user' ? 'user' : '');
+  row.innerHTML = `
+    <div class="msg-avatar ${role === 'user' ? 'user-av' : 'ai-av'}">${role === 'user' ? getUserInitials() : '✨'}</div>
+    <div>
+      <div class="msg-bubble ${role}">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div>
+      <div class="msg-time">${time}</div>
+    </div>
+  `;
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  if (!msgs) return;
+  const row = document.createElement('div');
+  row.className = 'msg-row'; row.id = 'typing-row';
+  row.innerHTML = `
+    <div class="msg-avatar ai-av">✨</div>
+    <div class="typing-bubble">
+      <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+    </div>`;
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-row');
+  if (t) t.remove();
+}
+
+function sendChat() {
+  if (isTyping) return;
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addMessage('user', msg);
+  isTyping = true;
+  showTyping();
+  const delay = 800 + Math.random() * 700;
+  setTimeout(() => {
+    removeTyping();
+    addMessage('ai', getAIResponse(msg));
+    isTyping = false;
+  }, delay);
+}
+
+function sendQuick(msg) {
+  document.getElementById('chat-input').value = msg;
+  sendChat();
+}
+
+function clearChat() {
+  const msgs = document.getElementById('chat-messages');
+  if (msgs) msgs.innerHTML = '';
+  initChat();
+}
+
+function initChat() {
+  setTimeout(() => {
+    addMessage('ai', 'Halo! 👋 Saya **AI Assistant IdeA1**. Tanya apapun tentang proyek IdeA1, teknologi, pendidikan, atau bisnis digital. Siap membantu! ✨');
+  }, 300);
+}
+
+/* AI PROPOSAL */
+function generateProposal() {
+  const nama   = document.getElementById('prop-nama').value.trim();
+  const desc   = document.getElementById('prop-desc').value.trim();
+  const target = document.getElementById('prop-target').value.trim();
+  const tech   = document.getElementById('prop-tech').value.trim();
+  const result = document.getElementById('proposal-result');
+  if (!nama || !desc) { alert('Lengkapi nama proyek dan deskripsi!'); return; }
+  result.innerHTML = '<div style="text-align:center;padding:20px;">⏳ Generating...</div>';
+  result.classList.add('show');
+  setTimeout(() => {
+    result.innerHTML = `
+      <h3>📋 PROPOSAL PROYEK DIGITAL</h3>
+      <strong>${nama.toUpperCase()}</strong><br><br>
+      <h3>1. Latar Belakang</h3>
+      ${desc}. Proyek ini hadir sebagai solusi digital yang menjawab kebutuhan nyata ${target || 'masyarakat luas'} di era modern.
+      <h3>2. Tujuan Proyek</h3>
+      • Membangun platform digital yang mudah diakses<br>
+      • Meningkatkan efisiensi dan produktivitas pengguna<br>
+      • Memberikan dampak positif bagi ${target || 'pengguna'}
+      <h3>3. Target Pengguna</h3>
+      ${target || 'Masyarakat umum yang membutuhkan solusi digital praktis'}
+      <h3>4. Teknologi</h3>
+      ${tech || 'PWA, HTML/CSS/JavaScript, Supabase, Vercel'}
+      <h3>5. Rencana Pengembangan</h3>
+      • Sprint 1: Desain UI/UX & struktur dasar (1 minggu)<br>
+      • Sprint 2: Fitur utama & backend (2 minggu)<br>
+      • Sprint 3: Testing & perbaikan (1 minggu)<br>
+      • Sprint 4: Launch & monitoring (ongoing)
+      <h3>6. Penutup</h3>
+      Dengan dukungan teknologi modern dan semangat inovasi, <strong>${nama}</strong> siap memberikan dampak nyata. <em>Begin Making Better.</em> 🚀
+    `;
+  }, 1200);
+}
+
+/* AI IDE */
+function generateIde() {
+  const bidang = document.getElementById('ide-bidang').value.trim();
+  const target = document.getElementById('ide-target').value.trim();
+  const result = document.getElementById('ide-result');
+  if (!bidang) { alert('Masukkan bidang/kategori terlebih dahulu!'); return; }
+  result.innerHTML = '<div style="text-align:center;padding:20px;">💡 Generating ide...</div>';
+  result.classList.add('show');
+  const prefixes = ['Smart','Digi','Maju','Karya','Nusa','Lokal','Hebat','Kita'];
+  const suffixes = ['App','Hub','Link','Pro','ID','ku','in','Go'];
+  const nama1 = prefixes[Math.floor(Math.random()*prefixes.length)] + bidang.split(' ')[0].charAt(0).toUpperCase() + bidang.split(' ')[0].slice(1,5);
+  const nama2 = bidang.split(' ')[0].charAt(0).toUpperCase() + bidang.split(' ')[0].slice(1,4) + suffixes[Math.floor(Math.random()*suffixes.length)];
+  const nama3 = prefixes[Math.floor(Math.random()*prefixes.length)] + suffixes[Math.floor(Math.random()*suffixes.length)];
+  setTimeout(() => {
+    result.innerHTML = `
+      <h3>💡 IDE NAMA PRODUK</h3>
+      • <strong>${nama1}</strong> — Platform ${bidang} digital modern<br>
+      • <strong>${nama2}</strong> — Solusi ${bidang} untuk ${target || 'semua kalangan'}<br>
+      • <strong>${nama3}</strong> — Ekosistem ${bidang} terpadu
+      <h3>🎯 SLOGAN</h3>
+      • "${nama1} — Solusi ${bidang} untuk masa depan"<br>
+      • "Bersama ${nama2}, ${bidang} jadi lebih mudah"<br>
+      • "${nama3}: Inovasi lokal, dampak global"
+      <h3>🚀 KONSEP BISNIS</h3>
+      Platform digital berbasis ${bidang} yang menyasar ${target || 'pengguna Indonesia'}, dengan model freemium — fitur dasar gratis, fitur premium berlangganan. Dimulai sebagai PWA untuk menekan biaya pengembangan.
+      <h3>📱 MVP yang Disarankan</h3>
+      Mulai dengan 3 fitur inti saja, launch dalam 2–4 minggu, dapatkan feedback pengguna nyata, lalu kembangkan bertahap. <em>Done is better than perfect.</em> ✅
+    `;
+  }, 1000);
+}
+
+/* AI TRANSLATE */
+function swapLang() {
+  translateMode = translateMode === 'id-en' ? 'en-id' : 'id-en';
+  const from = document.getElementById('lang-from');
+  const to   = document.getElementById('lang-to');
+  const fl   = document.getElementById('translate-from-label');
+  const tl   = document.getElementById('translate-to-label');
+  if (translateMode === 'id-en') {
+    from.textContent = '🇮🇩 Indonesia'; to.textContent = '🇬🇧 English';
+    fl.textContent = 'BAHASA INDONESIA'; tl.textContent = 'ENGLISH';
+  } else {
+    from.textContent = '🇬🇧 English'; to.textContent = '🇮🇩 Indonesia';
+    fl.textContent = 'ENGLISH'; tl.textContent = 'BAHASA INDONESIA';
+  }
+  document.getElementById('translate-input').value = '';
+  document.getElementById('translate-result').classList.remove('show');
+}
+
+function doTranslate() {
+  const text = document.getElementById('translate-input').value.trim();
+  const result = document.getElementById('translate-result');
+  const output = document.getElementById('translate-output');
+  if (!text) { alert('Masukkan teks yang ingin diterjemahkan!'); return; }
+  output.textContent = '⏳ Menerjemahkan...';
+  result.classList.add('show');
+  const dict_id_en = {
+    'halo':'hello','selamat pagi':'good morning','selamat siang':'good afternoon',
+    'selamat malam':'good evening','terima kasih':'thank you','sama sama':'you\'re welcome',
+    'apa kabar':'how are you','baik':'good','buruk':'bad','sekolah':'school',
+    'pendidikan':'education','aplikasi':'application','digital':'digital',
+    'komunitas':'community','warga':'citizen','teknologi':'technology',
+    'inovasi':'innovation','belajar':'learn','mengajar':'teach','siswa':'student',
+    'guru':'teacher','orang tua':'parents','proyek':'project','mulai':'start',
+    'selesai':'finish','bagus':'great','luar biasa':'amazing','semangat':'spirit'
+  };
+  const dict_en_id = Object.fromEntries(Object.entries(dict_id_en).map(([k,v])=>[v,k]));
+  setTimeout(() => {
+    const dict = translateMode === 'id-en' ? dict_id_en : dict_en_id;
+    let translated = text.toLowerCase();
+    Object.entries(dict).forEach(([k,v]) => {
+      translated = translated.replace(new RegExp(k,'gi'), v);
+    });
+    // Capitalize first letter
+    translated = translated.charAt(0).toUpperCase() + translated.slice(1);
+    output.textContent = translated;
+  }, 700);
 }
 
 /* ============================================
@@ -1810,12 +2396,16 @@ function openBlog() {
   showScreen('blog');
 }
 
-/* Bookmark screen */
+/* Screen overrides: bookmark + blog + AI chat */
 const _origShowScreen = showScreen;
 showScreen = function(id, anim) {
   _origShowScreen(id, anim);
   if (id === 'bookmarks') renderBookmarks();
   if (id === 'blog') setTimeout(filterBlog, 50);
+  if (id === 'ai-chat') {
+    const msgs = document.getElementById('chat-messages');
+    if (msgs && msgs.children.length === 0) initChat();
+  }
 };
 
 /* PWA */
