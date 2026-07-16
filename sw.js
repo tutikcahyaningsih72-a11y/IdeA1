@@ -1,23 +1,32 @@
-/* IdeA1 Service Worker — v2.0 */
-
-const CACHE = 'idea1-v2';  /* ← Naik dari v1 ke v2, paksa refresh */
+/* IdeA1 Service Worker — v3.0 (Sprint 5) */
+const CACHE = 'idea1-v3';
 
 self.addEventListener('install', e => {
-  self.skipWaiting(); /* Langsung aktif tanpa tunggu */
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(k => caches.delete(k))) /* Hapus SEMUA cache lama */
+      Promise.all(keys.map(k => caches.delete(k)))
     )
   );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
-  /* Network first — selalu ambil yang terbaru dari server */
+  if (e.request.method !== 'GET') return;
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    fetch(e.request)
+      .then(res => {
+        if (res.ok && e.request.url.includes(self.location.origin)) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      })
+      .catch(() => caches.match(e.request)
+        .then(cached => cached || caches.match('/index.html'))
+      )
   );
 });

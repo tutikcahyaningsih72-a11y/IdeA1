@@ -752,6 +752,199 @@
     }
 
     /* ============================================
+       SPRINT 5 — SETTINGS, ONBOARDING, PWA
+    ============================================ */
+
+    /* ONBOARDING */
+    #onboarding {
+      background: #000;
+      z-index: 99;
+    }
+    .onboard-slides {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+    .onboard-slide {
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px;
+      transition: transform 0.4s ease;
+      text-align: center;
+    }
+    .onboard-emoji {
+      font-size: 80px;
+      margin-bottom: 24px;
+      animation: floatEmoji 3s ease-in-out infinite;
+    }
+    @keyframes floatEmoji {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+    .onboard-title {
+      font-size: 26px; font-weight: 800;
+      letter-spacing: -0.5px; margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .onboard-desc {
+      font-size: 14px; color: var(--w70);
+      line-height: 1.7; max-width: 300px;
+    }
+    .onboard-dots {
+      display: flex; gap: 8px;
+      justify-content: center;
+      padding: 20px 0;
+      flex-shrink: 0;
+    }
+    .onboard-dot {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--w20); transition: all 0.3s;
+    }
+    .onboard-dot.active {
+      width: 24px; background: var(--orange);
+    }
+    .onboard-actions {
+      display: flex; gap: 12px;
+      padding: 0 24px calc(32px + var(--safe-b));
+      flex-shrink: 0;
+    }
+    .onboard-skip {
+      flex: 1; padding: 14px;
+      background: var(--glass); border: 1px solid var(--glass-b);
+      border-radius: var(--r16); color: var(--w70);
+      font-family: var(--font); font-size: 14px; font-weight: 600;
+      cursor: pointer;
+    }
+    .onboard-next {
+      flex: 2; padding: 14px;
+      background: var(--grad); border: none;
+      border-radius: var(--r16); color: white;
+      font-family: var(--font); font-size: 14px; font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* PWA INSTALL BANNER */
+    .pwa-banner {
+      position: fixed;
+      bottom: calc(72px + var(--safe-b) + 8px);
+      left: 12px; right: 12px;
+      background: linear-gradient(135deg, #1a0f2e, #0a1a3a);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: var(--r16);
+      padding: 14px 16px;
+      display: flex; align-items: center; gap: 12px;
+      z-index: 50;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      animation: slideUpBanner 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes slideUpBanner {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .pwa-banner.hidden { display: none; }
+    .pwa-banner-icon {
+      width: 44px; height: 44px; border-radius: 13px;
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .pwa-banner-body { flex: 1; min-width: 0; }
+    .pwa-banner-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .pwa-banner-sub   { font-size: 11px; color: var(--w40); }
+    .pwa-banner-btn {
+      padding: 8px 14px; border-radius: 10px;
+      background: var(--grad); border: none;
+      color: white; font-family: var(--font);
+      font-size: 12px; font-weight: 700;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .pwa-banner-close {
+      background: none; border: none; color: var(--w40);
+      font-size: 18px; cursor: pointer; flex-shrink: 0; padding: 4px;
+    }
+
+    /* SETTINGS SCREEN */
+    .settings-section {
+      margin: 0 20px 20px;
+    }
+    .settings-title {
+      font-size: 11px; font-weight: 700;
+      color: var(--w40); letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 10px;
+      padding-left: 4px;
+    }
+    .settings-group {
+      background: var(--bg2);
+      border: 1px solid var(--glass-b);
+      border-radius: var(--r16);
+      overflow: hidden;
+    }
+    .settings-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 15px 16px; cursor: pointer;
+      border-bottom: 1px solid var(--glass-b);
+      transition: background 0.15s;
+    }
+    .settings-item:last-child { border-bottom: none; }
+    .settings-item:active { background: var(--bg3); }
+    .settings-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .settings-label { flex: 1; }
+    .settings-label-text { font-size: 14px; font-weight: 600; }
+    .settings-label-sub  { font-size: 11px; color: var(--w40); margin-top: 1px; }
+    .settings-arrow { color: var(--w20); font-size: 16px; }
+    .settings-value { font-size: 12px; color: var(--w40); margin-right: 8px; }
+
+    /* Toggle Switch */
+    .toggle-wrap {
+      position: relative; width: 44px; height: 24px; flex-shrink: 0;
+    }
+    .toggle-input {
+      opacity: 0; width: 0; height: 0; position: absolute;
+    }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: var(--bg3); border-radius: 999px;
+      cursor: pointer; transition: background 0.3s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: white; top: 3px; left: 3px;
+      transition: transform 0.3s;
+    }
+    .toggle-input:checked + .toggle-slider { background: var(--orange); }
+    .toggle-input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    /* App Info Card */
+    .app-info-card {
+      margin: 0 20px 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(255,101,0,0.08), rgba(255,184,0,0.04));
+      border: 1px solid rgba(255,101,0,0.15);
+      border-radius: var(--r24);
+      text-align: center;
+    }
+    .app-info-logo { font-size: 40px; margin-bottom: 8px; }
+    .app-info-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .app-info-version { font-size: 12px; color: var(--w40); margin-bottom: 12px; }
+    .app-info-badges {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    }
+    .app-info-badge {
+      padding: 4px 10px; border-radius: 999px;
+      background: var(--glass); border: 1px solid var(--glass-b);
+      font-size: 10px; color: var(--w70); font-weight: 600;
+    }
+
+    /* ============================================
        LOADING SPINNER
     ============================================ */
     .spinner {
@@ -1156,11 +1349,11 @@
         </div>
         <span class="menu-item-arrow">›</span>
       </div>
-      <div class="menu-item">
-        <div class="menu-item-icon" style="background:rgba(99,102,241,0.1);">🔒</div>
+      <div class="menu-item" onclick="showScreen('settings')">
+        <div class="menu-item-icon" style="background:rgba(99,102,241,0.1);">⚙️</div>
         <div class="menu-item-body">
-          <div class="menu-item-title">Ubah Password</div>
-          <div class="menu-item-sub">Perbarui keamanan akun</div>
+          <div class="menu-item-title">Pengaturan</div>
+          <div class="menu-item-sub">Tema, notifikasi, install app</div>
         </div>
         <span class="menu-item-arrow">›</span>
       </div>
@@ -1375,6 +1568,222 @@
       <div class="empty-ico">🔖</div>
       <p>Belum ada artikel yang disimpan.<br>Tap 🔖 di artikel untuk menyimpannya.</p>
     </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     PWA INSTALL BANNER
+========================================== -->
+<div class="pwa-banner hidden" id="pwa-banner">
+  <div class="pwa-banner-icon">📲</div>
+  <div class="pwa-banner-body">
+    <div class="pwa-banner-title">Install IdeA1</div>
+    <div class="pwa-banner-sub">Tambah ke layar utama HP kamu</div>
+  </div>
+  <button class="pwa-banner-btn" onclick="installPWA()">Install</button>
+  <button class="pwa-banner-close" onclick="dismissPWA()">✕</button>
+</div>
+
+
+<!-- ==========================================
+     ONBOARDING SCREEN (Sprint 5)
+========================================== -->
+<div id="onboarding" class="screen">
+  <div class="onboard-slides" id="onboard-slides">
+    <!-- Slide 1 -->
+    <div class="onboard-slide">
+      <div class="onboard-emoji">🚀</div>
+      <div class="onboard-title">Selamat Datang di <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">IdeA1</span></div>
+      <div class="onboard-desc">Pusat ekosistem digital yang menyatukan semua proyek inovatif dalam satu platform.</div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="onboard-slide">
+      <div class="onboard-emoji">✨</div>
+      <div class="onboard-title">AI Assistant Canggih</div>
+      <div class="onboard-desc">Tanya apapun, generate proposal, terjemahkan teks, dan dapatkan ide bisnis dengan AI IdeA1.</div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="onboard-slide">
+      <div class="onboard-emoji">🏘️</div>
+      <div class="onboard-title">Proyek Nyata, Dampak Nyata</div>
+      <div class="onboard-desc">Dari WargaKu untuk komunitas RT/RW, FIDU untuk sekolah, hingga VEDU untuk belajar — semua ada di sini!</div>
+    </div>
+  </div>
+
+  <div class="onboard-dots">
+    <div class="onboard-dot active" id="dot-0"></div>
+    <div class="onboard-dot" id="dot-1"></div>
+    <div class="onboard-dot" id="dot-2"></div>
+  </div>
+
+  <div class="onboard-actions">
+    <button class="onboard-skip" onclick="skipOnboarding()">Lewati</button>
+    <button class="onboard-next" id="onboard-next-btn" onclick="nextSlide()">Selanjutnya →</button>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     SETTINGS SCREEN (Sprint 5)
+========================================== -->
+<div id="settings" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('profile')">←</button>
+      <span class="sub-title">Pengaturan</span>
+    </div>
+  </div>
+
+  <div class="scroll-area" style="padding-top:16px;">
+
+    <!-- App Info -->
+    <div class="app-info-card">
+      <div class="app-info-logo">⚡</div>
+      <div class="app-info-name"><span style="color:white;">Ide</span><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">A1</span></div>
+      <div class="app-info-version">Versi 5.0 · 2026</div>
+      <div class="app-info-badges">
+        <span class="app-info-badge">PWA Ready</span>
+        <span class="app-info-badge">Offline Mode</span>
+        <span class="app-info-badge">Dark Mode</span>
+      </div>
+    </div>
+
+    <!-- Install PWA -->
+    <div class="settings-section">
+      <div class="settings-title">Instalasi</div>
+      <div class="settings-group">
+        <div class="settings-item" onclick="installPWA()">
+          <div class="settings-icon" style="background:linear-gradient(135deg,#7c3aed,#2563eb);">📲</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Install Aplikasi</div>
+            <div class="settings-label-sub">Tambah IdeA1 ke layar utama HP</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifikasi -->
+    <div class="settings-section">
+      <div class="settings-title">Notifikasi</div>
+      <div class="settings-group">
+        <div class="settings-item">
+          <div class="settings-icon" style="background:rgba(255,101,0,0.12);">🔔</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Notifikasi Push</div>
+            <div class="settings-label-sub">Update proyek & artikel baru</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" class="toggle-input" id="notif-toggle" checked onchange="saveSetting('notif', this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="settings-item">
+          <div class="settings-icon" style="background:rgba(34,197,94,0.12);">📧</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Email Newsletter</div>
+            <div class="settings-label-sub">Artikel & tips mingguan</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" class="toggle-input" id="email-toggle" onchange="saveSetting('email', this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tampilan -->
+    <div class="settings-section">
+      <div class="settings-title">Tampilan</div>
+      <div class="settings-group">
+        <div class="settings-item" onclick="toggleTheme()">
+          <div class="settings-icon" style="background:rgba(99,102,241,0.12);">🌙</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Tema</div>
+            <div class="settings-label-sub">Tampilan aplikasi</div>
+          </div>
+          <span class="settings-value" id="theme-value">Dark Mode</span>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item">
+          <div class="settings-icon" style="background:rgba(255,184,0,0.12);">🌐</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Bahasa</div>
+            <div class="settings-label-sub">Language</div>
+          </div>
+          <span class="settings-value">Bahasa Indonesia</span>
+          <span class="settings-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Akun -->
+    <div class="settings-section">
+      <div class="settings-title">Akun</div>
+      <div class="settings-group">
+        <div class="settings-item" onclick="showScreen('profile')">
+          <div class="settings-icon" style="background:rgba(255,101,0,0.12);">👤</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Edit Profil</div>
+            <div class="settings-label-sub">Ubah nama dan info akun</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" onclick="showScreen('forgot')">
+          <div class="settings-icon" style="background:rgba(239,68,68,0.12);">🔒</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Ganti Password</div>
+            <div class="settings-label-sub">Perbarui keamanan akun</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" onclick="clearAppData()">
+          <div class="settings-icon" style="background:rgba(239,68,68,0.12);">🗑️</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Hapus Data Lokal</div>
+            <div class="settings-label-sub">Reset cache & data tersimpan</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tentang -->
+    <div class="settings-section">
+      <div class="settings-title">Tentang</div>
+      <div class="settings-group">
+        <div class="settings-item" onclick="alert('IdeA1 v5.0\nBegin Making Better\n© 2026 IdeA1')">
+          <div class="settings-icon" style="background:rgba(34,197,94,0.12);">ℹ️</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Tentang IdeA1</div>
+            <div class="settings-label-sub">Versi, lisensi, dan kredit</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" onclick="window.open('https://github.com','_blank')">
+          <div class="settings-icon" style="background:rgba(255,255,255,0.08);">🐙</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Source Code</div>
+            <div class="settings-label-sub">Lihat kode di GitHub</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" onclick="rateApp()">
+          <div class="settings-icon" style="background:rgba(255,184,0,0.12);">⭐</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Beri Rating</div>
+            <div class="settings-label-sub">Bantu kami berkembang</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-logout" onclick="doLogout()" style="margin-bottom:24px;">
+      🚪 Keluar dari Akun
+    </button>
+
   </div>
 </div>
 
@@ -2024,6 +2433,211 @@ function doTranslate() {
 }
 
 /* ============================================
+   SPRINT 5 — ONBOARDING, PWA, SETTINGS
+============================================ */
+
+/* --- ONBOARDING --- */
+let currentSlide = 0;
+const totalSlides = 3;
+
+function nextSlide() {
+  if (currentSlide < totalSlides - 1) {
+    currentSlide++;
+    updateSlide();
+  } else {
+    skipOnboarding();
+  }
+}
+
+function updateSlide() {
+  const slides = document.getElementById('onboard-slides');
+  if (slides) {
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    slides.style.transition = 'transform 0.4s ease';
+  }
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (dot) dot.classList.toggle('active', i === currentSlide);
+  }
+  const btn = document.getElementById('onboard-next-btn');
+  if (btn) btn.textContent = currentSlide === totalSlides - 1 ? 'Mulai Sekarang 🚀' : 'Selanjutnya →';
+}
+
+function skipOnboarding() {
+  localStorage.setItem('idea1_onboarded', 'true');
+  const user = auth.getSession();
+  if (user) {
+    updateHomeGreeting(user);
+    showScreen('home', false);
+  } else {
+    showScreen('login', false);
+  }
+}
+
+/* --- PWA INSTALL --- */
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Tampilkan banner setelah 3 detik
+  setTimeout(() => {
+    const dismissed = localStorage.getItem('idea1_pwa_dismissed');
+    const installed = localStorage.getItem('idea1_pwa_installed');
+    if (!dismissed && !installed) showPWABanner();
+  }, 3000);
+});
+
+window.addEventListener('appinstalled', () => {
+  localStorage.setItem('idea1_pwa_installed', 'true');
+  hidePWABanner();
+  deferredPrompt = null;
+});
+
+function showPWABanner() {
+  const banner = document.getElementById('pwa-banner');
+  if (banner) banner.classList.remove('hidden');
+}
+
+function hidePWABanner() {
+  const banner = document.getElementById('pwa-banner');
+  if (banner) banner.classList.add('hidden');
+}
+
+function dismissPWA() {
+  localStorage.setItem('idea1_pwa_dismissed', 'true');
+  hidePWABanner();
+}
+
+async function installPWA() {
+  hidePWABanner();
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      localStorage.setItem('idea1_pwa_installed', 'true');
+      showInstallSuccess();
+    }
+    deferredPrompt = null;
+  } else {
+    // Panduan manual jika prompt tidak tersedia
+    showInstallGuide();
+  }
+}
+
+function showInstallSuccess() {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position:fixed; top:20px; left:50%; transform:translateX(-50%);
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:white; padding:12px 20px; border-radius:999px;
+    font-size:13px; font-weight:700; z-index:999;
+    box-shadow:0 4px 20px rgba(34,197,94,0.4);
+    animation: fadeInDown 0.4s ease;
+  `;
+  toast.textContent = '✅ IdeA1 berhasil diinstall!';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function showInstallGuide() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isAndroid = /Android/.test(navigator.userAgent);
+  let guide = '';
+  if (isIOS) {
+    guide = '📱 Cara install di iPhone/iPad:\n\n1. Tap ikon Share (kotak dengan panah ↑)\n2. Scroll ke bawah\n3. Tap "Add to Home Screen"\n4. Tap "Add"';
+  } else if (isAndroid) {
+    guide = '📱 Cara install di Android:\n\n1. Tap menu ⋮ (titik tiga) di Chrome\n2. Tap "Add to Home Screen"\n3. Tap "Add"';
+  } else {
+    guide = '💻 Cara install di Desktop:\n\n1. Klik ikon install (📥) di address bar\n2. Klik "Install"';
+  }
+  alert(guide);
+}
+
+/* --- SETTINGS --- */
+function saveSetting(key, value) {
+  localStorage.setItem('idea1_setting_' + key, value);
+}
+
+function loadSettings() {
+  const notif = localStorage.getItem('idea1_setting_notif');
+  const email = localStorage.getItem('idea1_setting_email');
+  const notifEl = document.getElementById('notif-toggle');
+  const emailEl = document.getElementById('email-toggle');
+  if (notifEl && notif !== null) notifEl.checked = notif === 'true';
+  if (emailEl && email !== null) emailEl.checked = email === 'true';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('idea1_theme', next);
+  const val = document.getElementById('theme-value');
+  if (val) val.textContent = next === 'dark' ? 'Dark Mode' : 'Light Mode';
+  // Light mode basic
+  if (next === 'light') {
+    document.documentElement.style.setProperty('--bg', '#f5f5f5');
+    document.documentElement.style.setProperty('--bg2', '#ffffff');
+    document.documentElement.style.setProperty('--bg3', '#eeeeee');
+    document.documentElement.style.setProperty('--white', '#111111');
+    document.documentElement.style.setProperty('--w70', 'rgba(0,0,0,0.7)');
+    document.documentElement.style.setProperty('--w40', 'rgba(0,0,0,0.4)');
+    document.documentElement.style.setProperty('--w20', 'rgba(0,0,0,0.2)');
+    document.documentElement.style.setProperty('--glass-b', 'rgba(0,0,0,0.1)');
+  } else {
+    document.documentElement.style.setProperty('--bg', '#080808');
+    document.documentElement.style.setProperty('--bg2', '#111111');
+    document.documentElement.style.setProperty('--bg3', '#1c1c1c');
+    document.documentElement.style.setProperty('--white', '#ffffff');
+    document.documentElement.style.setProperty('--w70', 'rgba(255,255,255,0.70)');
+    document.documentElement.style.setProperty('--w40', 'rgba(255,255,255,0.40)');
+    document.documentElement.style.setProperty('--w20', 'rgba(255,255,255,0.20)');
+    document.documentElement.style.setProperty('--glass-b', 'rgba(255,255,255,0.08)');
+  }
+}
+
+function clearAppData() {
+  if (confirm('Hapus semua data lokal? (bookmark, settings, cache)\nAkun kamu tidak akan terhapus.')) {
+    const session = localStorage.getItem('idea1_session_perm');
+    localStorage.clear();
+    if (session) localStorage.setItem('idea1_session_perm', session);
+    // Reset SW cache
+    if ('serviceWorker' in navigator) {
+      caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+    }
+    showToast('✅ Data lokal berhasil dihapus');
+  }
+}
+
+function rateApp() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'IdeA1 — Begin Making Better',
+      text: 'Coba aplikasi IdeA1 — ekosistem digital keren dari Solo! 🚀',
+      url: window.location.href
+    });
+  } else {
+    alert('Terima kasih sudah menggunakan IdeA1! ⭐⭐⭐⭐⭐');
+  }
+}
+
+/* Toast notification */
+function showToast(msg, color = '#22c55e') {
+  const t = document.createElement('div');
+  t.style.cssText = `
+    position:fixed; top:80px; left:50%; transform:translateX(-50%);
+    background:${color}; color:white; padding:11px 20px;
+    border-radius:999px; font-size:13px; font-weight:700;
+    z-index:999; white-space:nowrap;
+    box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  `;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+/* ============================================
    BLOG DATA (Sprint 3)
 ============================================ */
 const ARTICLES = [
@@ -2381,8 +2995,15 @@ function shareBlog() {
 ============================================ */
 setTimeout(() => {
   document.getElementById('splash').classList.remove('active');
+  loadSettings();
+
+  const onboarded = localStorage.getItem('idea1_onboarded');
   const user = auth.getSession();
-  if (user) {
+
+  if (!onboarded) {
+    /* Pengguna baru → tampilkan onboarding */
+    showScreen('onboarding', false);
+  } else if (user) {
     updateHomeGreeting(user);
     showScreen('home', false);
   } else {
@@ -2396,12 +3017,13 @@ function openBlog() {
   showScreen('blog');
 }
 
-/* Screen overrides: bookmark + blog + AI chat */
+/* Screen overrides: bookmark + blog + AI chat + settings */
 const _origShowScreen = showScreen;
 showScreen = function(id, anim) {
   _origShowScreen(id, anim);
   if (id === 'bookmarks') renderBookmarks();
   if (id === 'blog') setTimeout(filterBlog, 50);
+  if (id === 'settings') loadSettings();
   if (id === 'ai-chat') {
     const msgs = document.getElementById('chat-messages');
     if (msgs && msgs.children.length === 0) initChat();
