@@ -1190,7 +1190,14 @@
 
     <div class="proj-grid">
       <div class="proj-card c-wargaku" onclick="showDetail('wargaku')">
-        <div class="proj-icon" style="background:rgba(239,68,68,0.12);">🏘️</div>
+        <div class="proj-icon" style="background:rgba(239,68,68,0.12);padding:0;overflow:hidden;">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:52px;height:52px;">
+            <rect width="52" height="52" rx="16" fill="rgba(239,68,68,0.15)"/>
+            <path d="M26 12L12 23h3v15h8v-9h6v9h8V23h3L26 12z" fill="#ef4444"/>
+            <circle cx="26" cy="20" r="3" fill="white" opacity="0.9"/>
+            <rect x="20" y="30" width="12" height="8" rx="2" fill="#ef4444" opacity="0.5"/>
+          </svg>
+        </div>
         <div class="proj-body">
           <div class="proj-name">WargaKu</div>
           <div class="proj-desc">Aplikasi manajemen RT/RW digital untuk warga Kartasura, Solo.</div>
@@ -1201,7 +1208,18 @@
         </div>
       </div>
       <div class="proj-card c-fidu" onclick="showDetail('fidu')">
-        <div class="proj-icon" style="background:rgba(34,197,94,0.10);">🏫</div>
+        <div class="proj-icon" style="background:rgba(34,197,94,0.10);padding:0;overflow:hidden;">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:52px;height:52px;">
+            <rect width="52" height="52" rx="16" fill="rgba(34,197,94,0.12)"/>
+            <rect x="10" y="24" width="24" height="18" rx="2" fill="#22c55e" opacity="0.8"/>
+            <path d="M10 24l12-12 12 12" fill="#22c55e"/>
+            <rect x="14" y="28" width="6" height="6" rx="1" fill="white" opacity="0.9"/>
+            <rect x="22" y="28" width="6" height="6" rx="1" fill="white" opacity="0.9"/>
+            <rect x="18" y="36" width="6" height="6" rx="1" fill="white" opacity="0.9"/>
+            <circle cx="36" cy="36" r="7" fill="#16a34a"/>
+            <path d="M32 36l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <div class="proj-body">
           <div class="proj-name">FIDU</div>
           <div class="proj-desc">Temukan sekolah TK & PAUD terbaik di Kota Solo.</div>
@@ -1209,7 +1227,16 @@
         </div>
       </div>
       <div class="proj-card c-school" onclick="showDetail('schoolid')">
-        <div class="proj-icon" style="background:rgba(99,102,241,0.10);">🎓</div>
+        <div class="proj-icon" style="background:rgba(99,102,241,0.10);padding:0;overflow:hidden;">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:52px;height:52px;">
+            <rect width="52" height="52" rx="16" fill="rgba(99,102,241,0.12)"/>
+            <path d="M26 12l-16 8 16 8 16-8-16-8z" fill="#818cf8"/>
+            <path d="M14 24v10c0 0 4 6 12 6s12-6 12-6V24" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <circle cx="26" cy="20" r="4" fill="white" opacity="0.9"/>
+            <rect x="38" y="20" width="3" height="12" rx="1.5" fill="#818cf8" opacity="0.7"/>
+            <circle cx="39.5" cy="34" r="2.5" fill="#818cf8"/>
+          </svg>
+        </div>
         <div class="proj-body">
           <div class="proj-name">SchoolID</div>
           <div class="proj-desc">Asisten digital manajemen sekolah modern Indonesia.</div>
@@ -1217,7 +1244,16 @@
         </div>
       </div>
       <div class="proj-card c-vedu" onclick="showDetail('vedu')">
-        <div class="proj-icon" style="background:rgba(59,130,246,0.10);">📚</div>
+        <div class="proj-icon" style="background:rgba(59,130,246,0.10);padding:0;overflow:hidden;">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:52px;height:52px;">
+            <rect width="52" height="52" rx="16" fill="rgba(59,130,246,0.12)"/>
+            <rect x="10" y="14" width="28" height="20" rx="3" fill="#3b82f6" opacity="0.8"/>
+            <polygon points="22,19 22,29 32,24" fill="white"/>
+            <rect x="10" y="36" width="32" height="3" rx="1.5" fill="#3b82f6" opacity="0.5"/>
+            <rect x="14" y="41" width="8" height="2" rx="1" fill="#3b82f6" opacity="0.4"/>
+            <rect x="24" y="41" width="14" height="2" rx="1" fill="#3b82f6" opacity="0.4"/>
+          </svg>
+        </div>
         <div class="proj-body">
           <div class="proj-name">VEDU</div>
           <div class="proj-desc">Platform pembelajaran digital dengan AI Tutor & sertifikat.</div>
@@ -1649,6 +1685,17 @@
       </div>
     </div>
 
+        <div class="settings-item" onclick="showScreen('admin-blog')">
+          <div class="settings-icon" style="background:rgba(255,184,0,0.12);">✏️</div>
+          <div class="settings-label">
+            <div class="settings-label-text">Kelola Artikel Blog</div>
+            <div class="settings-label-sub">Tambah, edit, atau hapus artikel</div>
+          </div>
+          <span class="settings-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Install PWA -->
     <div class="settings-section">
       <div class="settings-title">Instalasi</div>
@@ -1784,6 +1831,75 @@
       🚪 Keluar dari Akun
     </button>
 
+  </div>
+</div>
+
+
+<!-- ==========================================
+     ADMIN BLOG SCREEN (Fix 2)
+========================================== -->
+<div id="admin-blog" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('settings')">←</button>
+      <span class="sub-title">Kelola Artikel</span>
+    </div>
+    <button class="icon-btn" onclick="showScreen('admin-add-article')" title="Tambah">➕</button>
+  </div>
+  <div class="scroll-area" style="padding:16px 20px 0;">
+    <div style="background:linear-gradient(135deg,rgba(255,184,0,0.1),rgba(255,101,0,0.05));border:1px solid rgba(255,184,0,0.2);border-radius:var(--r16);padding:14px;margin-bottom:16px;">
+      <div style="font-size:12px;color:#fbbf24;line-height:1.6;">✏️ Artikel default tidak bisa dihapus. Artikel yang kamu tambahkan bisa diedit atau dihapus kapan saja.</div>
+    </div>
+    <div id="admin-article-list"></div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     ADMIN ADD ARTICLE SCREEN (Fix 2)
+========================================== -->
+<div id="admin-add-article" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('admin-blog')">←</button>
+      <span class="sub-title" id="admin-form-title">Tambah Artikel</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:20px;">
+    <input type="hidden" id="edit-article-id">
+
+    <div class="input-group">
+      <label class="input-label">Judul Artikel</label>
+      <input id="art-title" class="input-field" type="text" placeholder="Judul yang menarik...">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Ringkasan (Excerpt)</label>
+      <input id="art-excerpt" class="input-field" type="text" placeholder="Deskripsi singkat artikel...">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Kategori</label>
+      <select id="art-category" class="input-field" style="-webkit-appearance:none;">
+        <option value="teknologi">🤖 Teknologi</option>
+        <option value="bisnis">💼 Bisnis</option>
+        <option value="edukasi">📚 Edukasi</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label class="input-label">Emoji / Ikon</label>
+      <input id="art-emoji" class="input-field" type="text" placeholder="Contoh: 🚀 atau 💡" maxlength="4">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Isi Artikel</label>
+      <textarea id="art-content" class="input-field" rows="8"
+        style="min-height:180px;resize:none;line-height:1.6;"
+        placeholder="Tulis isi artikel kamu di sini...&#10;&#10;Kamu bisa gunakan baris baru untuk paragraf baru."></textarea>
+    </div>
+    <div class="input-group">
+      <label class="input-label">Estimasi Baca</label>
+      <input id="art-read" class="input-field" type="text" placeholder="Contoh: 3 mnt baca" value="3 mnt baca">
+    </div>
+
+    <button class="btn-primary" onclick="saveArticle()">💾 Simpan Artikel</button>
   </div>
 </div>
 
@@ -2006,22 +2122,22 @@ const auth = {
   saveUsers(users) {
     localStorage.setItem('idea1_users', JSON.stringify(users));
   },
-  getSession() {
-    const key = localStorage.getItem('idea1_remember') === 'true'
-      ? 'idea1_session_perm' : 'idea1_session';
-    return JSON.parse(localStorage.getItem('idea1_session_perm') || localStorage.getItem('idea1_session') || 'null');
-  },
-  saveSession(user, remember) {
-    const data = JSON.stringify(user);
-    sessionStorage.setItem('idea1_session', data);
-    if (remember) localStorage.setItem('idea1_session_perm', data);
-    localStorage.setItem('idea1_remember', remember ? 'true' : 'false');
-  },
-  clearSession() {
-    sessionStorage.removeItem('idea1_session');
-    localStorage.removeItem('idea1_session_perm');
-    localStorage.removeItem('idea1_remember');
-  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   login(email, pass, remember) {
     const users = this.getUsers();
     const user = users.find(u => u.email === email.trim().toLowerCase());
@@ -2430,6 +2546,144 @@ function doTranslate() {
     translated = translated.charAt(0).toUpperCase() + translated.slice(1);
     output.textContent = translated;
   }, 700);
+}
+
+/* ============================================
+   ADMIN BLOG (Fix 2)
+============================================ */
+function getCustomArticles() {
+  return JSON.parse(localStorage.getItem('idea1_custom_articles') || '[]');
+}
+function saveCustomArticles(arr) {
+  localStorage.setItem('idea1_custom_articles', JSON.stringify(arr));
+}
+function getAllArticles() {
+  const custom = getCustomArticles().map(a => ({...a, isCustom: true}));
+  return [...custom, ...ARTICLES];
+}
+
+function renderAdminList() {
+  const list = document.getElementById('admin-article-list');
+  if (!list) return;
+  const custom = getCustomArticles();
+  list.innerHTML = '';
+
+  if (custom.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-ico">📝</div><p>Belum ada artikel yang kamu tambahkan.<br>Tap ➕ untuk tambah artikel baru.</p></div>`;
+  } else {
+    custom.forEach((art, idx) => {
+      const card = document.createElement('div');
+      card.className = 'proj-card';
+      card.style.marginBottom = '12px';
+      card.innerHTML = `
+        <div style="font-size:28px;flex-shrink:0;">${art.emoji || '📝'}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="proj-name" style="font-size:14px;">${art.title}</div>
+          <div class="proj-desc">${art.excerpt}</div>
+          <span class="blog-cat-badge ${art.category}" style="margin-top:6px;display:inline-block;">${art.category}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
+          <button onclick="editArticle(${idx})" style="padding:6px 12px;background:rgba(255,184,0,0.15);border:1px solid rgba(255,184,0,0.3);border-radius:8px;color:#fbbf24;font-size:11px;font-weight:700;cursor:pointer;">Edit</button>
+          <button onclick="deleteArticle(${idx})" style="padding:6px 12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#fca5a5;font-size:11px;font-weight:700;cursor:pointer;">Hapus</button>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  // Artikel default (read-only)
+  const defTitle = document.createElement('div');
+  defTitle.className = 'settings-title';
+  defTitle.style.marginTop = '20px';
+  defTitle.textContent = 'ARTIKEL DEFAULT (tidak bisa dihapus)';
+  list.appendChild(defTitle);
+
+  ARTICLES.forEach(art => {
+    const card = document.createElement('div');
+    card.className = 'proj-card';
+    card.style.marginBottom = '8px';
+    card.style.opacity = '0.6';
+    card.innerHTML = `
+      <div style="font-size:24px;flex-shrink:0;">${art.emoji}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="proj-name" style="font-size:13px;">${art.title}</div>
+        <span class="blog-cat-badge ${art.category}" style="margin-top:4px;display:inline-block;">${art.category}</span>
+      </div>
+      <span style="font-size:10px;color:var(--w20);padding:4px 8px;background:var(--glass);border-radius:8px;">Default</span>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function saveArticle() {
+  const id    = document.getElementById('edit-article-id').value;
+  const title   = document.getElementById('art-title').value.trim();
+  const excerpt = document.getElementById('art-excerpt').value.trim();
+  const cat     = document.getElementById('art-category').value;
+  const emoji   = document.getElementById('art-emoji').value.trim() || '📝';
+  const content = document.getElementById('art-content').value.trim();
+  const read    = document.getElementById('art-read').value.trim() || '3 mnt baca';
+
+  if (!title || !content) { alert('Judul dan isi artikel wajib diisi!'); return; }
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+  const bgMap = { teknologi:'linear-gradient(135deg,#1a0a2e,#0d1a3a)', bisnis:'linear-gradient(135deg,#1a0f00,#2a1500)', edukasi:'linear-gradient(135deg,#001a0a,#0a2a1a)' };
+
+  const article = {
+    id: id ? parseInt(id) : Date.now(),
+    title, excerpt, category: cat, emoji,
+    bg: bgMap[cat] || bgMap.teknologi,
+    date: dateStr, read,
+    content: content.split('\n').map(p => p.trim()).filter(Boolean).map(p => `<p>${p}</p>`).join('')
+  };
+
+  const customs = getCustomArticles();
+  if (id) {
+    const idx = customs.findIndex(a => a.id == parseInt(id));
+    if (idx > -1) customs[idx] = article;
+  } else {
+    customs.unshift(article);
+  }
+  saveCustomArticles(customs);
+  showToast('✅ Artikel berhasil disimpan!');
+  clearArticleForm();
+  showScreen('admin-blog');
+}
+
+function editArticle(idx) {
+  const customs = getCustomArticles();
+  const art = customs[idx];
+  if (!art) return;
+  document.getElementById('edit-article-id').value = art.id;
+  document.getElementById('art-title').value   = art.title;
+  document.getElementById('art-excerpt').value = art.excerpt;
+  document.getElementById('art-category').value = art.category;
+  document.getElementById('art-emoji').value   = art.emoji || '📝';
+  document.getElementById('art-content').value = art.content.replace(/<p>/g,'').replace(/<\/p>/g,'\n').trim();
+  document.getElementById('art-read').value    = art.read;
+  document.getElementById('admin-form-title').textContent = 'Edit Artikel';
+  showScreen('admin-add-article');
+}
+
+function deleteArticle(idx) {
+  if (!confirm('Hapus artikel ini?')) return;
+  const customs = getCustomArticles();
+  customs.splice(idx, 1);
+  saveCustomArticles(customs);
+  showToast('🗑️ Artikel dihapus');
+  renderAdminList();
+}
+
+function clearArticleForm() {
+  ['edit-article-id','art-title','art-excerpt','art-emoji','art-content'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const readEl = document.getElementById('art-read');
+  if (readEl) readEl.value = '3 mnt baca';
+  const titleEl = document.getElementById('admin-form-title');
+  if (titleEl) titleEl.textContent = 'Tambah Artikel';
 }
 
 /* ============================================
@@ -2927,7 +3181,7 @@ function setCategory(cat, el) {
 
 function filterBlog() {
   const q = (document.getElementById('blog-search-input')?.value || '').toLowerCase();
-  let filtered = ARTICLES;
+  let filtered = getAllArticles();
   if (currentCategory !== 'semua') {
     filtered = filtered.filter(a => a.category === currentCategory);
   }
@@ -3017,13 +3271,18 @@ function openBlog() {
   showScreen('blog');
 }
 
-/* Screen overrides: bookmark + blog + AI chat + settings */
+/* Screen overrides: bookmark + blog + AI chat + settings + admin */
 const _origShowScreen = showScreen;
 showScreen = function(id, anim) {
   _origShowScreen(id, anim);
   if (id === 'bookmarks') renderBookmarks();
   if (id === 'blog') setTimeout(filterBlog, 50);
   if (id === 'settings') loadSettings();
+  if (id === 'admin-blog') renderAdminList();
+  if (id === 'admin-add-article') {
+    const artId = document.getElementById('edit-article-id')?.value;
+    if (!artId) clearArticleForm();
+  }
   if (id === 'ai-chat') {
     const msgs = document.getElementById('chat-messages');
     if (msgs && msgs.children.length === 0) initChat();
