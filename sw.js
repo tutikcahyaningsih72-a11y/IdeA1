@@ -1,5 +1,7 @@
-/* IdeA1 Service Worker — v3.0 (Sprint 5) */
-const CACHE = 'idea1-v3';
+/* IdeA1 Service Worker — v4.0 */
+/* v4: Force clear semua cache lama */
+
+const CACHE = 'idea1-v4';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
@@ -7,24 +9,24 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(k => caches.delete(k)))
-    )
+    caches.keys().then(keys => {
+      console.log('[SW] Clearing caches:', keys);
+      return Promise.all(keys.map(k => {
+        console.log('[SW] Deleting cache:', k);
+        return caches.delete(k);
+      }));
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
+/* Network first - selalu ambil versi terbaru */
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  if (e.request.url.includes('supabase') || e.request.url.includes('firebase')) return;
+
   e.respondWith(
     fetch(e.request)
-      .then(res => {
-        if (res.ok && e.request.url.includes(self.location.origin)) {
-          const clone = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-        }
-        return res;
-      })
+      .then(res => res)
       .catch(() => caches.match(e.request)
         .then(cached => cached || caches.match('/index.html'))
       )

@@ -2179,6 +2179,16 @@
 ========================================== -->
 <script>
 /* ============================================
+   INIT: Sembunyikan semua screen kecuali splash
+============================================ */
+(function() {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    if (s.id !== 'splash') s.classList.remove('active');
+  });
+  document.getElementById('splash')?.classList.add('active');
+})();
+
+/* ============================================
    AUTH SYSTEM (localStorage)
 ============================================ */
 const auth = {
@@ -3359,21 +3369,38 @@ function shareBlog() {
    APP INIT
 ============================================ */
 setTimeout(() => {
-  document.getElementById('splash').classList.remove('active');
+  /* Sembunyikan splash */
+  document.querySelectorAll('.screen.active').forEach(s => s.classList.remove('active'));
 
-  const onboarded = localStorage.getItem('idea1_onboarded');
-  const user = auth.getSession();
+  try {
+    const onboarded = localStorage.getItem('idea1_onboarded');
+    const user = auth.getSession();
 
-  if (!onboarded) {
-    /* Pengguna baru → tampilkan onboarding */
-    showScreen('onboarding', false);
-  } else if (user) {
-    updateHomeGreeting(user);
-    showScreen('home', false);
-  } else {
+    if (!onboarded) {
+      showScreen('onboarding', false);
+    } else if (user) {
+      updateHomeGreeting(user);
+      showScreen('home', false);
+    } else {
+      showScreen('login', false);
+    }
+  } catch(e) {
+    /* Fallback ke login jika ada error */
     showScreen('login', false);
   }
 }, 2700);
+
+/* Reset ke home/login saat app kembali dari background */
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    const active = document.querySelector('.screen.active');
+    if (!active) {
+      const user = auth.getSession();
+      if (user) { updateHomeGreeting(user); showScreen('home', false); }
+      else showScreen('login', false);
+    }
+  }
+});
 
 /* Blog navigation */
 function openBlog() {
