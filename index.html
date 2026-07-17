@@ -2248,13 +2248,37 @@ const auth = {
 let prevScreen = 'home';
 
 function showScreen(id, anim = true) {
-  const current = document.querySelector('.screen.active');
-  if (current) { prevScreen = current.id; current.classList.remove('active'); }
+  /* Pastikan hanya 1 screen yang active */
+  document.querySelectorAll('.screen.active').forEach(s => {
+    s.classList.remove('active', 'slide-in');
+  });
   const next = document.getElementById(id);
-  if (next) {
-    next.classList.add('active');
-    if (anim) next.classList.add('slide-in');
+  if (!next) return;
+  if (typeof prevScreen === 'undefined') prevScreen = 'home';
+  prevScreen = document.querySelector('.screen.active')?.id || prevScreen;
+  next.classList.add('active');
+  if (anim) {
+    next.classList.add('slide-in');
     setTimeout(() => next.classList.remove('slide-in'), 400);
+  }
+  /* Side effects per screen */
+  if (id === 'blog')              setTimeout(filterBlog, 50);
+  if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
+  if (id === 'settings')          setTimeout(loadSettings, 50);
+  if (id === 'admin-blog')        setTimeout(renderAdminList, 50);
+  if (id === 'admin-add-article') {
+    const artId = document.getElementById('edit-article-id')?.value;
+    if (!artId) setTimeout(clearArticleForm, 50);
+  }
+  if (id === 'ai-chat') {
+    setTimeout(() => {
+      const msgs = document.getElementById('chat-messages');
+      if (msgs && msgs.children.length === 0) initChat();
+    }, 100);
+  }
+  if (id === 'profile') {
+    const user = auth.getSession();
+    if (user) setTimeout(() => updateProfileUI(user), 50);
   }
 }
 
@@ -2267,7 +2291,7 @@ function setNav(el, screenId) {
 
 function goToProfile() {
   const user = auth.getSession();
-  if (user) { updateProfileUI(user); showScreen('profile'); }
+  if (user) showScreen('profile');
   else showScreen('login');
 }
 
@@ -3336,7 +3360,6 @@ function shareBlog() {
 ============================================ */
 setTimeout(() => {
   document.getElementById('splash').classList.remove('active');
-  loadSettings();
 
   const onboarded = localStorage.getItem('idea1_onboarded');
   const user = auth.getSession();
@@ -3358,23 +3381,7 @@ function openBlog() {
   showScreen('blog');
 }
 
-/* Screen overrides: bookmark + blog + AI chat + settings + admin */
-const _origShowScreen = showScreen;
-showScreen = function(id, anim) {
-  _origShowScreen(id, anim);
-  if (id === 'bookmarks') renderBookmarks();
-  if (id === 'blog') setTimeout(filterBlog, 50);
-  if (id === 'settings') loadSettings();
-  if (id === 'admin-blog') renderAdminList();
-  if (id === 'admin-add-article') {
-    const artId = document.getElementById('edit-article-id')?.value;
-    if (!artId) clearArticleForm();
-  }
-  if (id === 'ai-chat') {
-    const msgs = document.getElementById('chat-messages');
-    if (msgs && msgs.children.length === 0) initChat();
-  }
-};
+/* showScreen overrides sudah digabung ke fungsi utama */
 
 /* PWA */
 if ('serviceWorker' in navigator) {
