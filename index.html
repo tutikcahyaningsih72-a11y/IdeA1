@@ -905,6 +905,7 @@
     /* Toggle Switch */
     .toggle-wrap {
       position: relative; width: 44px; height: 24px; flex-shrink: 0;
+      display: inline-block;
     }
     .toggle-input {
       opacity: 0; width: 0; height: 0; position: absolute;
@@ -913,6 +914,7 @@
       position: absolute; inset: 0;
       background: var(--bg3); border-radius: 999px;
       cursor: pointer; transition: background 0.3s;
+      display: block;
     }
     .toggle-slider::before {
       content: ''; position: absolute;
@@ -922,6 +924,8 @@
     }
     .toggle-input:checked + .toggle-slider { background: var(--orange); }
     .toggle-input:checked + .toggle-slider::before { transform: translateX(20px); }
+    /* Sembunyikan toggle dari screen yang tidak aktif */
+    .screen:not(.active) .toggle-wrap { display: none !important; }
 
     /* App Info Card */
     .app-info-card {
@@ -2317,24 +2321,30 @@ function doLogin() {
   const email    = document.getElementById('login-email').value;
   const pass     = document.getElementById('login-pass').value;
   const remember = document.getElementById('remember-me').checked;
-  const alert    = document.getElementById('login-alert');
+  const loginAlert = document.getElementById('login-alert');
   const btn      = document.getElementById('btn-login');
 
-  if (!email || !pass) { showAlert(alert,'error','Lengkapi email dan password'); return; }
+  if (!email || !pass) { showAlert(loginAlert,'error','Lengkapi email dan password'); return; }
 
   btn.innerHTML = '<span class="spinner"></span>';
   btn.disabled = true;
 
   setTimeout(() => {
-    const res = auth.login(email, pass, remember);
-    btn.innerHTML = 'Masuk';
-    btn.disabled = false;
-    if (res.ok) {
-      alert.classList.remove('show');
-      updateHomeGreeting(res.user);
-      showScreen('home', false);
-    } else {
-      showAlert(alert, 'error', res.msg);
+    try {
+      const res = auth.login(email, pass, remember);
+      btn.innerHTML = 'Masuk';
+      btn.disabled = false;
+      if (res.ok) {
+        loginAlert.classList.remove('show');
+        updateHomeGreeting(res.user);
+        showScreen('home', false);
+      } else {
+        showAlert(loginAlert, 'error', res.msg);
+      }
+    } catch(e) {
+      btn.innerHTML = 'Masuk';
+      btn.disabled = false;
+      showAlert(loginAlert, 'error', 'Terjadi kesalahan, coba lagi.');
     }
   }, 800);
 }
@@ -2345,7 +2355,7 @@ function doRegister() {
   const pass  = document.getElementById('reg-pass').value;
   const pass2 = document.getElementById('reg-pass2').value;
   const agree = document.getElementById('agree-terms').checked;
-  const alert = document.getElementById('register-alert');
+  const alertEl = document.getElementById('register-alert');
   const btn   = document.getElementById('btn-register');
 
   // Validasi
@@ -2361,14 +2371,20 @@ function doRegister() {
   btn.disabled = true;
 
   setTimeout(() => {
-    const res = auth.register(name, email, pass);
-    btn.innerHTML = 'Daftar';
-    btn.disabled = false;
-    if (res.ok) {
-      updateHomeGreeting(res.user);
-      showScreen('home', false);
-    } else {
-      showAlert(alert, 'error', res.msg);
+    try {
+      const res = auth.register(name, email, pass);
+      btn.innerHTML = 'Daftar';
+      btn.disabled = false;
+      if (res.ok) {
+        updateHomeGreeting(res.user);
+        showScreen('home', false);
+      } else {
+        showAlert(alertEl, 'error', res.msg);
+      }
+    } catch(e) {
+      btn.innerHTML = 'Daftar';
+      btn.disabled = false;
+      showAlert(alertEl, 'error', 'Terjadi kesalahan, coba lagi.');
     }
   }, 900);
 }
