@@ -2209,22 +2209,24 @@ const auth = {
   saveUsers(users) {
     localStorage.setItem('idea1_users', JSON.stringify(users));
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  getSession() {
+    return JSON.parse(
+      localStorage.getItem('idea1_session_perm') ||
+      localStorage.getItem('idea1_session') ||
+      'null'
+    );
+  },
+  saveSession(user, remember) {
+    const data = JSON.stringify(user);
+    localStorage.setItem('idea1_session', data);
+    localStorage.setItem('idea1_remember', remember ? 'true' : 'false');
+    if (remember) localStorage.setItem('idea1_session_perm', data);
+  },
+  clearSession() {
+    localStorage.removeItem('idea1_session');
+    localStorage.removeItem('idea1_session_perm');
+    localStorage.removeItem('idea1_remember');
+  },
   login(email, pass, remember) {
     const users = this.getUsers();
     const user = users.find(u => u.email === email.trim().toLowerCase());
