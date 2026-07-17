@@ -907,29 +907,27 @@
     .settings-arrow { color: var(--w20); font-size: 16px; }
     .settings-value { font-size: 12px; color: var(--w40); margin-right: 8px; }
 
-    /* Toggle Switch */
-    .toggle-wrap {
-      position: relative; width: 44px; height: 24px; flex-shrink: 0;
-      display: inline-block;
+    /* Toggle Switch — Pure DIV, no native checkbox */
+    .toggle-div {
+      position: relative;
+      width: 44px; height: 24px;
+      border-radius: 999px;
+      background: var(--bg3);
+      cursor: pointer;
+      transition: background 0.3s;
+      flex-shrink: 0;
     }
-    .toggle-input {
-      opacity: 0; width: 0; height: 0; position: absolute;
-    }
-    .toggle-slider {
-      position: absolute; inset: 0;
-      background: var(--bg3); border-radius: 999px;
-      cursor: pointer; transition: background 0.3s;
-      display: block;
-    }
-    .toggle-slider::before {
-      content: ''; position: absolute;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: white; top: 3px; left: 3px;
+    .toggle-div.on { background: var(--orange); }
+    .toggle-knob {
+      position: absolute;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: white;
+      top: 3px; left: 3px;
       transition: transform 0.3s;
+      pointer-events: none;
     }
-    .toggle-input:checked + .toggle-slider { background: var(--orange); }
-    .toggle-input:checked + .toggle-slider::before { transform: translateX(20px); }
-    /* Toggle hanya terlihat di screen aktif — ditangani visibility di .screen */
+    .toggle-div.on .toggle-knob { transform: translateX(20px); }
 
     /* App Info Card */
     .app-info-card {
@@ -1795,10 +1793,9 @@
             <div class="settings-label-text">Notifikasi Push</div>
             <div class="settings-label-sub">Update proyek & artikel baru</div>
           </div>
-          <label class="toggle-wrap">
-            <input type="checkbox" class="toggle-input" id="notif-toggle" checked onchange="saveSetting('notif', this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
+          <div class="toggle-div on" id="notif-toggle" onclick="toggleSwitch(this,'notif')">
+            <div class="toggle-knob"></div>
+          </div>
         </div>
         <div class="settings-item">
           <div class="settings-icon" style="background:rgba(34,197,94,0.12);">📧</div>
@@ -1806,10 +1803,9 @@
             <div class="settings-label-text">Email Newsletter</div>
             <div class="settings-label-sub">Artikel & tips mingguan</div>
           </div>
-          <label class="toggle-wrap">
-            <input type="checkbox" class="toggle-input" id="email-toggle" onchange="saveSetting('email', this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
+          <div class="toggle-div" id="email-toggle" onclick="toggleSwitch(this,'email')">
+            <div class="toggle-knob"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -2956,13 +2952,21 @@ function saveSetting(key, value) {
   localStorage.setItem('idea1_setting_' + key, value);
 }
 
+function toggleSwitch(el, key) {
+  const isOn = el.classList.toggle('on');
+  saveSetting(key, isOn);
+}
+
 function loadSettings() {
   const notif = localStorage.getItem('idea1_setting_notif');
   const email = localStorage.getItem('idea1_setting_email');
   const notifEl = document.getElementById('notif-toggle');
   const emailEl = document.getElementById('email-toggle');
-  if (notifEl && notif !== null) notifEl.checked = notif === 'true';
-  if (emailEl && email !== null) emailEl.checked = email === 'true';
+  /* Default notif = ON, email = OFF */
+  const notifOn = notif === null ? true : notif === 'true';
+  const emailOn = email === 'true';
+  if (notifEl) notifEl.classList.toggle('on', notifOn);
+  if (emailEl) emailEl.classList.toggle('on', emailOn);
 }
 
 function toggleTheme() {
