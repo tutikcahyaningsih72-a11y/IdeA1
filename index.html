@@ -1302,7 +1302,13 @@
   </div>
   <div class="scroll-area" style="padding:20px 20px 0;">
     <div class="proj-card c-wargaku" style="margin-bottom:12px;" onclick="showDetail('wargaku')">
-      <div class="proj-icon" style="background:rgba(239,68,68,0.12);">🏘️</div>
+      <div class="proj-icon" style="background:rgba(239,68,68,0.12);padding:4px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <path d="M26 10L8 24h4.5v18h9v-10h9v10h9V24H44L26 10z" fill="#ef4444"/>
+  <circle cx="26" cy="18" r="4" fill="white" opacity="0.95"/>
+  <rect x="18" y="31" width="16" height="11" rx="2" fill="rgba(239,68,68,0.4)"/>
+  <rect x="21" y="33" width="4" height="5" rx="1" fill="white" opacity="0.8"/>
+  <rect x="27" y="33" width="4" height="5" rx="1" fill="white" opacity="0.8"/>
+</svg></div>
       <div class="proj-body">
         <div class="proj-name">WargaKu</div>
         <div class="proj-desc">Kelola RT/RW digital. Firebase Auth & Firestore, citizen dashboard, admin panel, iuran, arsip digital.</div>
@@ -1311,7 +1317,16 @@
       </div>
     </div>
     <div class="proj-card c-fidu" style="margin-bottom:12px;" onclick="showDetail('fidu')">
-      <div class="proj-icon" style="background:rgba(34,197,94,0.10);">🏫</div>
+      <div class="proj-icon" style="background:rgba(34,197,94,0.10);padding:4px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <rect x="8" y="22" width="26" height="22" rx="2" fill="#22c55e" opacity="0.85"/>
+  <path d="M8 22L21 10L34 22" fill="#16a34a"/>
+  <rect x="12" y="27" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+  <rect x="22" y="27" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+  <rect x="17" y="37" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+  <circle cx="39" cy="37" r="8" fill="#16a34a" stroke="white" stroke-width="1.5"/>
+  <circle cx="37" cy="35" r="3.5" fill="none" stroke="white" stroke-width="1.8"/>
+  <line x1="39.5" y1="37.5" x2="43" y2="41" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+</svg></div>
       <div class="proj-body">
         <div class="proj-name">FIDU — Find Education</div>
         <div class="proj-desc">Platform pencarian sekolah TK & PAUD di Solo. Koneksi orang tua dengan sekolah terpercaya.</div>
@@ -1320,7 +1335,13 @@
       </div>
     </div>
     <div class="proj-card c-school" style="margin-bottom:12px;" onclick="showDetail('schoolid')">
-      <div class="proj-icon" style="background:rgba(99,102,241,0.10);">🎓</div>
+      <div class="proj-icon" style="background:rgba(99,102,241,0.10);padding:4px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <path d="M26 10L10 18.5L26 27L42 18.5L26 10z" fill="#6366f1"/>
+  <path d="M14 22v11c0 3 5.5 9 12 9s12-6 12-9V22" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <circle cx="26" cy="18.5" r="5" fill="white" opacity="0.95"/>
+  <rect x="39" y="18" width="4" height="14" rx="2" fill="#6366f1" opacity="0.8"/>
+  <circle cx="41" cy="35" r="3" fill="#6366f1"/>
+</svg></div>
       <div class="proj-body">
         <div class="proj-name">SchoolID</div>
         <div class="proj-desc">Asisten digital sekolah Indonesia. Dashboard guru, siswa, orang tua, absensi, laporan harian.</div>
@@ -1329,7 +1350,13 @@
       </div>
     </div>
     <div class="proj-card c-vedu" style="margin-bottom:12px;" onclick="showDetail('vedu')">
-      <div class="proj-icon" style="background:rgba(59,130,246,0.10);">📚</div>
+      <div class="proj-icon" style="background:rgba(59,130,246,0.10);padding:4px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <rect x="7" y="12" width="30" height="22" rx="3" fill="#3b82f6" opacity="0.85"/>
+  <polygon points="20,17 20,29 33,23" fill="white"/>
+  <rect x="7" y="36" width="38" height="4" rx="2" fill="#3b82f6" opacity="0.6"/>
+  <rect x="13" y="42" width="10" height="2.5" rx="1.25" fill="#3b82f6" opacity="0.5"/>
+  <rect x="26" y="42" width="13" height="2.5" rx="1.25" fill="#3b82f6" opacity="0.5"/>
+</svg></div>
       <div class="proj-body">
         <div class="proj-name">VEDU</div>
         <div class="proj-desc">Platform e-learning modern. Video, kuis, sertifikat, dan AI Tutor personal.</div>
@@ -1342,7 +1369,7 @@
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
     <div class="nav-item active"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
     <div class="nav-ai" onclick="showScreen('ai')">✨</div>
-    <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item" onclick="openBlog()"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
 </div>
@@ -1373,6 +1400,18 @@
       <div class="pstat-box"><span class="pstat-num">4</span><span class="pstat-lbl">Proyek</span></div>
       <div class="pstat-box"><span class="pstat-num" id="profile-joined">2026</span><span class="pstat-lbl">Bergabung</span></div>
       <div class="pstat-box"><span class="pstat-num">Solo</span><span class="pstat-lbl">Kota</span></div>
+    </div>
+
+    <div class="menu-section" id="admin-menu-section" style="display:none;">
+      <div class="menu-title">⭐ Admin Panel</div>
+      <div class="menu-item" onclick="showScreen('admin-blog')">
+        <div class="menu-item-icon" style="background:rgba(255,184,0,0.12);">✏️</div>
+        <div class="menu-item-body">
+          <div class="menu-item-title">Kelola Artikel Blog</div>
+          <div class="menu-item-sub">Tambah, edit, atau hapus artikel</div>
+        </div>
+        <span class="menu-item-arrow">›</span>
+      </div>
     </div>
 
     <div class="menu-section">
@@ -1422,7 +1461,7 @@
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico">🏠</span><span class="nav-lbl">Home</span></div>
     <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico">📦</span><span class="nav-lbl">Proyek</span></div>
     <div class="nav-ai" onclick="showScreen('ai')">✨</div>
-    <div class="nav-item"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item" onclick="openBlog()"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item active"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
 </div>
@@ -1435,7 +1474,13 @@
   <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
   <div class="scroll-area">
     <div class="detail-hero">
-      <div class="detail-icon" style="background:rgba(239,68,68,0.12);">🏘️</div>
+      <div class="detail-icon" style="background:rgba(239,68,68,0.12);padding:6px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <path d="M26 10L8 24h4.5v18h9v-10h9v10h9V24H44L26 10z" fill="#ef4444"/>
+  <circle cx="26" cy="18" r="4" fill="white" opacity="0.95"/>
+  <rect x="18" y="31" width="16" height="11" rx="2" fill="rgba(239,68,68,0.4)"/>
+  <rect x="21" y="33" width="4" height="5" rx="1" fill="white" opacity="0.8"/>
+  <rect x="27" y="33" width="4" height="5" rx="1" fill="white" opacity="0.8"/>
+</svg></div>
       <div class="detail-info"><h1>WargaKu</h1><div class="detail-tagline">Milik warga, oleh warga, untuk warga</div><span class="badge live"><span class="badge-dot"></span>Live</span></div>
     </div>
     <div class="detail-body">
@@ -1452,7 +1497,16 @@
   <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
   <div class="scroll-area">
     <div class="detail-hero">
-      <div class="detail-icon" style="background:rgba(34,197,94,0.10);">🏫</div>
+      <div class="detail-icon" style="background:rgba(34,197,94,0.10);padding:6px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <rect x="8" y="22" width="26" height="22" rx="2" fill="#22c55e" opacity="0.85"/>
+  <path d="M8 22L21 10L34 22" fill="#16a34a"/>
+  <rect x="12" y="27" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+  <rect x="22" y="27" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+  <rect x="17" y="37" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+  <circle cx="39" cy="37" r="8" fill="#16a34a" stroke="white" stroke-width="1.5"/>
+  <circle cx="37" cy="35" r="3.5" fill="none" stroke="white" stroke-width="1.8"/>
+  <line x1="39.5" y1="37.5" x2="43" y2="41" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+</svg></div>
       <div class="detail-info"><h1>FIDU</h1><div class="detail-tagline">Find Education — Temukan Sekolah Terbaik</div><span class="badge dev"><span class="badge-dot"></span>Development</span></div>
     </div>
     <div class="detail-body">
@@ -1469,7 +1523,13 @@
   <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
   <div class="scroll-area">
     <div class="detail-hero">
-      <div class="detail-icon" style="background:rgba(99,102,241,0.10);">🎓</div>
+      <div class="detail-icon" style="background:rgba(99,102,241,0.10);padding:6px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <path d="M26 10L10 18.5L26 27L42 18.5L26 10z" fill="#6366f1"/>
+  <path d="M14 22v11c0 3 5.5 9 12 9s12-6 12-9V22" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <circle cx="26" cy="18.5" r="5" fill="white" opacity="0.95"/>
+  <rect x="39" y="18" width="4" height="14" rx="2" fill="#6366f1" opacity="0.8"/>
+  <circle cx="41" cy="35" r="3" fill="#6366f1"/>
+</svg></div>
       <div class="detail-info"><h1>SchoolID</h1><div class="detail-tagline">Asisten Digital Sekolah Indonesia</div><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
     </div>
     <div class="detail-body">
@@ -1486,7 +1546,13 @@
   <div class="topbar"><div style="display:flex;align-items:center;gap:14px;"><button class="back-btn" onclick="history.back()">←</button><span class="sub-title">Detail Proyek</span></div></div>
   <div class="scroll-area">
     <div class="detail-hero">
-      <div class="detail-icon" style="background:rgba(59,130,246,0.10);">📚</div>
+      <div class="detail-icon" style="background:rgba(59,130,246,0.10);padding:6px;"><svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  <rect x="7" y="12" width="30" height="22" rx="3" fill="#3b82f6" opacity="0.85"/>
+  <polygon points="20,17 20,29 33,23" fill="white"/>
+  <rect x="7" y="36" width="38" height="4" rx="2" fill="#3b82f6" opacity="0.6"/>
+  <rect x="13" y="42" width="10" height="2.5" rx="1.25" fill="#3b82f6" opacity="0.5"/>
+  <rect x="26" y="42" width="13" height="2.5" rx="1.25" fill="#3b82f6" opacity="0.5"/>
+</svg></div>
       <div class="detail-info"><h1>VEDU</h1><div class="detail-tagline">Platform Pembelajaran Digital Modern</div><span class="badge plan"><span class="badge-dot"></span>Perencanaan</span></div>
     </div>
     <div class="detail-body">
@@ -2119,6 +2185,13 @@ const auth = {
   getUsers() {
     return JSON.parse(localStorage.getItem('idea1_users') || '[]');
   },
+  isAdmin(user) {
+    if (!user) return false;
+    const admins = ['admin@idea1.id','maskur@idea1.id','tutikcahyaningsih72@gmail.com'];
+    if (admins.includes(user.email.toLowerCase())) return true;
+    if (user.role === 'admin') return true;
+    return false;
+  },
   saveUsers(users) {
     localStorage.setItem('idea1_users', JSON.stringify(users));
   },
@@ -2151,11 +2224,14 @@ const auth = {
     if (users.find(u => u.email === email.trim().toLowerCase())) {
       return { ok: false, msg: 'Email sudah terdaftar, silakan masuk' };
     }
+    const admins = ['admin@idea1.id','maskur@idea1.id','tutikcahyaningsih72@gmail.com'];
+    const isAdm = admins.includes(email.trim().toLowerCase());
     const user = {
       id: Date.now(),
       name: name.trim(),
       email: email.trim().toLowerCase(),
       password: pass,
+      role: isAdm ? 'admin' : 'user',
       joined: new Date().toLocaleDateString('id-ID', { year:'numeric', month:'short' })
     };
     users.push(user);
@@ -2321,6 +2397,17 @@ function updateProfileUI(user) {
   document.getElementById('profile-email').textContent   = user.email;
   document.getElementById('profile-joined').textContent  = user.joined || '2026';
   document.getElementById('avatar-initials').textContent = getInitials(user.name);
+  const isAdm = auth.isAdmin(user);
+  const roleEl = document.getElementById('profile-role');
+  if (roleEl) {
+    roleEl.textContent = isAdm ? '⭐ Admin IdeA1' : '👤 Member IdeA1';
+    roleEl.style.background = isAdm ? 'rgba(255,184,0,0.12)' : 'rgba(255,101,0,0.12)';
+    roleEl.style.color = isAdm ? '#fbbf24' : 'var(--orange)';
+    roleEl.style.borderColor = isAdm ? 'rgba(255,184,0,0.2)' : 'rgba(255,101,0,0.2)';
+  }
+  /* Tampilkan menu admin hanya untuk admin */
+  const adminMenu = document.getElementById('admin-menu-section');
+  if (adminMenu) adminMenu.style.display = isAdm ? 'block' : 'none';
 }
 
 /* ============================================
