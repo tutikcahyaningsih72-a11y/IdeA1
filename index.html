@@ -2045,7 +2045,7 @@
 <!-- ==========================================
      AI CHAT SCREEN (Sprint 4)
 ========================================== -->
-<div id="ai-chat" class="screen" style="display:flex;flex-direction:column;">
+<div id="ai-chat" class="screen">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:14px;">
       <button class="back-btn" onclick="showScreen('ai')">←</button>
@@ -3409,17 +3409,7 @@ setTimeout(() => {
   }
 }, 2700);
 
-/* Reset ke home/login saat app kembali dari background */
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden) {
-    const active = document.querySelector('.screen.active');
-    if (!active) {
-      const user = auth.getSession();
-      if (user) { updateHomeGreeting(user); showScreen('home', false); }
-      else showScreen('login', false);
-    }
-  }
-});
+/* visibilitychange dihapus - tidak diperlukan */
 
 /* Blog navigation */
 function openBlog() {
