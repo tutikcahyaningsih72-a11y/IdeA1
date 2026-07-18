@@ -71,8 +71,6 @@
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-    /* Splash exception - tampil di HTML default */
-    #splash { display: flex; }
     .screen.slide-in { animation: slideIn 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
     @keyframes slideIn {
       from { opacity: 0; }
@@ -3393,9 +3391,6 @@ function shareBlog() {
    APP INIT
 ============================================ */
 setTimeout(() => {
-  /* Sembunyikan splash, tampilkan screen berikutnya */
-  document.getElementById('splash').classList.remove('active');
-
   try {
     const onboarded = localStorage.getItem('idea1_onboarded');
     const user = auth.getSession();
