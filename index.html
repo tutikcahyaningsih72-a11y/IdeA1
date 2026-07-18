@@ -58,22 +58,25 @@
     ============================================ */
     .screen {
       position: fixed; inset: 0;
-      display: flex; flex-direction: column;
+      flex-direction: column;
       overflow: hidden;
-      opacity: 0; pointer-events: none;
-      visibility: hidden;
-      transition: opacity 0.35s ease, visibility 0.35s ease;
       background: var(--bg);
+      display: none; /* Semua tersembunyi by default */
     }
     .screen.active {
-      opacity: 1;
-      pointer-events: all;
-      visibility: visible;
+      display: flex; /* Hanya yang aktif yang muncul */
+      animation: fadeScreen 0.3s ease forwards;
     }
-    .screen.slide-in { animation: slideIn 0.35s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+    @keyframes fadeScreen {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    /* Splash exception - tampil di HTML default */
+    #splash { display: flex; }
+    .screen.slide-in { animation: slideIn 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
     @keyframes slideIn {
-      from { opacity: 0; transform: translateX(40px); }
-      to   { opacity: 1; transform: translateX(0); }
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
     .scroll-area {
       flex: 1; overflow-y: auto; overflow-x: hidden;
@@ -2264,19 +2267,14 @@ const auth = {
 let prevScreen = 'home';
 
 function showScreen(id, anim = true) {
-  /* Pastikan hanya 1 screen yang active */
-  document.querySelectorAll('.screen.active').forEach(s => {
+  /* display:none semua screen — paling reliable di Android */
+  document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active', 'slide-in');
+    /* display dihandle oleh .active class via CSS */
   });
   const next = document.getElementById(id);
   if (!next) return;
-  if (typeof prevScreen === 'undefined') prevScreen = 'home';
-  prevScreen = document.querySelector('.screen.active')?.id || prevScreen;
   next.classList.add('active');
-  if (anim) {
-    next.classList.add('slide-in');
-    setTimeout(() => next.classList.remove('slide-in'), 400);
-  }
   /* Side effects per screen */
   if (id === 'blog')              setTimeout(filterBlog, 50);
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
@@ -3395,8 +3393,8 @@ function shareBlog() {
    APP INIT
 ============================================ */
 setTimeout(() => {
-  /* Sembunyikan splash */
-  document.querySelectorAll('.screen.active').forEach(s => s.classList.remove('active'));
+  /* Sembunyikan splash, tampilkan screen berikutnya */
+  document.getElementById('splash').classList.remove('active');
 
   try {
     const onboarded = localStorage.getItem('idea1_onboarded');
