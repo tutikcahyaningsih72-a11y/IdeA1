@@ -13,6 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
     /* ============================================
        RESET & TOKENS
@@ -2184,6 +2186,35 @@
 ========================================== -->
 <script>
 /* ============================================
+   SUPABASE CONFIG
+   Ganti SUPABASE_URL dan SUPABASE_KEY
+   dengan nilai dari dashboard Supabase kamu!
+============================================ */
+const SUPABASE_URL = 'https://eilwbwpzyqmmahzvcnmx.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_y76UCpYQUWi8-Vje6Na4Uw_Bqr-y66x';
+
+let _sb = null;
+let currentUser = null;
+
+try {
+  _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  _sb.auth.onAuthStateChange((event, session) => {
+    if (session?.user) {
+      currentUser = {
+        name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+        email: session.user.email,
+        id: session.user.id,
+        joined: new Date(session.user.created_at).toLocaleDateString('id-ID', { year:'numeric', month:'short' })
+      };
+    } else {
+      currentUser = null;
+    }
+  });
+} catch(e) {
+  console.warn('Supabase belum dikonfigurasi:', e.message);
+}
+
+/* ============================================
    INIT: Sembunyikan semua screen kecuali splash
 ============================================ */
 (function() {
@@ -2303,8 +2334,12 @@ function setNav(el, screenId) {
 
 function goToProfile() {
   const user = auth.getSession();
-  if (user) showScreen('profile');
-  else showScreen('login');
+  if (user) {
+    updateProfileUI(user);
+    showScreen('profile');
+  } else {
+    showScreen('login');
+  }
 }
 
 function showDetail(id) {
@@ -2315,7 +2350,7 @@ function showDetail(id) {
 /* ============================================
    AUTH ACTIONS
 ============================================ */
-function doLogin() {
+async function doLogin() {
   const email    = document.getElementById('login-email').value;
   const pass     = document.getElementById('login-pass').value;
   const remember = document.getElementById('remember-me').checked;
@@ -2327,27 +2362,26 @@ function doLogin() {
   btn.innerHTML = '<span class="spinner"></span>';
   btn.disabled = true;
 
-  setTimeout(() => {
-    try {
-      const res = auth.login(email, pass, remember);
-      btn.innerHTML = 'Masuk';
-      btn.disabled = false;
-      if (res.ok) {
-        loginAlert.classList.remove('show');
-        updateHomeGreeting(res.user);
-        showScreen('home', false);
-      } else {
-        showAlert(loginAlert, 'error', res.msg);
-      }
-    } catch(e) {
-      btn.innerHTML = 'Masuk';
-      btn.disabled = false;
-      showAlert(loginAlert, 'error', 'Terjadi kesalahan, coba lagi.');
+  try {
+    const res = await auth.login(email, pass, remember);
+    btn.innerHTML = 'Masuk';
+    btn.disabled = false;
+    if (res.ok) {
+      loginAlert.classList.remove('show');
+      const user = auth.getSession() || res.user;
+      if (user) updateHomeGreeting(user);
+      showScreen('home', false);
+    } else {
+      showAlert(loginAlert, 'error', res.msg);
     }
-  }, 800);
+  } catch(e) {
+    btn.innerHTML = 'Masuk';
+    btn.disabled = false;
+    showAlert(loginAlert, 'error', 'Terjadi kesalahan: ' + e.message);
+  }
 }
 
-function doRegister() {
+async function doRegister() {
   const name  = document.getElementById('reg-name').value;
   const email = document.getElementById('reg-email').value;
   const pass  = document.getElementById('reg-pass').value;
@@ -2368,23 +2402,22 @@ function doRegister() {
   btn.innerHTML = '<span class="spinner"></span>';
   btn.disabled = true;
 
-  setTimeout(() => {
-    try {
-      const res = auth.register(name, email, pass);
-      btn.innerHTML = 'Daftar';
-      btn.disabled = false;
-      if (res.ok) {
-        updateHomeGreeting(res.user);
-        showScreen('home', false);
-      } else {
-        showAlert(alertEl, 'error', res.msg);
-      }
-    } catch(e) {
-      btn.innerHTML = 'Daftar';
-      btn.disabled = false;
-      showAlert(alertEl, 'error', 'Terjadi kesalahan, coba lagi.');
+  try {
+    const res = await auth.register(name, email, pass);
+    btn.innerHTML = 'Daftar';
+    btn.disabled = false;
+    if (res.ok) {
+      const user = auth.getSession() || res.user;
+      if (user) updateHomeGreeting(user);
+      showScreen('home', false);
+    } else {
+      showAlert(alertEl, 'error', res.msg);
     }
-  }, 900);
+  } catch(e) {
+    btn.innerHTML = 'Daftar';
+    btn.disabled = false;
+    showAlert(alertEl, 'error', 'Terjadi kesalahan: ' + e.message);
+  }
 }
 
 function doForgot() {
@@ -2399,11 +2432,13 @@ function doForgot() {
   alert.textContent = '✅ Link reset telah dikirim ke ' + email + ' (simulasi)';
 }
 
-function doLogout() {
+async function doLogout() {
   if (confirm('Yakin ingin keluar dari akun?')) {
-    auth.logout();
-    document.getElementById('home-greeting').textContent = '👋 Selamat datang di';
-    document.getElementById('home-name').textContent = 'IdeA1 Hub';
+    await auth.logout();
+    const greetEl = document.getElementById('home-greeting');
+    const nameEl  = document.getElementById('home-name');
+    if (greetEl) greetEl.textContent = '👋 Selamat datang di';
+    if (nameEl)  nameEl.textContent  = 'IdeA1 Hub';
     showScreen('login', false);
   }
 }
@@ -3390,21 +3425,36 @@ function shareBlog() {
 /* ============================================
    APP INIT
 ============================================ */
-setTimeout(() => {
+setTimeout(async () => {
   try {
-    const onboarded = localStorage.getItem('idea1_onboarded');
-    const user = auth.getSession();
+    /* Cek session dari Supabase jika sudah dikonfigurasi */
+    if (auth.hasSupabase()) {
+      const { data: { session } } = await _sb.auth.getSession();
+      if (session?.user) {
+        currentUser = {
+          name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+          email: session.user.email,
+          id: session.user.id,
+          joined: new Date(session.user.created_at).toLocaleDateString('id-ID', { year:'numeric', month:'short' })
+        };
+      }
+    } else {
+      /* Fallback localStorage */
+      const saved = localStorage.getItem('idea1_session_perm') || localStorage.getItem('idea1_session');
+      if (saved) currentUser = JSON.parse(saved);
+    }
 
+    const onboarded = localStorage.getItem('idea1_onboarded');
     if (!onboarded) {
       showScreen('onboarding', false);
-    } else if (user) {
-      updateHomeGreeting(user);
+    } else if (currentUser) {
+      updateHomeGreeting(currentUser);
       showScreen('home', false);
     } else {
       showScreen('login', false);
     }
   } catch(e) {
-    /* Fallback ke login jika ada error */
+    console.error('Init error:', e);
     showScreen('login', false);
   }
 }, 2700);
