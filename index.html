@@ -910,19 +910,20 @@
     .settings-arrow { color: var(--w20); font-size: 16px; }
     .settings-value { font-size: 12px; color: var(--w40); margin-right: 8px; }
 
-    /* Toggle Switch — Pure DIV, no native checkbox */
+    /* Toggle Switch — Pure DIV, injected via JS */
     .toggle-div {
-      position: relative;
+      position: relative !important;
       width: 44px; height: 24px;
       border-radius: 999px;
       background: var(--bg3);
       cursor: pointer;
       transition: background 0.3s;
       flex-shrink: 0;
+      display: inline-block;
     }
     .toggle-div.on { background: var(--orange); }
     .toggle-knob {
-      position: absolute;
+      position: absolute !important;
       width: 18px; height: 18px;
       border-radius: 50%;
       background: white;
@@ -931,6 +932,12 @@
       pointer-events: none;
     }
     .toggle-div.on .toggle-knob { transform: translateX(20px); }
+    /* Pastikan toggle tidak bisa keluar dari parent screen */
+    .screen:not(.active) .toggle-div,
+    .screen:not(.active) .toggle-div * {
+      display: none !important;
+      visibility: hidden !important;
+    }
 
     /* App Info Card */
     .app-info-card {
@@ -1796,9 +1803,7 @@
             <div class="settings-label-text">Notifikasi Push</div>
             <div class="settings-label-sub">Update proyek & artikel baru</div>
           </div>
-          <div class="toggle-div on" id="notif-toggle" onclick="toggleSwitch(this,'notif')">
-            <div class="toggle-knob"></div>
-          </div>
+<div id="notif-toggle-wrap"></div>
         </div>
         <div class="settings-item">
           <div class="settings-icon" style="background:rgba(34,197,94,0.12);">📧</div>
@@ -1806,9 +1811,7 @@
             <div class="settings-label-text">Email Newsletter</div>
             <div class="settings-label-sub">Artikel & tips mingguan</div>
           </div>
-          <div class="toggle-div" id="email-toggle" onclick="toggleSwitch(this,'email')">
-            <div class="toggle-knob"></div>
-          </div>
+<div id="email-toggle-wrap"></div>
         </div>
       </div>
     </div>
@@ -2988,16 +2991,25 @@ function toggleSwitch(el, key) {
   saveSetting(key, isOn);
 }
 
+function makeToggle(wrapperId, storageKey, defaultOn) {
+  const wrap = document.getElementById(wrapperId);
+  if (!wrap) return;
+  const saved = localStorage.getItem('idea1_setting_' + storageKey);
+  const isOn = saved === null ? defaultOn : saved === 'true';
+  wrap.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'toggle-div' + (isOn ? ' on' : '');
+  div.id = storageKey + '-toggle';
+  div.onclick = function() { toggleSwitch(this, storageKey); };
+  const knob = document.createElement('div');
+  knob.className = 'toggle-knob';
+  div.appendChild(knob);
+  wrap.appendChild(div);
+}
+
 function loadSettings() {
-  const notif = localStorage.getItem('idea1_setting_notif');
-  const email = localStorage.getItem('idea1_setting_email');
-  const notifEl = document.getElementById('notif-toggle');
-  const emailEl = document.getElementById('email-toggle');
-  /* Default notif = ON, email = OFF */
-  const notifOn = notif === null ? true : notif === 'true';
-  const emailOn = email === 'true';
-  if (notifEl) notifEl.classList.toggle('on', notifOn);
-  if (emailEl) emailEl.classList.toggle('on', emailOn);
+  makeToggle('notif-toggle-wrap', 'notif', true);
+  makeToggle('email-toggle-wrap', 'email', false);
 }
 
 function toggleTheme() {
