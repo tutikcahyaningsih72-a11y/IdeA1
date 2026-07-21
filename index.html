@@ -1447,7 +1447,7 @@
       <span class="sub-title">Profil Saya</span>
     </div>
   </div>
-  <div class="scroll-area">
+  <div class="scroll-area" style="position:relative;z-index:1;">
     <div class="profile-header">
       <div class="avatar-circle" id="profile-avatar">
         <span id="avatar-initials">?</span>
@@ -2437,6 +2437,13 @@ function showScreen(id, anim = true) {
   const next = document.getElementById(id);
   if (!next) return;
   next.classList.add('active');
+  /* Hapus toggle dari DOM saat settings ditutup */
+  if (id !== 'settings') {
+    const nw = document.getElementById('notif-toggle-wrap');
+    const ew = document.getElementById('email-toggle-wrap');
+    if (nw) nw.innerHTML = '';
+    if (ew) ew.innerHTML = '';
+  }
   /* Side effects per screen */
   if (id === 'blog')              setTimeout(filterBlog, 50);
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
