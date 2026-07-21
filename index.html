@@ -2609,21 +2609,31 @@ function updateHomeGreeting(user) {
 }
 
 function updateProfileUI(user) {
-  document.getElementById('profile-name').textContent    = user.name;
-  document.getElementById('profile-email').textContent   = user.email;
-  document.getElementById('profile-joined').textContent  = user.joined || '2026';
-  document.getElementById('avatar-initials').textContent = getInitials(user.name);
+  if (!user) return;
+  const nameEl  = document.getElementById('profile-name');
+  const emailEl = document.getElementById('profile-email');
+  const initEl  = document.getElementById('avatar-initials');
+  const roleEl  = document.getElementById('profile-role');
+
+  if (nameEl)  nameEl.textContent  = user.name || '';
+  if (emailEl) emailEl.textContent = user.email || '';
+  if (initEl)  initEl.textContent  = getInitials(user.name || 'U');
+
+  /* Role badge */
   const isAdm = auth.isAdmin(user);
-  const roleEl = document.getElementById('profile-role');
   if (roleEl) {
-    roleEl.textContent = isAdm ? '⭐ Admin IdeA1' : '👤 Member IdeA1';
-    roleEl.style.background = isAdm ? 'rgba(255,184,0,0.12)' : 'rgba(255,101,0,0.12)';
-    roleEl.style.color = isAdm ? '#fbbf24' : 'var(--orange)';
-    roleEl.style.borderColor = isAdm ? 'rgba(255,184,0,0.2)' : 'rgba(255,101,0,0.2)';
+    roleEl.textContent    = isAdm ? '⭐ Admin IdeA1' : '👤 Member IdeA1';
+    roleEl.style.background   = isAdm ? 'rgba(255,184,0,0.12)' : 'rgba(255,101,0,0.12)';
+    roleEl.style.color        = isAdm ? '#fbbf24' : 'var(--orange)';
+    roleEl.style.borderColor  = isAdm ? 'rgba(255,184,0,0.2)' : 'rgba(255,101,0,0.2)';
   }
-  /* Tampilkan menu admin hanya untuk admin */
+
+  /* Admin menu */
   const adminMenu = document.getElementById('admin-menu-section');
   if (adminMenu) adminMenu.style.display = isAdm ? 'block' : 'none';
+
+  /* Extra profile data (kota, bio, avatar) */
+  updateProfileUIWithExtra();
 }
 
 /* ============================================
@@ -3379,12 +3389,7 @@ function updateProfileUIWithExtra() {
   }
 }
 
-/* Override updateProfileUI untuk include extra data */
-const _origUpdateProfileUI = updateProfileUI;
-function updateProfileUI(user) {
-  _origUpdateProfileUI(user);
-  updateProfileUIWithExtra();
-}
+/* updateProfileUI sudah include extra data */
 
 /* ============================================
    BLOG DATA (Sprint 3)
