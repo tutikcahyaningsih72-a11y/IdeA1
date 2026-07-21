@@ -347,6 +347,45 @@
     .menu-item-sub   { font-size: 11px; color: var(--w40); margin-top: 1px; }
     .menu-item-arrow { color: var(--w20); font-size: 18px; }
 
+    /* EDIT PROFILE SCREEN */
+    .edit-avatar-section {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 12px;
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid var(--glass-b);
+    }
+    .edit-avatar-circle {
+      width: 90px; height: 90px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; font-weight: 800; color: white;
+      position: relative; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255,101,0,0.3);
+    }
+    .edit-avatar-overlay {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: rgba(0,0,0,0.45);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .avatar-color-grid {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; padding: 0 20px;
+    }
+    .avatar-color-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid transparent; cursor: pointer;
+      transition: transform 0.15s, border-color 0.2s;
+    }
+    .avatar-color-btn.selected {
+      border-color: white; transform: scale(1.15);
+    }
+    .avatar-preview-img {
+      width: 90px; height: 90px; border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(255,101,0,0.3);
+      cursor: pointer;
+    }
+
     .btn-logout {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: calc(100% - 40px); margin: 0 20px;
@@ -1487,6 +1526,66 @@
     <div class="nav-item" onclick="openBlog()"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item active"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
+</div>
+
+
+<!-- ==========================================
+     EDIT PROFILE SCREEN
+========================================== -->
+<div id="edit-profile" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('profile')">←</button>
+      <span class="sub-title">Edit Profil</span>
+    </div>
+    <button style="background:var(--grad);border:none;color:white;padding:8px 16px;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;" onclick="saveProfile()">Simpan</button>
+  </div>
+
+  <div class="scroll-area" style="padding-bottom:40px;">
+    <!-- Avatar Section -->
+    <div class="edit-avatar-section">
+      <div id="edit-avatar-preview" class="edit-avatar-circle" style="background:var(--grad);" onclick="document.getElementById('avatar-file-input').click()">
+        <span id="edit-avatar-initials" style="position:relative;z-index:1;">MM</span>
+        <div class="edit-avatar-overlay">📷</div>
+      </div>
+      <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)">
+      <div style="font-size:12px;color:var(--w40);">Tap foto untuk ganti</div>
+    </div>
+
+    <!-- Pilih warna avatar -->
+    <div style="padding:16px 20px 8px;">
+      <div style="font-size:12px;font-weight:600;color:var(--w40);letter-spacing:0.5px;margin-bottom:10px;">WARNA AVATAR</div>
+      <div class="avatar-color-grid" id="avatar-color-grid">
+        <!-- Diisi JS -->
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div style="padding:16px 20px 0;">
+      <div class="input-group">
+        <label class="input-label">Nama Lengkap</label>
+        <input id="edit-name" class="input-field" type="text" placeholder="Nama kamu">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Email</label>
+        <input id="edit-email" class="input-field" type="email" disabled
+          style="opacity:0.5;cursor:not-allowed;">
+        <div style="font-size:11px;color:var(--w40);margin-top:4px;">Email tidak bisa diubah</div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Kota</label>
+        <input id="edit-kota" class="input-field" type="text" placeholder="Contoh: Solo">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Bio / Deskripsi</label>
+        <textarea id="edit-bio" class="input-field" rows="3"
+          style="resize:none;line-height:1.6;"
+          placeholder="Ceritakan sedikit tentang dirimu..."></textarea>
+      </div>
+    </div>
+
+    <div id="edit-profile-alert" class="alert-box error" style="margin:0 20px;"></div>
+  </div>
 </div>
 
 
@@ -3110,6 +3209,181 @@ function showToast(msg, color = '#22c55e') {
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2500);
+}
+
+/* ============================================
+   EDIT PROFILE (Opsi 3)
+============================================ */
+const AVATAR_COLORS = [
+  'linear-gradient(135deg,#FF6500,#FFB800)',
+  'linear-gradient(135deg,#7c3aed,#2563eb)',
+  'linear-gradient(135deg,#059669,#10b981)',
+  'linear-gradient(135deg,#dc2626,#f97316)',
+  'linear-gradient(135deg,#0891b2,#6366f1)',
+  'linear-gradient(135deg,#be185d,#f43f5e)',
+  'linear-gradient(135deg,#d97706,#fbbf24)',
+  'linear-gradient(135deg,#374151,#6b7280)',
+];
+
+let selectedAvatarColor = AVATAR_COLORS[0];
+let avatarImageData = null;
+
+function openEditProfile() {
+  const user = auth.getSession();
+  if (!user) return;
+
+  /* Isi form dengan data saat ini */
+  document.getElementById('edit-name').value  = user.name || '';
+  document.getElementById('edit-email').value = user.email || '';
+  const profile = JSON.parse(localStorage.getItem('idea1_profile_extra') || '{}');
+  document.getElementById('edit-kota').value = profile.kota || '';
+  document.getElementById('edit-bio').value  = profile.bio  || '';
+
+  /* Set avatar preview */
+  selectedAvatarColor = profile.avatarColor || AVATAR_COLORS[0];
+  avatarImageData     = profile.avatarImage || null;
+  renderEditAvatar();
+
+  /* Render color picker */
+  renderColorGrid();
+
+  showScreen('edit-profile');
+}
+
+function renderEditAvatar() {
+  const preview  = document.getElementById('edit-avatar-preview');
+  const initials = document.getElementById('edit-avatar-initials');
+  const user     = auth.getSession();
+
+  if (avatarImageData) {
+    /* Tampilkan foto */
+    preview.style.background = '#000';
+    preview.innerHTML = `
+      <img src="${avatarImageData}" class="avatar-preview-img" onclick="document.getElementById('avatar-file-input').click()">
+      <div class="edit-avatar-overlay" style="border-radius:50%;">📷</div>
+    `;
+  } else {
+    /* Tampilkan inisial */
+    preview.style.background = selectedAvatarColor;
+    const ini = getInitials(user?.name || 'U');
+    preview.innerHTML = `
+      <span id="edit-avatar-initials" style="position:relative;z-index:1;">${ini}</span>
+      <div class="edit-avatar-overlay">📷</div>
+    `;
+  }
+}
+
+function renderColorGrid() {
+  const grid = document.getElementById('avatar-color-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  AVATAR_COLORS.forEach((color, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'avatar-color-btn' + (color === selectedAvatarColor ? ' selected' : '');
+    btn.style.background = color;
+    btn.onclick = () => {
+      avatarImageData = null; /* Hapus foto jika pilih warna */
+      selectedAvatarColor = color;
+      renderColorGrid();
+      renderEditAvatar();
+    };
+    grid.appendChild(btn);
+  });
+}
+
+function handleAvatarUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    alert('Ukuran foto maksimal 2MB ya Bu!');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    avatarImageData = e.target.result;
+    renderEditAvatar();
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveProfile() {
+  const name = document.getElementById('edit-name').value.trim();
+  const kota = document.getElementById('edit-kota').value.trim();
+  const bio  = document.getElementById('edit-bio').value.trim();
+  const alertEl = document.getElementById('edit-profile-alert');
+
+  if (!name) {
+    showAlert(alertEl, 'error', 'Nama tidak boleh kosong');
+    alertEl.classList.add('show');
+    return;
+  }
+
+  const btn = document.querySelector('#edit-profile .topbar button:last-child');
+  if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
+
+  try {
+    /* Simpan extra profile ke localStorage */
+    const extra = { kota, bio, avatarColor: selectedAvatarColor, avatarImage: avatarImageData };
+    localStorage.setItem('idea1_profile_extra', JSON.stringify(extra));
+
+    /* Update nama di Supabase jika tersedia */
+    if (auth.hasSupabase() && _sb) {
+      await _sb.auth.updateUser({ data: { name } });
+      const user = auth.getSession();
+      if (user) {
+        await _sb.from('profiles').update({ name }).eq('id', user.id);
+      }
+    }
+
+    /* Update currentUser */
+    if (currentUser) currentUser.name = name;
+
+    /* Update tampilan profil */
+    updateProfileUIWithExtra();
+    showToast('✅ Profil berhasil disimpan!');
+    showScreen('profile');
+
+  } catch(e) {
+    showAlert(alertEl, 'error', 'Gagal menyimpan: ' + e.message);
+    alertEl.classList.add('show');
+  } finally {
+    if (btn) { btn.textContent = 'Simpan'; btn.disabled = false; }
+  }
+}
+
+function updateProfileUIWithExtra() {
+  const user    = auth.getSession();
+  const extra   = JSON.parse(localStorage.getItem('idea1_profile_extra') || '{}');
+  if (!user) return;
+
+  /* Update nama & email */
+  const nameEl  = document.getElementById('profile-name');
+  const emailEl = document.getElementById('profile-email');
+  const kotaEl  = document.getElementById('profile-joined');
+  if (nameEl)  nameEl.textContent  = user.name;
+  if (emailEl) emailEl.textContent = user.email;
+  if (kotaEl)  kotaEl.textContent  = extra.kota || user.joined || '2026';
+
+  /* Update avatar */
+  const avatarEl    = document.getElementById('profile-avatar');
+  const initialsEl  = document.getElementById('avatar-initials');
+  if (extra.avatarImage && avatarEl) {
+    avatarEl.innerHTML = `
+      <img src="${extra.avatarImage}"
+        style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+      <div class="avatar-edit">✏️</div>
+    `;
+  } else {
+    if (avatarEl)   avatarEl.style.background = extra.avatarColor || 'var(--grad)';
+    if (initialsEl) initialsEl.textContent = getInitials(user.name);
+  }
+}
+
+/* Override updateProfileUI untuk include extra data */
+const _origUpdateProfileUI = updateProfileUI;
+function updateProfileUI(user) {
+  _origUpdateProfileUI(user);
+  updateProfileUIWithExtra();
 }
 
 /* ============================================
