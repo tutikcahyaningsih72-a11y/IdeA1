@@ -386,6 +386,57 @@
       cursor: pointer;
     }
 
+    /* CONTACT SCREEN */
+    .contact-hero {
+      background: linear-gradient(135deg, rgba(255,101,0,0.1), rgba(255,184,0,0.05));
+      border-bottom: 1px solid var(--glass-b);
+      padding: 28px 20px 24px;
+      text-align: center;
+    }
+    .contact-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 800; color: white;
+      margin: 0 auto 12px;
+      box-shadow: 0 4px 20px rgba(255,101,0,0.3);
+    }
+    .contact-name   { font-size: 20px; font-weight: 800; margin-bottom: 3px; }
+    .contact-title  { font-size: 13px; color: var(--orange); font-weight: 600; margin-bottom: 4px; }
+    .contact-loc    { font-size: 12px; color: var(--w40); }
+
+    .contact-big-btn {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      border-radius: var(--r16);
+      text-decoration: none;
+      color: var(--white);
+      font-weight: 600; font-size: 14px;
+      transition: transform 0.15s, opacity 0.15s;
+      margin-bottom: 10px;
+      cursor: pointer; border: none; width: 100%;
+      font-family: var(--font);
+    }
+    .contact-big-btn:active { transform: scale(0.98); opacity: 0.9; }
+    .contact-big-btn .cb-icon {
+      width: 46px; height: 46px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .contact-big-btn .cb-body { flex: 1; text-align: left; }
+    .contact-big-btn .cb-label { font-size: 15px; font-weight: 700; }
+    .contact-big-btn .cb-value { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+    .contact-big-btn .cb-arrow { color: rgba(255,255,255,0.5); font-size: 18px; }
+
+    .contact-form-card {
+      background: var(--bg2); border: 1px solid var(--glass-b);
+      border-radius: var(--r24); padding: 20px;
+      margin: 0 20px 24px;
+    }
+    .contact-form-title {
+      font-size: 15px; font-weight: 700; margin-bottom: 14px;
+    }
+
     .btn-logout {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: calc(100% - 40px); margin: 0 20px;
@@ -1335,10 +1386,15 @@
 
     <div class="section-head"><h2>📬 Hubungi Kami</h2></div>
     <div class="contact-grid">
-      <a href="https://wa.me/6281134567890" target="_blank" class="contact-btn"><span class="contact-icon">💬</span> WhatsApp</a>
-      <a href="mailto:idea1@email.com" class="contact-btn"><span class="contact-icon">✉️</span> Email</a>
-      <a href="https://github.com" target="_blank" class="contact-btn"><span class="contact-icon">🐙</span> GitHub</a>
-      <a href="https://instagram.com" target="_blank" class="contact-btn"><span class="contact-icon">📸</span> Instagram</a>
+      <a href="https://wa.me/628566776888" target="_blank" class="contact-btn"><span class="contact-icon">💬</span> WhatsApp</a>
+      <a href="mailto:mfebrianto78@gmail.com" class="contact-btn"><span class="contact-icon">✉️</span> Email</a>
+      <a href="https://github.com/tutikcahyaningsih72-a11y" target="_blank" class="contact-btn"><span class="contact-icon">🐙</span> GitHub</a>
+      <a href="https://instagram.com/ideai2026" target="_blank" class="contact-btn"><span class="contact-icon">📸</span> Instagram</a>
+    </div>
+    <div style="text-align:center;padding:0 20px 24px;">
+      <button onclick="showScreen('contact')" style="background:none;border:1px solid var(--glass-b);color:var(--orange);font-family:var(--font);font-size:13px;font-weight:600;padding:10px 24px;border-radius:999px;cursor:pointer;">
+        📬 Lihat Halaman Kontak Lengkap →
+      </button>
     </div>
   </div>
 
@@ -1526,6 +1582,104 @@
     <div class="nav-item" onclick="openBlog()"><span class="nav-ico">📝</span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item active"><span class="nav-ico">👤</span><span class="nav-lbl">Akun</span></div>
   </nav>
+</div>
+
+
+<!-- ==========================================
+     CONTACT SCREEN
+========================================== -->
+<div id="contact" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('home')">←</button>
+      <span class="sub-title">Kontak</span>
+    </div>
+  </div>
+
+  <div class="scroll-area">
+    <!-- Hero Profile -->
+    <div class="contact-hero">
+      <div class="contact-avatar">MF</div>
+      <div class="contact-name">Muhammad Febriyanto</div>
+      <div class="contact-title">Founder IdeA1 · Solopreneur & Developer</div>
+      <div class="contact-loc">📍 Solo, Jawa Tengah</div>
+    </div>
+
+    <!-- Tombol Kontak -->
+    <div style="padding: 20px 20px 8px;">
+      <div style="font-size:12px;font-weight:700;color:var(--w40);letter-spacing:1px;margin-bottom:12px;">HUBUNGI LANGSUNG</div>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/628566776888?text=Halo, saya tertarik dengan IdeA1!" target="_blank" class="contact-big-btn"
+        style="background:linear-gradient(135deg,#22c55e,#16a34a);">
+        <div class="cb-icon" style="background:rgba(255,255,255,0.2);">💬</div>
+        <div class="cb-body">
+          <div class="cb-label">WhatsApp</div>
+          <div class="cb-value">0856-6776-888</div>
+        </div>
+        <span class="cb-arrow">›</span>
+      </a>
+
+      <!-- Email -->
+      <a href="mailto:mfebrianto78@gmail.com?subject=Kolaborasi IdeA1" class="contact-big-btn"
+        style="background:linear-gradient(135deg,#FF6500,#FFB800);">
+        <div class="cb-icon" style="background:rgba(255,255,255,0.2);">✉️</div>
+        <div class="cb-body">
+          <div class="cb-label">Email</div>
+          <div class="cb-value">mfebrianto78@gmail.com</div>
+        </div>
+        <span class="cb-arrow">›</span>
+      </a>
+
+      <!-- Instagram -->
+      <a href="https://instagram.com/ideai2026" target="_blank" class="contact-big-btn"
+        style="background:linear-gradient(135deg,#e1306c,#f77737);">
+        <div class="cb-icon" style="background:rgba(255,255,255,0.2);">📸</div>
+        <div class="cb-body">
+          <div class="cb-label">Instagram</div>
+          <div class="cb-value">@ideai2026</div>
+        </div>
+        <span class="cb-arrow">›</span>
+      </a>
+
+      <!-- GitHub -->
+      <a href="https://github.com/tutikcahyaningsih72-a11y" target="_blank" class="contact-big-btn"
+        style="background:linear-gradient(135deg,#24292e,#57606a);">
+        <div class="cb-icon" style="background:rgba(255,255,255,0.15);">🐙</div>
+        <div class="cb-body">
+          <div class="cb-label">GitHub</div>
+          <div class="cb-value">tutikcahyaningsih72-a11y</div>
+        </div>
+        <span class="cb-arrow">›</span>
+      </a>
+    </div>
+
+    <!-- Form Pesan -->
+    <div class="contact-form-card">
+      <div class="contact-form-title">💬 Kirim Pesan</div>
+      <div class="input-group">
+        <label class="input-label">Nama Kamu</label>
+        <input id="contact-nama" class="input-field" type="text" placeholder="Nama lengkap">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Pesan</label>
+        <textarea id="contact-pesan" class="input-field" rows="4"
+          style="resize:none;line-height:1.6;"
+          placeholder="Tulis pesanmu di sini...&#10;&#10;Bisa tentang kolaborasi, pertanyaan, atau saran."></textarea>
+      </div>
+      <button class="btn-primary" onclick="kirimPesan()">
+        💬 Kirim via WhatsApp
+      </button>
+    </div>
+
+    <!-- Info -->
+    <div style="text-align:center;padding:0 20px 32px;">
+      <div style="font-size:12px;color:var(--w20);line-height:1.7;">
+        Saya terbuka untuk peluang kerja sama,<br>
+        kolaborasi, dan berbagi ide. 🚀
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -2449,6 +2603,7 @@ function showScreen(id, anim = true) {
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
   if (id === 'settings')          setTimeout(loadSettings, 50);
   if (id === 'admin-blog')        setTimeout(renderAdminList, 50);
+  if (id === 'contact')           { /* Contact screen ready */ }
   if (id === 'admin-add-article') {
     const artId = document.getElementById('edit-article-id')?.value;
     if (!artId) setTimeout(clearArticleForm, 50);
@@ -3789,6 +3944,18 @@ setTimeout(async () => {
 }, 2700);
 
 /* visibilitychange dihapus - tidak diperlukan */
+
+/* Contact - kirim pesan via WA */
+function kirimPesan() {
+  const nama  = document.getElementById('contact-nama').value.trim();
+  const pesan = document.getElementById('contact-pesan').value.trim();
+  if (!nama || !pesan) {
+    showToast('⚠️ Lengkapi nama dan pesan dulu ya!', '#FF6500');
+    return;
+  }
+  const text = encodeURIComponent(`Halo, saya ${nama}!\n\n${pesan}\n\n— Dikirim via IdeA1`);
+  window.open(`https://wa.me/628566776888?text=${text}`, '_blank');
+}
 
 /* Blog navigation */
 function openBlog() {
