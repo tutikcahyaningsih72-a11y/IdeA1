@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Supabase JS Client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
     /* ============================================
        RESET & TOKENS
@@ -2478,28 +2478,49 @@
    dengan nilai dari dashboard Supabase kamu!
 ============================================ */
 const SUPABASE_URL = 'https://eilwbwpzyqmmahzvcnmx.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_y76UCpYQUWi8-Vje6Na4Uw_Bqr-y66x';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpbHdid3B6eXFtbWFoenZjbm14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MDEwNjIsImV4cCI6MjA5OTk3NzA2Mn0.K_HOC6EYy5CoDo0pi9b7ISVjQfkeE4v3F9_xtn6QrY8';
 
 let _sb = null;
 let currentUser = null;
 
-try {
-  _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  _sb.auth.onAuthStateChange((event, session) => {
-    if (session?.user) {
-      currentUser = {
-        name: session.user.user_metadata?.name || session.user.email.split('@')[0],
-        email: session.user.email,
-        id: session.user.id,
-        joined: new Date(session.user.created_at).toLocaleDateString('id-ID', { year:'numeric', month:'short' })
-      };
-    } else {
-      currentUser = null;
+function initSupabase() {
+  try {
+    if (typeof supabase === 'undefined') {
+      console.warn('Supabase belum loaded');
+      return false;
     }
-  });
-} catch(e) {
-  console.warn('Supabase belum dikonfigurasi:', e.message);
+    _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    _sb.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        currentUser = {
+          name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+          email: session.user.email,
+          id: session.user.id,
+          joined: new Date(session.user.created_at).toLocaleDateString('id-ID', { year:'numeric', month:'short' })
+        };
+      } else {
+        currentUser = null;
+      }
+    });
+    console.log('✅ Supabase berhasil diinisialisasi');
+    return true;
+  } catch(e) {
+    console.warn('Supabase init error:', e.message);
+    _sb = null;
+    return false;
+  }
 }
+
+/* Coba inisialisasi Supabase sekarang */
+initSupabase();
+
+/* Jika gagal, coba lagi saat window load */
+window.addEventListener('load', () => {
+  if (!_sb) {
+    console.log('Mencoba init Supabase ulang...');
+    initSupabase();
+  }
+});
 
 /* ============================================
    INIT: Sembunyikan semua screen kecuali splash
@@ -3026,40 +3047,64 @@ function doTranslate() {
 /* ============================================
    ADMIN BLOG (Fix 2)
 ============================================ */
-function getCustomArticles() {
+function normalizeArticle(sa) {
+  return {
+    id: 'sb_' + sa.id, db_id: sa.id,
+    title: sa.title, excerpt: sa.excerpt || '',
+    category: sa.category || 'edukasi',
+    emoji: sa.emoji || '📝',
+    bg: sa.bg || 'linear-gradient(135deg,#001a0a,#0a2a1a)',
+    date: new Date(sa.created_at).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}),
+    read: sa.read_time || '3 mnt baca',
+    content: sa.content || '', isSupabase: true, isCustom: true
+  };
+}
+
+async function getCustomArticles() {
+  if (auth.hasSupabase() && _sb) {
+    try {
+      const { data, error } = await _sb.from('articles').select('*').order('created_at',{ascending:false});
+      if (!error && data) return data.map(normalizeArticle);
+    } catch(e) { console.warn('Supabase articles:', e); }
+  }
   return JSON.parse(localStorage.getItem('idea1_custom_articles') || '[]');
 }
-function saveCustomArticles(arr) {
-  localStorage.setItem('idea1_custom_articles', JSON.stringify(arr));
-}
-function getAllArticles() {
-  const custom = getCustomArticles().map(a => ({...a, isCustom: true}));
+
+async function getAllArticles() {
+  const custom = await getCustomArticles();
   return [...custom, ...ARTICLES];
 }
 
-function renderAdminList() {
+async function renderAdminList() {
   const list = document.getElementById('admin-article-list');
   if (!list) return;
-  const custom = getCustomArticles();
+  list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--w40);">⏳ Memuat...</div>';
+  const custom = await getCustomArticles();
   list.innerHTML = '';
+  const lbl = document.createElement('div');
+  lbl.style.cssText = 'font-size:11px;color:var(--orange);margin-bottom:10px;font-weight:700;';
+  lbl.textContent = (auth.hasSupabase()&&_sb) ? '☁️ Tersinkron dengan Supabase' : '💾 Mode lokal';
+  list.appendChild(lbl);
 
   if (custom.length === 0) {
     list.innerHTML = `<div class="empty-state"><div class="empty-ico">📝</div><p>Belum ada artikel yang kamu tambahkan.<br>Tap ➕ untuk tambah artikel baru.</p></div>`;
   } else {
-    custom.forEach((art, idx) => {
+    custom.forEach((art) => {
+      const dbId = art.db_id || art.id;
+      const isSb = !!art.isSupabase;
       const card = document.createElement('div');
       card.className = 'proj-card';
       card.style.marginBottom = '12px';
       card.innerHTML = `
         <div style="font-size:28px;flex-shrink:0;">${art.emoji || '📝'}</div>
         <div style="flex:1;min-width:0;">
-          <div class="proj-name" style="font-size:14px;">${art.title}</div>
-          <div class="proj-desc">${art.excerpt}</div>
+          <div class="proj-name" style="font-size:14px;">${art.title} ${isSb?'<span style="font-size:10px;color:var(--orange);">☁️</span>':''}</div>
+          <div class="proj-desc">${art.excerpt||''}</div>
           <span class="blog-cat-badge ${art.category}" style="margin-top:6px;display:inline-block;">${art.category}</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
-          <button onclick="editArticle(${idx})" style="padding:6px 12px;background:rgba(255,184,0,0.15);border:1px solid rgba(255,184,0,0.3);border-radius:8px;color:#fbbf24;font-size:11px;font-weight:700;cursor:pointer;">Edit</button>
-          <button onclick="deleteArticle(${idx})" style="padding:6px 12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#fca5a5;font-size:11px;font-weight:700;cursor:pointer;">Hapus</button>
+          <button onclick="editArticleSupa('${dbId}',${isSb})" style="padding:6px 12px;background:rgba(255,184,0,0.15);border:1px solid rgba(255,184,0,0.3);border-radius:8px;color:#fbbf24;font-size:11px;font-weight:700;cursor:pointer;">Edit</button>
+          <button onclick="deleteArticle('${dbId}',${isSb})" style="padding:6px 12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#fca5a5;font-size:11px;font-weight:700;cursor:pointer;">Hapus</button>
         </div>
       `;
       list.appendChild(card);
@@ -3126,16 +3171,23 @@ function saveArticle() {
   showScreen('admin-blog');
 }
 
-function editArticle(idx) {
-  const customs = getCustomArticles();
-  const art = customs[idx];
+async function editArticleSupa(id, isSb) {
+  let art = null;
+  if (isSb && auth.hasSupabase() && _sb) {
+    const {data} = await _sb.from('articles').select('*').eq('id', parseInt(id)).single();
+    if (data) art = { id:data.id, title:data.title, excerpt:data.excerpt||'', category:data.category||'edukasi', emoji:data.emoji||'📝', content:(data.content||'').replace(/<p>/g,'').replace(/<\/p>/g,'\n').trim(), read:data.read_time||'3 mnt baca' };
+  } else {
+    const customs = JSON.parse(localStorage.getItem('idea1_custom_articles')||'[]');
+    const found = customs.find(a=>String(a.id)===String(id));
+    if (found) art = {...found, content:(found.content||'').replace(/<p>/g,'').replace(/<\/p>/g,'\n').trim(), read:found.read||'3 mnt baca'};
+  }
   if (!art) return;
-  document.getElementById('edit-article-id').value = art.id;
+  document.getElementById('edit-article-id').value  = art.id;
   document.getElementById('art-title').value   = art.title;
   document.getElementById('art-excerpt').value = art.excerpt;
   document.getElementById('art-category').value = art.category;
-  document.getElementById('art-emoji').value   = art.emoji || '📝';
-  document.getElementById('art-content').value = art.content.replace(/<p>/g,'').replace(/<\/p>/g,'\n').trim();
+  document.getElementById('art-emoji').value   = art.emoji;
+  document.getElementById('art-content').value = art.content;
   document.getElementById('art-read').value    = art.read;
   document.getElementById('admin-form-title').textContent = 'Edit Artikel';
   showScreen('admin-add-article');
