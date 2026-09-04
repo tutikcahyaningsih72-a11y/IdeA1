@@ -2534,69 +2534,105 @@ window.addEventListener('load', () => {
 })();
 
 /* ============================================
-   AUTH SYSTEM (localStorage)
+   AUTH SYSTEM (Supabase + localStorage fallback)
 ============================================ */
+const ADMIN_EMAILS = ['admin@idea1.id','maskur@idea1.id','tutikcahyaningsih72@gmail.com'];
+
 const auth = {
-  getUsers() {
-    return JSON.parse(localStorage.getItem('idea1_users') || '[]');
+  hasSupabase() {
+    return _sb !== null && typeof _sb !== 'undefined';
   },
+
+  getSession() {
+    if (this.hasSupabase() && currentUser) return currentUser;
+    if (!this.hasSupabase()) {
+      const saved = localStorage.getItem('idea1_session_perm') || localStorage.getItem('idea1_session');
+      if (saved) { try { return JSON.parse(saved); } catch(e) { return null; } }
+    }
+    return currentUser;
+  },
+
   isAdmin(user) {
     if (!user) return false;
-    const admins = ['admin@idea1.id','maskur@idea1.id','tutikcahyaningsih72@gmail.com'];
-    if (admins.includes(user.email.toLowerCase())) return true;
-    if (user.role === 'admin') return true;
-    return false;
+    return ADMIN_EMAILS.includes((user.email||'').toLowerCase()) || user.role === 'admin';
   },
-  saveUsers(users) {
-    localStorage.setItem('idea1_users', JSON.stringify(users));
-  },
-  getSession() {
-    return JSON.parse(
-      localStorage.getItem('idea1_session_perm') ||
-      localStorage.getItem('idea1_session') ||
-      'null'
-    );
-  },
-  saveSession(user, remember) {
-    const data = JSON.stringify(user);
-    localStorage.setItem('idea1_session', data);
-    localStorage.setItem('idea1_remember', remember ? 'true' : 'false');
-    if (remember) localStorage.setItem('idea1_session_perm', data);
-  },
-  clearSession() {
-    localStorage.removeItem('idea1_session');
-    localStorage.removeItem('idea1_session_perm');
-    localStorage.removeItem('idea1_remember');
-  },
-  login(email, pass, remember) {
-    const users = this.getUsers();
-    const user = users.find(u => u.email === email.trim().toLowerCase());
-    if (!user) return { ok: false, msg: 'Email tidak terdaftar' };
-    if (user.password !== pass) return { ok: false, msg: 'Password salah' };
-    this.saveSession(user, remember);
-    return { ok: true, user };
-  },
-  register(name, email, pass) {
-    const users = this.getUsers();
-    if (users.find(u => u.email === email.trim().toLowerCase())) {
-      return { ok: false, msg: 'Email sudah terdaftar, silakan masuk' };
+
+  async login(email, pass, remember) {
+    if (this.hasSupabase()) {
+      const { data, error } = await _sb.auth.signInWithPassword({
+        email: email.trim().toLowerCase(), password: pass
+      });
+      if (error) {
+        let msg = 'Email atau password salah';
+        if (error.message.includes('confirmed')) msg = 'Email belum diverifikasi';
+        return { ok: false, msg };
+      }
+      currentUser = {
+        name: data.user.user_metadata?.name || data.user.email.split('@')[0],
+        email: data.user.email, id: data.user.id,
+        joined: new Date(data.user.created_at).toLocaleDateString('id-ID',{year:'numeric',month:'short'})
+      };
+      return { ok: true, user: currentUser };
+    } else {
+      const users = JSON.parse(localStorage.getItem('idea1_users') || '[]');
+      const user = users.find(u => u.email === email.trim().toLowerCase());
+      if (!user) return { ok: false, msg: 'Email tidak terdaftar (mode offline)' };
+      if (user.password !== pass) return { ok: false, msg: 'Password salah' };
+      currentUser = user;
+      localStorage.setItem('idea1_session', JSON.stringify(user));
+      if (remember) localStorage.setItem('idea1_session_perm', JSON.stringify(user));
+      return { ok: true, user };
     }
-    const admins = ['admin@idea1.id','maskur@idea1.id','tutikcahyaningsih72@gmail.com'];
-    const isAdm = admins.includes(email.trim().toLowerCase());
-    const user = {
-      id: Date.now(),
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
-      password: pass,
-      role: isAdm ? 'admin' : 'user',
-      joined: new Date().toLocaleDateString('id-ID', { year:'numeric', month:'short' })
-    };
-    users.push(user);
-    this.saveUsers(users);
-    this.saveSession(user, false);
-    return { ok: true, user };
   },
-  logout() { this.clearSession(); }
+
+  async register(name, email, pass) {
+    if (this.hasSupabase()) {
+      const { data, error } = await _sb.auth.signUp({
+        email: email.trim().toLowerCase(), password: pass,
+        options: { data: { name: name.trim() } }
+      });
+      if (error) {
+        let msg = 'Pendaftaran gagal';
+        if (error.message.includes('already')) msg = 'Email sudah terdaftar, silakan masuk';
+        if (error.message.toLowerCase().includes('password')) msg = 'Password minimal 6 karakter';
+        return { ok: false, msg };
+      }
+      if (data.user) {
+        await _sb.from('profiles').upsert({
+          id: data.user.id, name: name.trim(),
+          role: ADMIN_EMAILS.includes(email.trim().toLowerCase()) ? 'admin' : 'user'
+        }, { onConflict: 'id' });
+      }
+      currentUser = {
+        name: name.trim(), email: email.trim().toLowerCase(), id: data.user?.id,
+        joined: new Date().toLocaleDateString('id-ID',{year:'numeric',month:'short'})
+      };
+      return { ok: true, user: currentUser };
+    } else {
+      const users = JSON.parse(localStorage.getItem('idea1_users') || '[]');
+      if (users.find(u => u.email === email.trim().toLowerCase()))
+        return { ok: false, msg: 'Email sudah terdaftar, silakan masuk' };
+      const user = {
+        id: Date.now(), name: name.trim(), email: email.trim().toLowerCase(), password: pass,
+        role: ADMIN_EMAILS.includes(email.trim().toLowerCase()) ? 'admin' : 'user',
+        joined: new Date().toLocaleDateString('id-ID',{year:'numeric',month:'short'})
+      };
+      users.push(user);
+      localStorage.setItem('idea1_users', JSON.stringify(users));
+      localStorage.setItem('idea1_session', JSON.stringify(user));
+      currentUser = user;
+      return { ok: true, user };
+    }
+  },
+
+  async logout() {
+    currentUser = null;
+    if (this.hasSupabase()) { await _sb.auth.signOut(); }
+    else {
+      localStorage.removeItem('idea1_session');
+      localStorage.removeItem('idea1_session_perm');
+    }
+  }
 };
 
 /* ============================================
