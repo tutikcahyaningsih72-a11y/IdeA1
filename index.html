@@ -1111,6 +1111,7 @@
   <div class="splash-loader" style="position:absolute;bottom:52px;left:50%;transform:translateX(-50%);">
     <div class="splash-loader-fill"></div>
   </div>
+  <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(255,255,255,0.3);">Build 20260904-1528</div>
 </div>
 
 
@@ -3135,40 +3136,76 @@ async function renderAdminList() {
   });
 }
 
-function saveArticle() {
-  const id    = document.getElementById('edit-article-id').value;
+async function saveArticle() {
+ try {
+  const db_id   = document.getElementById('edit-article-id').value;
   const title   = document.getElementById('art-title').value.trim();
   const excerpt = document.getElementById('art-excerpt').value.trim();
   const cat     = document.getElementById('art-category').value;
   const emoji   = document.getElementById('art-emoji').value.trim() || '📝';
-  const content = document.getElementById('art-content').value.trim();
+  const artBody = document.getElementById('art-content').value.trim();
   const read    = document.getElementById('art-read').value.trim() || '3 mnt baca';
 
-  if (!title || !content) { alert('Judul dan isi artikel wajib diisi!'); return; }
+  if (!title || !artBody) { alert('⚠️ Judul dan isi artikel wajib diisi!'); return; }
 
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+  const btn = document.querySelector('#admin-add-article .btn-primary');
+  if (btn) { btn.textContent = '⏳ Menyimpan...'; btn.disabled = true; }
+
   const bgMap = { teknologi:'linear-gradient(135deg,#1a0a2e,#0d1a3a)', bisnis:'linear-gradient(135deg,#1a0f00,#2a1500)', edukasi:'linear-gradient(135deg,#001a0a,#0a2a1a)' };
+  const htmlContent = artBody.split('\n').map(p=>p.trim()).filter(Boolean).map(p=>`<p>${p.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`).join('');
 
-  const article = {
-    id: id ? parseInt(id) : Date.now(),
-    title, excerpt, category: cat, emoji,
-    bg: bgMap[cat] || bgMap.teknologi,
-    date: dateStr, read,
-    content: content.split('\n').map(p => p.trim()).filter(Boolean).map(p => `<p>${p}</p>`).join('')
-  };
+  let saved = false;
 
-  const customs = getCustomArticles();
-  if (id) {
-    const idx = customs.findIndex(a => a.id == parseInt(id));
-    if (idx > -1) customs[idx] = article;
-  } else {
-    customs.unshift(article);
+  if (auth.hasSupabase() && _sb) {
+    try {
+      const { data: { session } } = await _sb.auth.getSession();
+      if (!session) throw new Error('Sesi login habis, silakan login ulang');
+      const uid = session.user.id;
+
+      await _sb.from('profiles').upsert({
+        id: uid,
+        name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+        role: ADMIN_EMAILS.includes(session.user.email?.toLowerCase()) ? 'admin' : 'user'
+      }, { onConflict: 'id' });
+
+      const row = { title, excerpt, category:cat, emoji, bg:bgMap[cat]||bgMap.edukasi, read_time:read, content:htmlContent, author_id:uid };
+
+      if (db_id && db_id.toString().startsWith('sb_') === false && !isNaN(parseInt(db_id))) {
+        const { error } = await _sb.from('articles').update(row).eq('id', parseInt(db_id));
+        if (error) throw error;
+      } else if (db_id) {
+        const realId = db_id.toString().replace('sb_','');
+        const { error } = await _sb.from('articles').update(row).eq('id', parseInt(realId));
+        if (error) throw error;
+      } else {
+        const { error } = await _sb.from('articles').insert(row);
+        if (error) throw error;
+      }
+      saved = true;
+      showToast('✅ Artikel tersimpan di Supabase ☁️');
+    } catch(e) {
+      console.error('Supabase error:', e);
+      alert('❌ SUPABASE ERROR:\n\n' + (e.message || JSON.stringify(e)));
+    }
   }
-  saveCustomArticles(customs);
-  showToast('✅ Artikel berhasil disimpan!');
+
+  if (!saved) {
+    const customs = JSON.parse(localStorage.getItem('idea1_custom_articles') || '[]');
+    const art = { id: db_id?parseInt(db_id)||Date.now():Date.now(), title, excerpt, category:cat, emoji, bg:bgMap[cat]||bgMap.edukasi, date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}), read, content:htmlContent, isCustom:true };
+    if (db_id) { const i=customs.findIndex(a=>String(a.id)===String(db_id)); if(i>-1) customs[i]=art; else customs.unshift(art); } else customs.unshift(art);
+    localStorage.setItem('idea1_custom_articles', JSON.stringify(customs));
+    if (!auth.hasSupabase()) showToast('✅ Artikel disimpan lokal!');
+  }
+
+  if (btn) { btn.textContent = '💾 Simpan Artikel'; btn.disabled = false; }
   clearArticleForm();
   showScreen('admin-blog');
+ } catch(fatalErr) {
+   console.error('FATAL saveArticle:', fatalErr);
+   alert('❌ ERROR:\n\n' + fatalErr.message);
+   const btn2 = document.querySelector('#admin-add-article .btn-primary');
+   if (btn2) { btn2.textContent = '💾 Simpan Artikel'; btn2.disabled = false; }
+ }
 }
 
 async function editArticleSupa(id, isSb) {
@@ -3193,12 +3230,24 @@ async function editArticleSupa(id, isSb) {
   showScreen('admin-add-article');
 }
 
-function deleteArticle(idx) {
+async function deleteArticle(idOrDbId, isSb) {
   if (!confirm('Hapus artikel ini?')) return;
-  const customs = getCustomArticles();
-  customs.splice(idx, 1);
-  saveCustomArticles(customs);
-  showToast('🗑️ Artikel dihapus');
+  const isSbBool = (isSb === true || isSb === 'true');
+  if (isSbBool && auth.hasSupabase() && _sb) {
+    try {
+      const realId = idOrDbId.toString().replace('sb_','');
+      const { error } = await _sb.from('articles').delete().eq('id', parseInt(realId));
+      if (error) throw error;
+      showToast('🗑️ Artikel dihapus dari Supabase');
+    } catch(e) {
+      alert('❌ Gagal hapus: ' + e.message);
+      return;
+    }
+  } else {
+    const customs = JSON.parse(localStorage.getItem('idea1_custom_articles') || '[]');
+    localStorage.setItem('idea1_custom_articles', JSON.stringify(customs.filter(a => String(a.id) !== String(idOrDbId))));
+    showToast('🗑️ Artikel dihapus');
+  }
   renderAdminList();
 }
 
