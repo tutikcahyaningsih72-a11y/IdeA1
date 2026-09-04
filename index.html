@@ -3930,6 +3930,7 @@ function renderBlogCard(article, container) {
 }
 
 function renderBlog(articles) {
+  ALL_ARTICLES_CACHE = articles;
   const list  = document.getElementById('blog-list');
   const empty = document.getElementById('blog-empty');
   list.innerHTML = '';
@@ -3978,9 +3979,19 @@ function setCategory(cat, el) {
   filterBlog();
 }
 
-function filterBlog() {
+async function filterBlog() {
+  const list = document.getElementById('blog-list');
+  if (list) list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--w40);">⏳ Memuat artikel...</div>';
+
   const q = (document.getElementById('blog-search-input')?.value || '').toLowerCase();
-  let filtered = getAllArticles();
+  let filtered = [];
+  try {
+    filtered = await getAllArticles();
+  } catch(e) {
+    console.error('filterBlog error:', e);
+    filtered = ARTICLES; // fallback minimal ke artikel default
+  }
+
   if (currentCategory !== 'semua') {
     filtered = filtered.filter(a => a.category === currentCategory);
   }
@@ -3993,9 +4004,17 @@ function filterBlog() {
   renderBlog(filtered);
 }
 
-function openArticle(id) {
-  const article = ARTICLES.find(a => a.id === id);
-  if (!article) return;
+let ALL_ARTICLES_CACHE = [];
+
+async function openArticle(id) {
+  let article = ALL_ARTICLES_CACHE.find(a => a.id === id) || ARTICLES.find(a => a.id === id);
+  if (!article) {
+    /* Coba ambil ulang dari sumber (custom + default) */
+    const all = await getAllArticles();
+    ALL_ARTICLES_CACHE = all;
+    article = all.find(a => a.id === id);
+  }
+  if (!article) { alert('Artikel tidak ditemukan'); return; }
   currentArticleId = id;
 
   document.getElementById('blog-detail-thumb').style.background = article.bg;
