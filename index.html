@@ -26,23 +26,29 @@
     }
     :root {
       --bg:     #000000;
-      --bg2:    #0d0d0d;
-      --bg3:    #1a1a1a;
+      --bg2:    #080808;
+      --bg3:    #111111;
       --orange: #FFFFFF;
-      --amber:  #E5E5E5;
-      --grad:   linear-gradient(135deg, #FFFFFF 0%, #B0B0B0 100%);
-      --glass:  rgba(255,255,255,0.05);
-      --glass-b:rgba(255,255,255,0.12);
+      --amber:  #E0E0E0;
+      --grad:   linear-gradient(135deg, #FFFFFF 0%, #A0A0A0 100%);
+      --grad-silver: linear-gradient(135deg, #ffffff 0%, #d0d0d0 40%, #888 100%);
+      --glass:  rgba(255,255,255,0.04);
+      --glass-b:rgba(255,255,255,0.10);
+      --glow:   rgba(255,255,255,0.15);
       --white:  #FFFFFF;
       --w70:    rgba(255,255,255,0.70);
       --w40:    rgba(255,255,255,0.40);
       --w20:    rgba(255,255,255,0.20);
+      --w10:    rgba(255,255,255,0.08);
       --green:  #22c55e;
       --red:    #ef4444;
       --indigo: #a3a3a3;
-      --r24: 20px; --r16: 14px; --r12: 10px;
+      --r24: 16px; --r16: 12px; --r12: 10px;
       --font: 'Plus Jakarta Sans', system-ui, sans-serif;
       --safe-b: env(safe-area-inset-bottom, 0px);
+      /* Futuristik */
+      --border-fut: rgba(255,255,255,0.15);
+      --bg-fut: linear-gradient(180deg, #050505 0%, #000000 100%);
     }
     html {
       height: 100%;
@@ -114,71 +120,137 @@
     ============================================ */
     #splash {
       align-items: center; justify-content: center;
-      background: #000; z-index: 100;
+      background: #000; z-index: 100; overflow: hidden;
+    }
+    /* Globe background */
+    #splash::before {
+      content: '';
+      position: absolute; bottom: -10%; left: 50%; transform: translateX(-50%);
+      width: 130vw; height: 80vw;
+      background: radial-gradient(ellipse at 50% 90%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 30%, transparent 70%);
+      border-radius: 50%;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      pointer-events: none;
+    }
+    /* Corner ornaments */
+    #splash::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08) 0px, transparent 60px) top left,
+        linear-gradient(225deg, rgba(255,255,255,0.08) 0px, transparent 60px) top right,
+        linear-gradient(315deg, rgba(255,255,255,0.08) 0px, transparent 60px) bottom right,
+        linear-gradient(45deg,  rgba(255,255,255,0.08) 0px, transparent 60px) bottom left;
+      background-repeat: no-repeat;
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+    /* Top glow ray */
+    .splash-ray {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 35%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .splash-ray::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 60px;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    /* Bottom horizon glow */
+    .splash-horizon {
+      position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      pointer-events: none;
+    }
+    .splash-horizon::before {
+      content: '';
+      position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 40px;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.12) 0%, transparent 70%);
     }
     .splash-content {
       display: flex; flex-direction: column;
-      align-items: center; gap: 24px;
-      animation: splashIn 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      align-items: center; gap: 20px; position: relative; z-index: 2;
+      animation: splashIn 0.8s cubic-bezier(0.34,1.3,0.64,1) forwards;
     }
     @keyframes splashIn {
-      from { opacity: 0; transform: scale(0.8) translateY(20px); }
+      from { opacity: 0; transform: scale(0.85) translateY(30px); }
       to   { opacity: 1; transform: scale(1) translateY(0); }
     }
     .splash-icon-wrap { position: relative; }
     .splash-icon-wrap .glow {
-      position: absolute; inset: -20px;
-      background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%);
+      position: absolute; inset: -30px;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 65%);
       border-radius: 50%;
-      animation: glowPulse 2s ease-in-out infinite;
+      animation: glowPulse 2.5s ease-in-out infinite;
     }
     @keyframes glowPulse {
-      0%,100% { opacity: 0.6; transform: scale(1); }
-      50%      { opacity: 1; transform: scale(1.1); }
+      0%,100% { opacity: 0.5; transform: scale(1); }
+      50%      { opacity: 1; transform: scale(1.15); }
     }
-    .splash-logomark { width: 110px; height: 110px; }
-    .brand { font-size: 40px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; }
+    .splash-logomark { width: 140px; height: 140px; border-radius: 28px; }
+    .brand { font-size: 42px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
     .brand .ide { color: var(--white); }
     .brand .a1 {
-      background: var(--grad);
+      background: var(--grad-silver);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .tagline { font-size: 12px; color: var(--w40); letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; text-align: center; }
+    .tagline {
+      font-size: 11px; color: rgba(255,255,255,0.5);
+      letter-spacing: 4px; text-transform: uppercase; margin-top: 4px;
+      text-align: center;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
     .splash-loader {
       position: absolute; bottom: 52px; left: 50%; transform: translateX(-50%);
-      width: 100px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden;
+      width: 120px; height: 1px; background: rgba(255,255,255,0.08); overflow: hidden;
     }
     .splash-loader-fill {
-      height: 100%; width: 0%; background: var(--grad); border-radius: 999px;
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, transparent, #fff, transparent);
       animation: loadFill 2.4s cubic-bezier(0.4,0,0.2,1) forwards;
     }
     @keyframes loadFill { 0%{width:0%} 60%{width:75%} 100%{width:100%} }
-    .splash-version { position: absolute; bottom: 28px; font-size: 11px; color: var(--w20); letter-spacing: 1px; }
+    .splash-version { position: absolute; bottom: 28px; font-size: 11px; color: var(--w20); letter-spacing: 2px; }
 
     /* ============================================
        TOP BAR
     ============================================ */
     .topbar {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px 14px;
-      background: rgba(8,8,8,0.85);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--glass-b);
+      padding: 14px 20px 12px;
+      background: rgba(4,4,4,0.92);
+      backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0; position: sticky; top: 0; z-index: 10;
+      /* Sudut diagonal kiri kanan atas */
     }
-    .topbar-brand { display: flex; align-items: center; gap: 9px; }
-    .topbar-brand svg { width: 26px; height: 26px; }
-    .topbar-name { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .topbar::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 70%, transparent 100%);
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 10px; }
+    .topbar-brand img { width: 36px; height: 36px; border-radius: 9px; }
+    .topbar-name { display: flex; flex-direction: column; }
+    .topbar-name .name-main { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; line-height: 1; }
+    .topbar-name .name-tag { font-size: 9px; color: var(--w40); letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin-top: 2px; }
     .topbar-name .ide { color: var(--white); }
-    .topbar-name .a1 { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .topbar-name .a1 { background: var(--grad-silver); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .topbar-actions { display: flex; gap: 8px; }
     .icon-btn {
-      width: 38px; height: 38px; border-radius: var(--r12);
-      background: var(--glass); border: 1px solid var(--glass-b);
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: background 0.15s;
     }
-    .icon-btn:active { background: rgba(255,255,255,0.1); }
+    .icon-btn:active { background: rgba(255,255,255,0.12); }
 
     /* ============================================
        SUB HEADER
@@ -203,19 +275,45 @@
       background: var(--bg);
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+    /* Globe background untuk login */
+    .auth-screen::before {
+      content: '';
+      position: fixed; bottom: -5%; left: 50%; transform: translateX(-50%);
+      width: 140vw; height: 70vw;
+      background: radial-gradient(ellipse at 50% 90%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 35%, transparent 70%);
+      border-radius: 50%;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      pointer-events: none; z-index: 0;
+    }
+    /* Corner ornaments login */
+    .auth-screen::after {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.06) 0px, transparent 50px) top left,
+        linear-gradient(225deg, rgba(255,255,255,0.06) 0px, transparent 50px) top right,
+        linear-gradient(315deg, rgba(255,255,255,0.06) 0px, transparent 50px) bottom right,
+        linear-gradient(45deg,  rgba(255,255,255,0.06) 0px, transparent 50px) bottom left;
+      background-repeat: no-repeat;
+      background-size: 70px 70px;
+      pointer-events: none; z-index: 0;
     }
     .auth-wrap {
       min-height: 100%;
       display: flex; flex-direction: column;
       padding: 0 24px calc(40px + var(--safe-b));
+      position: relative; z-index: 1;
     }
     .auth-logo-area {
       display: flex; flex-direction: column; align-items: center;
-      padding: 48px 0 32px;
-      gap: 12px;
+      padding: 40px 0 28px;
+      gap: 10px;
     }
-    .auth-logo-area svg { width: 52px; height: 52px; }
-    .auth-logo-name { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+    .auth-logo-area img { width: 90px; height: 90px; border-radius: 20px; filter: drop-shadow(0 0 20px rgba(255,255,255,0.25)); }
+    .auth-logo-name { font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+    .auth-tagline { font-size: 10px; color: var(--w40); letter-spacing: 3px; text-transform: uppercase; }
 
     .auth-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
     .auth-sub   { font-size: 13px; color: var(--w40); margin-bottom: 28px; line-height: 1.5; }
@@ -224,16 +322,24 @@
     .input-label { font-size: 12px; font-weight: 600; color: var(--w70); margin-bottom: 6px; display: block; letter-spacing: 0.3px; }
     .input-wrap  { position: relative; }
     .input-field {
-      width: 100%; padding: 14px 16px;
-      background: var(--bg2); border: 1px solid var(--glass-b);
-      border-radius: var(--r16); color: var(--white);
+      width: 100%; padding: 14px 16px 14px 44px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; color: var(--white);
       font-family: var(--font); font-size: 14px; font-weight: 500;
-      outline: none; transition: border-color 0.2s;
+      outline: none; transition: border-color 0.2s, background 0.2s;
       -webkit-appearance: none;
     }
-    .input-field::placeholder { color: var(--w20); }
-    .input-field:focus { border-color: var(--orange); }
+    .input-field::placeholder { color: rgba(255,255,255,0.2); }
+    .input-field:focus {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.06);
+    }
     .input-field.has-toggle { padding-right: 48px; }
+    .input-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: rgba(255,255,255,0.3); font-size: 16px; pointer-events: none;
+    }
     .input-toggle {
       position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
       background: none; border: none; color: var(--w40); cursor: pointer;
@@ -252,19 +358,26 @@
 
     .btn-primary {
       width: 100%; padding: 15px;
-      background: var(--grad); border: none; border-radius: var(--r16);
-      color: white; font-family: var(--font); font-size: 15px; font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+      border: none; border-radius: 14px;
+      color: #000; font-family: var(--font); font-size: 15px; font-weight: 800;
       cursor: pointer; transition: opacity 0.15s, transform 0.1s;
       margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+      letter-spacing: 0.3px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .btn-primary:active { opacity: 0.85; transform: scale(0.99); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary:active { opacity: 0.88; transform: scale(0.99); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
     .btn-secondary {
       width: 100%; padding: 14px;
-      background: var(--glass); border: 1px solid var(--glass-b); border-radius: var(--r16);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
       color: var(--white); font-family: var(--font); font-size: 14px; font-weight: 600;
       cursor: pointer; margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
     .auth-divider {
@@ -512,14 +625,22 @@
     ============================================ */
     .hero-card {
       margin: 16px 20px 14px; padding: 22px 20px;
-      border-radius: var(--r24);
-      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(200,200,200,0.06) 50%, transparent 100%);
-      border: 1px solid rgba(255,255,255,0.18); position: relative; overflow: hidden;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.15);
+      position: relative; overflow: hidden;
+      /* Sudut futuristik */
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+    .hero-card::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.06) 0%, transparent 65%);
+      pointer-events: none;
     }
     .hero-card::after {
-      content: ''; position: absolute; top: -40px; right: -40px;
-      width: 140px; height: 140px;
-      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
       pointer-events: none;
     }
     .hero-eyebrow { font-size: 12px; color: var(--w40); letter-spacing: 0.5px; margin-bottom: 4px; }
@@ -527,9 +648,19 @@
     .hero-sub     { font-size: 13px; font-weight: 600; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; }
     .hero-bio     { font-size: 13px; color: var(--w70); line-height: 1.65; }
 
-    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin: 0 20px 22px; }
-    .stat-box  { background: var(--glass); border: 1px solid var(--glass-b); border-radius: var(--r16); padding: 13px 6px; text-align: center; }
-    .stat-num  { display: block; font-size: 18px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 4px; }
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 0 20px 22px; }
+    .stat-box  {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 13px 4px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .stat-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+    .stat-icon { display: block; font-size: 14px; margin-bottom: 4px; opacity: 0.7; }
+    .stat-num  { display: block; font-size: 17px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; }
     .stat-lbl  { display: block; font-size: 9px; color: var(--w40); font-weight: 500; }
 
     .section-head { display: flex; align-items: center; justify-content: space-between; margin: 0 20px 14px; }
@@ -538,16 +669,27 @@
 
     .proj-grid { display: flex; flex-direction: column; gap: 12px; margin: 0 20px 22px; }
     .proj-card {
-      background: var(--bg2); border: 1px solid var(--glass-b);
-      border-radius: var(--r24); padding: 18px;
-      cursor: pointer; transition: transform 0.15s;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; padding: 18px;
+      cursor: pointer; transition: transform 0.15s, border-color 0.2s;
       display: flex; gap: 14px; align-items: flex-start;
+      position: relative; overflow: hidden;
     }
-    .proj-card:active { transform: scale(0.98); }
-    .proj-card.c-wargaku { border-color: rgba(255,255,255,0.15); }
-    .proj-card.c-fidu    { border-color: rgba(255,255,255,0.15); }
-    .proj-card.c-school  { border-color: rgba(255,255,255,0.15); }
-    .proj-card.c-vedu    { border-color: rgba(255,255,255,0.15); }
+    .proj-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+    .proj-card::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      border-style: solid; border-width: 0 16px 16px 0;
+      border-color: transparent rgba(255,255,255,0.15) transparent transparent;
+    }
+    .proj-card:active { transform: scale(0.98); border-color: rgba(255,255,255,0.25); }
+    .proj-card.c-wargaku { border-color: rgba(255,255,255,0.12); }
+    .proj-card.c-fidu    { border-color: rgba(255,255,255,0.12); }
+    .proj-card.c-school  { border-color: rgba(255,255,255,0.12); }
+    .proj-card.c-vedu    { border-color: rgba(255,255,255,0.12); }
     .proj-icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
     .proj-body { flex: 1; min-width: 0; }
     .proj-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
@@ -605,20 +747,36 @@
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       height: calc(68px + var(--safe-b)); padding-bottom: var(--safe-b);
-      background: rgba(8,8,8,0.92);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-top: 1px solid var(--glass-b);
+      background: rgba(4,4,4,0.95);
+      backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border-top: 1px solid rgba(255,255,255,0.08);
       display: flex; align-items: flex-start; padding-top: 6px; z-index: 20;
     }
-    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; cursor: pointer; border-radius: 12px; }
-    .nav-ico { font-size: 20px; color: var(--w40); transition: color 0.2s; line-height: 1; }
-    .nav-lbl { font-size: 10px; color: var(--w40); font-weight: 600; transition: color 0.2s; }
-    .nav-item.active .nav-ico, .nav-item.active .nav-lbl { color: var(--orange); }
+    .bottom-nav::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 30%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.25) 70%, transparent 100%);
+    }
+    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; cursor: pointer; border-radius: 10px; transition: all 0.2s; }
+    .nav-ico { font-size: 20px; color: rgba(255,255,255,0.3); transition: color 0.2s; line-height: 1; }
+    .nav-lbl { font-size: 10px; color: rgba(255,255,255,0.3); font-weight: 600; transition: color 0.2s; }
+    .nav-item.active .nav-ico { color: var(--white); filter: drop-shadow(0 0 6px rgba(255,255,255,0.6)); }
+    .nav-item.active .nav-lbl { color: var(--white); }
+    .nav-item.active { position: relative; }
+    .nav-item.active::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 20px; height: 2px; background: var(--white); border-radius: 999px; }
     .nav-ai {
-      width: 48px; height: 48px; border-radius: 15px; background: var(--grad);
+      width: 52px; height: 52px; border-radius: 16px;
+      background: linear-gradient(135deg, #fff 0%, #888 100%);
       display: flex; align-items: center; justify-content: center; font-size: 22px;
-      flex-shrink: 0; margin: -4px 12px 0;
-      box-shadow: 0 4px 20px rgba(255,255,255,0.35); cursor: pointer;
+      flex-shrink: 0; margin: -6px 10px 0;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 4px 15px rgba(0,0,0,0.5); cursor: pointer;
+      position: relative;
+    }
+    .nav-ai::before {
+      content: '';
+      position: absolute; inset: -1px; border-radius: 17px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.5), transparent);
+      z-index: -1;
     }
     .nav-ai:active { transform: scale(0.95); }
 
@@ -1187,20 +1345,23 @@
       <div class="auth-logo-name"><span class="ide">Ide</span><span class="a1" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">A1</span></div>
     </div>
 
-    <div class="auth-title">Selamat Datang 👋</div>
-    <div class="auth-sub">Masuk untuk mengakses semua proyek dan fitur IdeA1.</div>
+    <div class="auth-title">Selamat Datang</div>
+    <div class="auth-sub">Masuk ke akun Anda untuk melanjutkan ke IdeA1.</div>
+    <div class="auth-sub" style="display:none">Masuk untuk mengakses semua proyek dan fitur IdeA1.</div>
 
     <div id="login-alert" class="alert-box error"></div>
 
     <div class="input-group">
       <label class="input-label">Email</label>
-      <input id="login-email" class="input-field" type="email" placeholder="email@kamu.com" autocomplete="email">
+      <span class="input-icon">✉</span>
+      <input id="login-email" class="input-field" type="email" placeholder="Email atau Username" autocomplete="email">
     </div>
 
     <div class="input-group">
       <label class="input-label">Password</label>
       <div class="input-wrap">
-        <input id="login-pass" class="input-field has-toggle" type="password" placeholder="Masukkan password" autocomplete="current-password">
+        <span class="input-icon">🔒</span>
+      <input id="login-pass" class="input-field has-toggle" type="password" placeholder="Password" autocomplete="current-password">
         <button class="input-toggle" onclick="togglePass('login-pass', this)">👁️</button>
       </div>
     </div>
@@ -1216,6 +1377,7 @@
 
     <div class="auth-divider">atau</div>
 
+    <p style="text-align:center;font-size:10px;color:rgba(255,255,255,0.15);margin-bottom:16px;letter-spacing:2px;">POWERED BY IDEA1</p>
     <div class="auth-footer">
       Belum punya akun? <span onclick="showScreen('register')">Daftar sekarang</span>
     </div>
@@ -1339,10 +1501,10 @@
     </div>
 
     <div class="stats-row">
-      <div class="stat-box"><span class="stat-num">4</span><span class="stat-lbl">Proyek</span></div>
-      <div class="stat-box"><span class="stat-num">1</span><span class="stat-lbl">Live</span></div>
-      <div class="stat-box"><span class="stat-num">Solo</span><span class="stat-lbl">Lokasi</span></div>
-      <div class="stat-box"><span class="stat-num">2026</span><span class="stat-lbl">Tahun</span></div>
+      <div class="stat-box"><span class="stat-icon">⬛</span><span class="stat-num">4</span><span class="stat-lbl">Proyek</span></div>
+      <div class="stat-box"><span class="stat-icon">📡</span><span class="stat-num">1</span><span class="stat-lbl">Live</span></div>
+      <div class="stat-box"><span class="stat-icon">📍</span><span class="stat-num">Solo</span><span class="stat-lbl">Lokasi</span></div>
+      <div class="stat-box"><span class="stat-icon">📅</span><span class="stat-num">2026</span><span class="stat-lbl">Tahun</span></div>
     </div>
 
     <div class="section-head">
