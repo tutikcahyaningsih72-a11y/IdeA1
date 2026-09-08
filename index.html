@@ -2948,11 +2948,16 @@ const auth = {
 ============================================ */
 let prevScreen = 'home';
 
+var _initDone = false; /* Flag: splash selesai baru boleh pindah screen */
+
 function showScreen(id, anim = true) {
-  /* display:none semua screen — paling reliable di Android */
+  /* Blokir pindah screen selama splash masih tampil */
+  if (!_initDone && id !== 'splash' && id !== 'onboarding' && id !== 'login' && id !== 'home') {
+    console.log('[IdeA1] showScreen blocked during init:', id);
+    return;
+  }
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active', 'slide-in');
-    /* display dihandle oleh .active class via CSS */
   });
   const next = document.getElementById(id);
   if (!next) return;
@@ -4556,6 +4561,7 @@ setTimeout(async () => {
     }
 
     const onboarded = localStorage.getItem('idea1_onboarded');
+    _initDone = true; /* Buka blokir showScreen */
     if (!onboarded) {
       showScreen('onboarding', false);
     } else if (currentUser) {
@@ -4566,6 +4572,7 @@ setTimeout(async () => {
     }
   } catch(e) {
     console.error('Init error:', e);
+    _initDone = true;
     showScreen('login', false);
   }
 }, 2500);
