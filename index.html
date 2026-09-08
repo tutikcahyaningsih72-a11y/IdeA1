@@ -2807,6 +2807,7 @@ function initSupabase() {
           id: session.user.id,
           joined: new Date(session.user.created_at).toLocaleDateString('id-ID', { year:'numeric', month:'short' })
         };
+        /* Jangan redirect screen saat auth change — biarkan init yang handle */
       } else {
         currentUser = null;
       }
@@ -2949,12 +2950,15 @@ const auth = {
 let prevScreen = 'home';
 
 var _initDone = false; /* Flag: splash selesai baru boleh pindah screen */
+var _userNavigated = false; /* Flag: user sudah tap sesuatu */
 
 function showScreen(id, anim = true) {
-  /* Blokir pindah screen selama splash masih tampil */
-  if (!_initDone && id !== 'splash' && id !== 'onboarding' && id !== 'login' && id !== 'home') {
-    console.log('[IdeA1] showScreen blocked during init:', id);
-    return;
+  /* Selama init, hanya boleh ke splash/onboarding/login/home */
+  if (!_initDone) {
+    if (id !== 'splash' && id !== 'onboarding' && id !== 'login' && id !== 'home') {
+      console.log('[IdeA1] showScreen blocked during init:', id);
+      return;
+    }
   }
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active', 'slide-in');
@@ -2994,6 +2998,7 @@ function showScreen(id, anim = true) {
 }
 
 function setNav(el, screenId) {
+  _userNavigated = true;
   const nav = el.closest('.bottom-nav');
   nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
@@ -3001,6 +3006,7 @@ function setNav(el, screenId) {
 }
 
 function goToProfile() {
+  _userNavigated = true;
   const user = auth.getSession();
   if (user) {
     updateProfileUI(user);
