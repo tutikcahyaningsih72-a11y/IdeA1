@@ -4524,6 +4524,18 @@ function shareBlog() {
 /* ============================================
    APP INIT
 ============================================ */
+/* PAKSA RESET KE SPLASH - jalankan synchronous sebelum init */
+(function() {
+  /* Sembunyikan semua screen selain splash */
+  var screens = document.querySelectorAll('.screen');
+  screens.forEach(function(s) { s.classList.remove('active'); });
+  var splash = document.getElementById('splash');
+  if (splash) splash.classList.add('active');
+  /* Scroll ke atas */
+  window.scrollTo(0, 0);
+  document.body.scrollTop = 0;
+})();
+
 setTimeout(async () => {
   try {
     /* Cek session dari Supabase jika sudah dikonfigurasi */
@@ -4556,7 +4568,7 @@ setTimeout(async () => {
     console.error('Init error:', e);
     showScreen('login', false);
   }
-}, 2700);
+}, 2500);
 
 /* visibilitychange dihapus - tidak diperlukan */
 
@@ -4586,6 +4598,31 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   });
 }
+
+/* Handle Android back/forward cache - paksa reload fresh */
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) {
+    /* Halaman dari cache Android - reload paksa */
+    window.location.reload(true);
+  }
+});
+
+/* Handle visibilitychange - reset jika app di-resume dari background */
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') {
+    var activeScreen = document.querySelector('.screen.active');
+    var badScreens = ['settings', 'profile', 'admin', 'edit-profile'];
+    if (activeScreen && badScreens.indexOf(activeScreen.id) !== -1) {
+      /* Kalau buka dari background di halaman settings dll, kembali ke home/login */
+      var user = typeof currentUser !== 'undefined' ? currentUser : null;
+      if (user) {
+        showScreen('home', false);
+      } else {
+        showScreen('login', false);
+      }
+    }
+  }
+});
 
 /* SELALU MULAI DARI SPLASH SAAT APP DIBUKA */
 document.addEventListener('DOMContentLoaded', function() {
