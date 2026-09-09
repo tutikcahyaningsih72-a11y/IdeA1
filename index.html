@@ -2840,6 +2840,8 @@ window.addEventListener('load', () => {
     if (s.id !== 'splash') s.classList.remove('active');
   });
   document.getElementById('splash')?.classList.add('active');
+  /* Set timestamp start untuk guard 5 detik */
+  window._appStartTime = Date.now();
 })();
 
 /* ============================================
@@ -2953,10 +2955,13 @@ var _initDone = false; /* Flag: splash selesai baru boleh pindah screen */
 var _userNavigated = false; /* Flag: user sudah tap sesuatu */
 
 function showScreen(id, anim = true) {
-  /* Selama init, hanya boleh ke splash/onboarding/login/home */
-  if (!_initDone) {
-    if (id !== 'splash' && id !== 'onboarding' && id !== 'login' && id !== 'home') {
-      console.log('[IdeA1] showScreen blocked during init:', id);
+  /* Selama init ATAU dalam 5 detik pertama, blokir screen sensitif */
+  const elapsed = Date.now() - (window._appStartTime || 0);
+  const badScreens = ['settings', 'profile', 'admin', 'admin-blog', 'admin-dashboard', 'admin-users', 'edit-profile'];
+  
+  if (!_initDone || elapsed < 3000) {
+    if (badScreens.indexOf(id) !== -1) {
+      console.log('[IdeA1] showScreen BLOCKED:', id, '| initDone:', _initDone, '| elapsed:', elapsed);
       return;
     }
   }
@@ -2976,7 +2981,7 @@ function showScreen(id, anim = true) {
   /* Side effects per screen */
   if (id === 'blog')              setTimeout(filterBlog, 50);
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
-  if (id === 'settings')          setTimeout(loadSettings, 50);
+  if (id === 'settings' && _initDone) setTimeout(loadSettings, 50);
   if (id === 'admin-blog')        setTimeout(renderAdminList, 50);
   if (id === 'admin-dashboard')   setTimeout(refreshAdminStats, 50);
   if (id === 'admin-users')       setTimeout(loadAdminUsers, 50);
@@ -2995,6 +3000,8 @@ function showScreen(id, anim = true) {
     const user = auth.getSession();
     if (user) setTimeout(() => updateProfileUI(user), 50);
   }
+  /* Log setiap perpindahan screen untuk debug */
+  console.log('[SCREEN]', id, '| initDone:', _initDone, '| time:', new Date().toISOString());
 }
 
 function setNav(el, screenId) {
@@ -3934,11 +3941,17 @@ function clearAppData() {
     const session = localStorage.getItem('idea1_session_perm');
     localStorage.clear();
     if (session) localStorage.setItem('idea1_session_perm', session);
-    // Reset SW cache
+    /* Simpan kembali onboarded agar tidak muncul lagi */
+    localStorage.setItem('idea1_onboarded', 'true');
+    /* Reset SW cache */
     if ('serviceWorker' in navigator) {
       caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
     }
     showToast('✅ Data lokal berhasil dihapus');
+    /* Reload ke home setelah 1.5 detik */
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 }
 
