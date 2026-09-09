@@ -2768,13 +2768,8 @@
     document.referrer.includes('android-app://');
 
   if (!isStandalone) {
-    /* Scroll trick untuk sembunyikan address bar di browser */
-    window.addEventListener('load', () => {
-      setTimeout(() => window.scrollTo(0, 1), 100);
-    });
-    window.addEventListener('orientationchange', () => {
-      setTimeout(() => window.scrollTo(0, 1), 200);
-    });
+    /* Scroll trick dihapus - menyebabkan bug navigasi ke settings */
+    /* window.scrollTo(0, 1) tidak digunakan */
   }
 
   /* Tambah class ke body untuk styling */
