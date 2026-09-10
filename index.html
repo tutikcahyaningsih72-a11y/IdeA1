@@ -40,6 +40,8 @@
       --green:  #22c55e;
       --red:    #ef4444;
       --indigo: #a3a3a3;
+      --gold:   #C9A84C;
+      --gold-grad: linear-gradient(135deg, #C9A84C 0%, #F5D88A 50%, #C9A84C 100%);
       --r24: 20px; --r16: 14px; --r12: 10px;
       --font: 'Plus Jakarta Sans', system-ui, sans-serif;
       --safe-b: env(safe-area-inset-bottom, 0px);
@@ -296,10 +298,10 @@
     }
     .avatar-circle {
       width: 80px; height: 80px; border-radius: 50%;
-      background: var(--grad);
+      background: var(--gold-grad);
       display: flex; align-items: center; justify-content: center;
-      font-size: 28px; font-weight: 800; color: white;
-      box-shadow: 0 4px 20px rgba(255,255,255,0.3);
+      font-size: 28px; font-weight: 800; color: #000;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.4);
       position: relative;
     }
     .avatar-edit {
@@ -313,8 +315,8 @@
     .profile-email { font-size: 13px; color: var(--w40); }
     .profile-role  {
       padding: 4px 12px; border-radius: 999px;
-      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-      font-size: 11px; font-weight: 700; color: var(--orange);
+      background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4);
+      font-size: 11px; font-weight: 700; color: var(--gold);
     }
 
     .profile-stats {
@@ -327,7 +329,7 @@
     }
     .pstat-num {
       display: block; font-size: 20px; font-weight: 800;
-      background: var(--grad); -webkit-background-clip: text;
+      background: var(--gold-grad); -webkit-background-clip: text;
       -webkit-text-fill-color: transparent; background-clip: text;
     }
     .pstat-lbl { display: block; font-size: 10px; color: var(--w40); margin-top: 3px; }
@@ -636,7 +638,7 @@
       outline: none; transition: border-color 0.2s;
       -webkit-appearance: none;
     }
-    .blog-search:focus { border-color: var(--orange); }
+    .blog-search:focus { border-color: var(--gold); }
     .blog-search::placeholder { color: var(--w20); }
     .blog-search-wrap { position: relative; padding: 12px 20px 0; }
     .blog-search-ico {
@@ -658,7 +660,7 @@
       flex-shrink: 0;
     }
     .cat-tab.active {
-      background: var(--grad); border-color: transparent; color: white;
+      background: var(--gold-grad); border-color: transparent; color: #000;
     }
 
     .blog-list { padding: 14px 20px 0; display: flex; flex-direction: column; gap: 14px; }
@@ -1572,7 +1574,7 @@
     <div class="menu-section" id="admin-menu-section" style="display:none;">
       <div class="menu-title">⭐ Admin Panel</div>
       <div class="menu-item" onclick="showScreen('admin-dashboard')">
-        <div class="menu-item-icon" style="background:linear-gradient(135deg,#FFFFFF,#B0B0B0);">📊</div>
+        <div class="menu-item-icon" style="background:linear-gradient(135deg,#C9A84C,#F5D88A);">📊</div>
         <div class="menu-item-body">
           <div class="menu-item-title">Dashboard Admin</div>
           <div class="menu-item-sub">Statistik, kelola artikel & user</div>
@@ -2600,15 +2602,7 @@
     window.navigator.standalone ||
     document.referrer.includes('android-app://');
 
-  if (!isStandalone) {
-    /* Scroll trick untuk sembunyikan address bar di browser */
-    window.addEventListener('load', () => {
-      setTimeout(() => window.scrollTo(0, 1), 100);
-    });
-    window.addEventListener('orientationchange', () => {
-      setTimeout(() => window.scrollTo(0, 1), 200);
-    });
-  }
+  /* scrollTo(0,1) dihapus - menyebabkan bug buka ke Settings */
 
   /* Tambah class ke body untuk styling */
   document.documentElement.classList.add(isStandalone ? 'pwa-mode' : 'browser-mode');
@@ -2781,7 +2775,14 @@ const auth = {
 ============================================ */
 let prevScreen = 'home';
 
+var _initDone = false;
+
 function showScreen(id, anim = true) {
+  const elapsed = Date.now() - (window._appStartTime || 0);
+  const badScreens = ['settings', 'profile', 'admin', 'admin-blog', 'admin-dashboard', 'edit-profile'];
+  if (!_initDone || elapsed < 3000) {
+    if (badScreens.indexOf(id) !== -1) return;
+  }
   /* display:none semua screen — paling reliable di Android */
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active', 'slide-in');
@@ -4357,6 +4358,16 @@ function shareBlog() {
 /* ============================================
    APP INIT
 ============================================ */
+/* PAKSA RESET KE SPLASH */
+(function() {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+  var splash = document.getElementById('splash');
+  if (splash) splash.classList.add('active');
+  window._appStartTime = Date.now();
+})();
+
 setTimeout(async () => {
   try {
     /* Cek session dari Supabase jika sudah dikonfigurasi */
@@ -4377,6 +4388,7 @@ setTimeout(async () => {
     }
 
     const onboarded = localStorage.getItem('idea1_onboarded');
+    _initDone = true;
     if (!onboarded) {
       showScreen('onboarding', false);
     } else if (currentUser) {
@@ -4386,10 +4398,10 @@ setTimeout(async () => {
       showScreen('login', false);
     }
   } catch(e) {
-    console.error('Init error:', e);
+    _initDone = true;
     showScreen('login', false);
   }
-}, 2700);
+}, 2500);
 
 /* visibilitychange dihapus - tidak diperlukan */
 
@@ -4419,6 +4431,10 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   });
 }
+
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) window.location.reload(true);
+});
 </script>
 </body>
 </html>
