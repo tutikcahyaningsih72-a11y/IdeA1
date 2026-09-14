@@ -570,6 +570,7 @@
     .badge.plan   { background: rgba(99,102,241,0.12); color: var(--indigo); border: 1px solid rgba(99,102,241,0.2); }
 
     .btn-open { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 10px; background: var(--grad); color: white; font-size: 11px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; }
+    .btn-install { display: inline-flex; align-items: center; gap: 4px; padding: 5px 11px; border-radius: 10px; background: transparent; color: var(--gold); font-size: 11px; font-weight: 700; text-decoration: none; border: 1px solid var(--gold); cursor: pointer; }
 
     .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
     .tech-tag  { padding: 3px 9px; background: var(--glass); border: 1px solid var(--glass-b); border-radius: 8px; font-size: 10px; color: var(--w70); font-weight: 500; }
@@ -1372,7 +1373,7 @@
           <div class="proj-desc">Aplikasi manajemen RT/RW digital untuk warga Kartasura, Solo.</div>
           <div class="proj-footer">
             <span class="badge live"><span class="badge-dot"></span>Live</span>
-            <a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a>
+            <a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://wargaku-apk.netlify.app','WargaKu')">Instal ↓</button>
           </div>
         </div>
       </div>
@@ -1393,7 +1394,7 @@
         <div class="proj-body">
           <div class="proj-name">SchoolID</div>
           <div class="proj-desc">Asisten digital manajemen sekolah modern Indonesia.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://schoolidvercelapp.vercel.app','SchoolID')">Instal ↓</button></div>
         </div>
       </div>
       <div class="proj-card c-vedu" onclick="showDetail('vedu')">
@@ -1403,7 +1404,7 @@
         <div class="proj-body">
           <div class="proj-name">VEDU</div>
           <div class="proj-desc">Platform pembelajaran digital dengan AI Tutor & sertifikat.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://vedu-app.vercel.app','VEDU')">Instal ↓</button></div>
         </div>
       </div>
       <div class="proj-card c-masjidku" onclick="showDetail('masjidku')">
@@ -1419,7 +1420,7 @@
         <div class="proj-body">
           <div class="proj-name">JasaKu</div>
           <div class="proj-desc">Marketplace jasa & tukang terpercaya di sekitarmu.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://jasa-ku-solo.vercel.app','JasaKu')">Instal ↓</button></div>
         </div>
       </div>
       <div class="proj-card c-paijo" onclick="showDetail('paijo')">
@@ -1427,7 +1428,7 @@
         <div class="proj-body">
           <div class="proj-name">PaiJO</div>
           <div class="proj-desc">Chatbot AI berbahasa Jawa — Bolo Dewe.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://paijo-app.vercel.app','PaiJO')">Instal ↓</button></div>
         </div>
       </div>
       <div class="proj-card c-kosku" onclick="showDetail('kosku')">
@@ -1435,7 +1436,7 @@
         <div class="proj-body">
           <div class="proj-name">KosKu Solo</div>
           <div class="proj-desc">Aplikasi pencarian kamar kos Soloraya.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://kosku-solo-app.vercel.app','KosKu Solo')">Instal ↓</button></div>
         </div>
       </div>
     </div>
@@ -1489,7 +1490,7 @@
       <div class="proj-body">
         <div class="proj-name">WargaKu</div>
         <div class="proj-desc">Kelola RT/RW digital. Firebase Auth & Firestore, citizen dashboard, admin panel, iuran, arsip digital.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://wargaku-apk.netlify.app','WargaKu')">Instal ↓</button></div>
         <div class="tech-tags"><span class="tech-tag">Firebase</span><span class="tech-tag">Firestore</span><span class="tech-tag">PWA</span><span class="tech-tag">Netlify</span></div>
       </div>
     </div>
@@ -1507,7 +1508,7 @@
       <div class="proj-body">
         <div class="proj-name">SchoolID</div>
         <div class="proj-desc">Asisten digital sekolah Indonesia. Dashboard guru, siswa, orang tua, absensi, laporan harian.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://schoolidvercelapp.vercel.app','SchoolID')">Instal ↓</button></div>
         <div class="tech-tags"><span class="tech-tag">Supabase</span><span class="tech-tag">PWA</span><span class="tech-tag">AI</span></div>
       </div>
     </div>
@@ -1516,7 +1517,7 @@
       <div class="proj-body">
         <div class="proj-name">VEDU</div>
         <div class="proj-desc">Platform e-learning modern. Video, kuis, sertifikat, dan AI Tutor personal.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://vedu-app.vercel.app','VEDU')">Instal ↓</button></div>
         <div class="tech-tags"><span class="tech-tag">Video</span><span class="tech-tag">AI Tutor</span><span class="tech-tag">PWA</span></div>
       </div>
     </div>
@@ -1533,7 +1534,7 @@
       <div class="proj-body">
         <div class="proj-name">JasaKu</div>
         <div class="proj-desc">Marketplace jasa & tukang — cari tenaga ahli terpercaya di sekitarmu.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://jasa-ku-solo.vercel.app','JasaKu')">Instal ↓</button></div>
       </div>
     </div>
     <div class="proj-card c-paijo" style="margin-bottom:12px;" onclick="showDetail('paijo')">
@@ -1541,7 +1542,7 @@
       <div class="proj-body">
         <div class="proj-name">PaiJO</div>
         <div class="proj-desc">Chatbot AI berbahasa Jawa — teman ngobrol santai, Bolo Dewe.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://paijo-app.vercel.app','PaiJO')">Instal ↓</button></div>
       </div>
     </div>
     <div class="proj-card c-kosku" style="margin-bottom:12px;" onclick="showDetail('kosku')">
@@ -1549,7 +1550,7 @@
       <div class="proj-body">
         <div class="proj-name">KosKu Solo</div>
         <div class="proj-desc">Aplikasi pencarian kamar kos di wilayah Soloraya — cepat, mudah, terpercaya.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://kosku-solo-app.vercel.app','KosKu Solo')">Instal ↓</button></div>
       </div>
     </div>
   </div>
@@ -3806,6 +3807,22 @@ function showInstallGuide() {
     guide = '💻 Cara install di Desktop:\n\n1. Klik ikon install (📥) di address bar\n2. Klik "Install"';
   }
   alert(guide);
+}
+
+function installApp(url, nama) {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isAndroid = /Android/.test(navigator.userAgent);
+  let guide = '';
+  if (isIOS) {
+    guide = '📱 Cara install ' + nama + ' di iPhone/iPad:\n\n1. Aplikasi akan dibuka di browser\n2. Tap ikon Share (kotak dengan panah ↑)\n3. Scroll ke bawah, tap "Add to Home Screen"\n4. Tap "Add"\n\nAplikasi akan muncul di layar utama HP Anda.';
+  } else if (isAndroid) {
+    guide = '📱 Cara install ' + nama + ' di Android:\n\n1. Aplikasi akan dibuka di Chrome\n2. Tap menu ⋮ (titik tiga) di pojok kanan atas\n3. Tap "Add to Home Screen" atau "Install App"\n4. Tap "Add"\n\nAplikasi akan muncul di layar utama HP Anda.';
+  } else {
+    guide = '💻 Cara install ' + nama + ' di Desktop:\n\n1. Aplikasi akan dibuka di browser\n2. Klik ikon install (📥) di address bar\n3. Klik "Install"\n\nAplikasi siap digunakan!';
+  }
+  if (confirm(guide + '\n\nBuka ' + nama + ' sekarang?')) {
+    window.open(url, '_blank');
+  }
 }
 
 /* --- SETTINGS --- */
