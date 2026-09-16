@@ -1605,7 +1605,7 @@
 
     <div class="menu-section">
       <div class="menu-title">Akun</div>
-      <div class="menu-item">
+      <div class="menu-item" onclick="showScreen('edit-profile')">
         <div class="menu-item-icon" style="background:rgba(201,168,76,0.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <div class="menu-item-body">
           <div class="menu-item-title">Edit Profil</div>
@@ -1625,7 +1625,7 @@
 
     <div class="menu-section">
       <div class="menu-title">Lainnya</div>
-      <div class="menu-item">
+      <div class="menu-item" onclick="showScreen('about')">
         <div class="menu-item-icon" style="background:rgba(201,168,76,0.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
         <div class="menu-item-body">
           <div class="menu-item-title">Tentang IdeA1</div>
@@ -1633,7 +1633,7 @@
         </div>
         <span class="menu-item-arrow">›</span>
       </div>
-      <div class="menu-item">
+      <div class="menu-item" onclick="showScreen('rating')">
         <div class="menu-item-icon" style="background:rgba(201,168,76,0.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="menu-item-body">
           <div class="menu-item-title">Beri Rating</div>
@@ -4591,6 +4591,184 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('pageshow', function(e) {
   if (e.persisted) window.location.reload(true);
 });
+</script>
+
+<!-- ==========================================
+     ABOUT SCREEN
+========================================== -->
+<div id="about" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('profile')">←</button>
+      <span class="sub-title">Tentang IdeA1</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:24px 20px;">
+
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="width:72px;height:72px;margin:0 auto 14px;border-radius:18px;overflow:hidden;border:2px solid var(--gold);padding:4px;box-sizing:border-box;">
+        <img src="data:image/png;base64,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" style="width:100%;height:100%;border-radius:12px;object-fit:cover;" alt="Logo IdeA1">
+      </div>
+      <div style="font-size:22px;font-weight:800;color:white;margin-bottom:4px;"><span style="color:white;">Ide</span><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">A1</span></div>
+      <div style="font-size:13px;color:var(--gold);font-weight:600;margin-bottom:4px;">Versi 2.0 · Begin Making Better</div>
+      <div style="font-size:12px;color:var(--w40);">Digital Ecosystem Hub</div>
+    </div>
+
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:10px;">📌 Tentang Aplikasi</div>
+      <div style="font-size:13px;color:var(--w70);line-height:1.7;">
+        IdeA1 adalah platform ekosistem digital yang menghubungkan berbagai aplikasi inovatif karya tim IdeA1. Dari manajemen warga, pendidikan, hingga marketplace jasa — semuanya hadir dalam satu genggaman.
+      </div>
+    </div>
+
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">🚀 Fitur Unggulan</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);">
+          <span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">🏘️</span> 8 Proyek Aplikasi Live & Aktif
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);">
+          <span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">🤖</span> AI Assistant Multi-fungsi
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);">
+          <span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">📰</span> Blog & Artikel Edukasi
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);">
+          <span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">📲</span> PWA — Bisa Diinstal di HP
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);">
+          <span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">🌙</span> Dark Mode & Tema Emas
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">👥 Tim Pengembang</div>
+      <div style="font-size:13px;color:var(--w70);line-height:1.8;">
+        <div>🧑‍💼 <strong style="color:var(--w90);">Muhammad Febriyanto</strong> — Founder & CEO</div>
+        <div style="margin-top:4px;">✉️ mfebrianto78@gmail.com</div>
+        <div style="margin-top:4px;">📸 @ideai2026</div>
+      </div>
+    </div>
+
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:10px;">⚖️ Hak Cipta</div>
+      <div style="font-size:12px;color:var(--w40);line-height:1.7;">© 2026 IdeA1. Seluruh hak cipta dilindungi. Dibuat dengan ❤️ di Solo, Indonesia.</div>
+    </div>
+
+    <button onclick="showScreen('profile')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--gold);border-radius:14px;color:var(--gold);font-size:14px;font-weight:700;cursor:pointer;">← Kembali ke Profil</button>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<!-- ==========================================
+     RATING SCREEN
+========================================== -->
+<div id="rating" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('profile')">←</button>
+      <span class="sub-title">Beri Rating</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:24px 20px;">
+
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="font-size:48px;margin-bottom:10px;">⭐</div>
+      <div style="font-size:18px;font-weight:800;color:white;margin-bottom:6px;">Bagaimana pengalaman Anda?</div>
+      <div style="font-size:13px;color:var(--w50);">Penilaian Anda sangat berarti untuk perkembangan IdeA1</div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:12px;margin-bottom:28px;" id="star-container">
+      <span onclick="setRating(1)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;">★</span>
+      <span onclick="setRating(2)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;">★</span>
+      <span onclick="setRating(3)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;">★</span>
+      <span onclick="setRating(4)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;">★</span>
+      <span onclick="setRating(5)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;">★</span>
+    </div>
+    <div id="rating-label" style="text-align:center;font-size:14px;color:var(--gold);font-weight:600;margin-bottom:20px;min-height:20px;"></div>
+
+    <div style="margin-bottom:16px;">
+      <div style="font-size:13px;color:var(--w70);margin-bottom:8px;font-weight:600;">Komentar / Saran (opsional)</div>
+      <textarea id="rating-comment" placeholder="Tulis komentar atau saran Anda di sini..." style="width:100%;box-sizing:border-box;background:var(--glass);border:1px solid var(--glass-b);border-radius:12px;padding:14px;color:var(--w90);font-size:13px;font-family:inherit;resize:none;height:110px;outline:none;"></textarea>
+    </div>
+
+    <div id="rating-alert" style="display:none;background:rgba(201,168,76,0.12);border:1px solid var(--gold);border-radius:12px;padding:14px;text-align:center;font-size:13px;color:var(--gold);margin-bottom:16px;"></div>
+
+    <button onclick="submitRating()" id="rating-submit-btn" style="width:100%;padding:15px;background:var(--grad);border:none;border-radius:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;">Kirim Rating</button>
+    <button onclick="showScreen('profile')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--glass-b);border-radius:14px;color:var(--w70);font-size:14px;font-weight:600;cursor:pointer;">Batal</button>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<script>
+// Rating screen logic
+let currentRating = 0;
+const ratingLabels = ['','😞 Kurang Baik','😐 Cukup','🙂 Lumayan','😊 Bagus!','🤩 Luar Biasa!'];
+
+function setRating(val) {
+  currentRating = val;
+  const stars = document.querySelectorAll('.star-btn');
+  stars.forEach((s, i) => {
+    s.style.opacity = i < val ? '1' : '0.25';
+    s.style.color   = i < val ? 'var(--gold)' : 'var(--w40)';
+    s.style.transform = i < val ? 'scale(1.1)' : 'scale(1)';
+  });
+  document.getElementById('rating-label').textContent = ratingLabels[val] || '';
+}
+
+function submitRating() {
+  if (!currentRating) {
+    const alert = document.getElementById('rating-alert');
+    alert.style.display = 'block';
+    alert.textContent = '⚠️ Pilih bintang terlebih dahulu!';
+    alert.style.background = 'rgba(239,68,68,0.12)';
+    alert.style.borderColor = '#ef4444';
+    alert.style.color = '#ef4444';
+    setTimeout(() => { alert.style.display = 'none'; }, 2500);
+    return;
+  }
+  const comment = document.getElementById('rating-comment').value.trim();
+  const user = auth.currentUser;
+  const nama = user ? (user.email || 'Pengguna') : 'Tamu';
+
+  // Simpan ke localStorage sebagai fallback
+  const ratingData = {
+    bintang: currentRating,
+    komentar: comment,
+    pengguna: nama,
+    waktu: new Date().toISOString()
+  };
+  const riwayat = JSON.parse(localStorage.getItem('idea1_ratings') || '[]');
+  riwayat.push(ratingData);
+  localStorage.setItem('idea1_ratings', JSON.stringify(riwayat));
+
+  // Tampilkan sukses
+  const btn = document.getElementById('rating-submit-btn');
+  btn.disabled = true;
+  btn.textContent = '✅ Rating Terkirim!';
+  const alert = document.getElementById('rating-alert');
+  alert.style.display = 'block';
+  alert.style.background = 'rgba(201,168,76,0.12)';
+  alert.style.borderColor = 'var(--gold)';
+  alert.style.color = 'var(--gold)';
+  alert.textContent = '🌟 Terima kasih! Rating ' + currentRating + ' bintang Anda sudah kami terima.';
+
+  setTimeout(() => {
+    currentRating = 0;
+    document.querySelectorAll('.star-btn').forEach(s => {
+      s.style.opacity = '0.3';
+      s.style.color = '';
+      s.style.transform = 'scale(1)';
+    });
+    document.getElementById('rating-label').textContent = '';
+    document.getElementById('rating-comment').value = '';
+    document.getElementById('rating-alert').style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = 'Kirim Rating';
+    showScreen('profile');
+  }, 2500);
+}
 </script>
 </body>
 </html>
