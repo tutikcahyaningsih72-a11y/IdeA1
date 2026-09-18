@@ -1605,7 +1605,7 @@
 
     <div class="menu-section">
       <div class="menu-title">Akun</div>
-      <div class="menu-item">
+      <div class="menu-item" onclick="showScreen('edit-profile')">
         <div class="menu-item-icon" style="background:rgba(201,168,76,0.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <div class="menu-item-body">
           <div class="menu-item-title">Edit Profil</div>
@@ -1625,7 +1625,7 @@
 
     <div class="menu-section">
       <div class="menu-title">Lainnya</div>
-      <div class="menu-item">
+      <div class="menu-item" onclick="showScreen('about')">
         <div class="menu-item-icon" style="background:rgba(201,168,76,0.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
         <div class="menu-item-body">
           <div class="menu-item-title">Tentang IdeA1</div>
@@ -1633,7 +1633,7 @@
         </div>
         <span class="menu-item-arrow">›</span>
       </div>
-      <div class="menu-item">
+      <div class="menu-item" onclick="showScreen('rating')">
         <div class="menu-item-icon" style="background:rgba(201,168,76,0.12);"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="menu-item-body">
           <div class="menu-item-title">Beri Rating</div>
@@ -4591,6 +4591,139 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('pageshow', function(e) {
   if (e.persisted) window.location.reload(true);
 });
+</script>
+
+<!-- ABOUT SCREEN -->
+<div id="about" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('profile')">←</button>
+      <span class="sub-title">Tentang IdeA1</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:24px 20px;">
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="width:72px;height:72px;margin:0 auto 14px;border-radius:18px;overflow:hidden;border:2px solid var(--gold);padding:4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#111;">
+        <svg viewBox="0 0 100 100" width="56" height="56"><text y=".9em" font-size="90" x="5">A</text></svg>
+      </div>
+      <div style="font-size:22px;font-weight:800;color:white;margin-bottom:4px;">Ide<span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">A1</span></div>
+      <div style="font-size:13px;color:var(--gold);font-weight:600;margin-bottom:4px;">Versi 2.0 · Begin Making Better</div>
+      <div style="font-size:12px;color:var(--w40);">Digital Ecosystem Hub</div>
+    </div>
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:10px;">📌 Tentang Aplikasi</div>
+      <div style="font-size:13px;color:var(--w70);line-height:1.7;">IdeA1 adalah platform ekosistem digital yang menghubungkan berbagai aplikasi inovatif karya tim IdeA1. Dari manajemen warga, pendidikan, hingga marketplace jasa — semuanya hadir dalam satu genggaman.</div>
+    </div>
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">🚀 Fitur Unggulan</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">🏘️</span>8 Proyek Aplikasi Live & Aktif</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">🤖</span>AI Assistant Multi-fungsi</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">📰</span>Blog & Artikel Edukasi</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">📲</span>PWA — Bisa Diinstal di HP</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="width:28px;height:28px;background:rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">🌙</span>Dark Mode & Tema Emas</div>
+      </div>
+    </div>
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">👥 Tim Pengembang</div>
+      <div style="font-size:13px;color:var(--w70);line-height:1.8;">
+        <div>🧑‍💼 <strong style="color:var(--w90);">Muhammad Febriyanto</strong> — Founder & CEO</div>
+        <div style="margin-top:4px;">✉️ mfebrianto78@gmail.com</div>
+        <div style="margin-top:4px;">📸 @ideai2026</div>
+      </div>
+    </div>
+    <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;margin-bottom:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:10px;">⚖️ Hak Cipta</div>
+      <div style="font-size:12px;color:var(--w40);line-height:1.7;">© 2026 IdeA1. Seluruh hak cipta dilindungi. Dibuat dengan ❤️ di Solo, Indonesia.</div>
+    </div>
+    <button onclick="showScreen('profile')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--gold);border-radius:14px;color:var(--gold);font-size:14px;font-weight:700;cursor:pointer;">← Kembali ke Profil</button>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<!-- RATING SCREEN -->
+<div id="rating" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('profile')">←</button>
+      <span class="sub-title">Beri Rating</span>
+    </div>
+  </div>
+  <div class="scroll-area" style="padding:24px 20px;">
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="font-size:48px;margin-bottom:10px;">⭐</div>
+      <div style="font-size:18px;font-weight:800;color:white;margin-bottom:6px;">Bagaimana pengalaman Anda?</div>
+      <div style="font-size:13px;color:var(--w50);">Penilaian Anda sangat berarti untuk perkembangan IdeA1</div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:12px;margin-bottom:10px;">
+      <span onclick="setRating(1)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;color:var(--gold);">★</span>
+      <span onclick="setRating(2)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;color:var(--gold);">★</span>
+      <span onclick="setRating(3)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;color:var(--gold);">★</span>
+      <span onclick="setRating(4)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;color:var(--gold);">★</span>
+      <span onclick="setRating(5)" class="star-btn" style="font-size:40px;cursor:pointer;opacity:0.3;transition:all 0.2s;color:var(--gold);">★</span>
+    </div>
+    <div id="rating-label" style="text-align:center;font-size:14px;color:var(--gold);font-weight:600;margin-bottom:20px;min-height:20px;"></div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:13px;color:var(--w70);margin-bottom:8px;font-weight:600;">Komentar / Saran (opsional)</div>
+      <textarea id="rating-comment" placeholder="Tulis komentar atau saran Anda di sini..." style="width:100%;box-sizing:border-box;background:var(--glass);border:1px solid var(--glass-b);border-radius:12px;padding:14px;color:var(--w90);font-size:13px;font-family:inherit;resize:none;height:110px;outline:none;"></textarea>
+    </div>
+    <div id="rating-alert" style="display:none;border-radius:12px;padding:14px;text-align:center;font-size:13px;margin-bottom:16px;"></div>
+    <button onclick="submitRating()" id="rating-submit-btn" style="width:100%;padding:15px;background:var(--grad);border:none;border-radius:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;">Kirim Rating</button>
+    <button onclick="showScreen('profile')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--glass-b);border-radius:14px;color:var(--w70);font-size:14px;font-weight:600;cursor:pointer;">Batal</button>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<script>
+var currentRating = 0;
+var ratingLabels = ['','😞 Kurang Baik','😐 Cukup','🙂 Lumayan','😊 Bagus!','🤩 Luar Biasa!'];
+function setRating(val) {
+  currentRating = val;
+  var stars = document.querySelectorAll('.star-btn');
+  stars.forEach(function(s, i) {
+    s.style.opacity = i < val ? '1' : '0.25';
+    s.style.transform = i < val ? 'scale(1.1)' : 'scale(1)';
+  });
+  document.getElementById('rating-label').textContent = ratingLabels[val] || '';
+}
+function submitRating() {
+  if (!currentRating) {
+    var al = document.getElementById('rating-alert');
+    al.style.display = 'block';
+    al.style.background = 'rgba(239,68,68,0.12)';
+    al.style.border = '1px solid #ef4444';
+    al.style.color = '#ef4444';
+    al.textContent = '⚠️ Pilih bintang terlebih dahulu!';
+    setTimeout(function(){ al.style.display='none'; }, 2500);
+    return;
+  }
+  var comment = document.getElementById('rating-comment').value.trim();
+  var ratingData = { bintang: currentRating, komentar: comment, waktu: new Date().toISOString() };
+  try {
+    var riwayat = JSON.parse(localStorage.getItem('idea1_ratings') || '[]');
+    riwayat.push(ratingData);
+    localStorage.setItem('idea1_ratings', JSON.stringify(riwayat));
+  } catch(e) {}
+  var btn = document.getElementById('rating-submit-btn');
+  btn.disabled = true;
+  btn.textContent = '✅ Rating Terkirim!';
+  var al = document.getElementById('rating-alert');
+  al.style.display = 'block';
+  al.style.background = 'rgba(201,168,76,0.12)';
+  al.style.border = '1px solid var(--gold)';
+  al.style.color = 'var(--gold)';
+  al.textContent = '🌟 Terima kasih! Rating ' + currentRating + ' bintang sudah kami terima.';
+  setTimeout(function() {
+    currentRating = 0;
+    document.querySelectorAll('.star-btn').forEach(function(s){ s.style.opacity='0.3'; s.style.transform='scale(1)'; });
+    document.getElementById('rating-label').textContent = '';
+    document.getElementById('rating-comment').value = '';
+    al.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = 'Kirim Rating';
+    showScreen('profile');
+  }, 2500);
+}
 </script>
 </body>
 </html>
