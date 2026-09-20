@@ -295,6 +295,20 @@
       padding: 28px 20px 20px;
       display: flex; flex-direction: column; align-items: center;
       gap: 12px; border-bottom: 1px solid var(--glass-b);
+      position: relative; overflow: hidden;
+    }
+    .profile-bg-carousel {
+      position: absolute; inset: 0; z-index: 0;
+      overflow: hidden;
+    }
+    .profile-bg-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.2s ease;
+    }
+    .profile-bg-slide.active { opacity: 0.30; }
+    .profile-header > *:not(.profile-bg-carousel) {
+      position: relative; z-index: 1;
     }
     .avatar-circle {
       width: 80px; height: 80px; border-radius: 50%;
@@ -1602,6 +1616,14 @@
   </div>
   <div class="scroll-area" style="position:relative;z-index:1;">
     <div class="profile-header">
+      <!-- Carousel Background -->
+      <div class="profile-bg-carousel" id="profileBgCarousel">
+        <div class="profile-bg-slide active" style="background-image:url('bg1.jpg')"></div>
+        <div class="profile-bg-slide" style="background-image:url('bg2.jpg')"></div>
+        <div class="profile-bg-slide" style="background-image:url('bg3.jpg')"></div>
+        <div class="profile-bg-slide" style="background-image:url('bg4.jpg')"></div>
+        <div class="profile-bg-slide" style="background-image:url('bg5.jpg')"></div>
+      </div>
       <div class="avatar-circle" id="profile-avatar" onclick="openEditProfile()" style="cursor:pointer;">
         <span id="avatar-initials">?</span>
         <div class="avatar-edit">✏️</div>
@@ -2884,6 +2906,8 @@ function showScreen(id, anim = true) {
   }
   /* Kelola banner slider */
   if (id === 'home') { bannerStartAuto(); } else { bannerStopAuto(); }
+  /* Kelola profile bg carousel */
+  if (id === 'profile') { profileBgStart(); } else { profileBgStop(); }
   /* Tracking screen sebelumnya untuk back button */
   if (id === 'tentang-kami') { window._prevScreen = window._currentScreen || 'home'; }
   window._currentScreen = id;
@@ -4667,6 +4691,28 @@ document.addEventListener('DOMContentLoaded', function() {
   bannerStartAuto();
 });
 // ==================== END BANNER SLIDER ====================
+
+// ==================== PROFILE BG CAROUSEL ====================
+var profileBgIndex = 0;
+var profileBgTimer = null;
+
+function profileBgNext() {
+  var slides = document.querySelectorAll('.profile-bg-slide');
+  if (!slides.length) return;
+  slides[profileBgIndex].classList.remove('active');
+  profileBgIndex = (profileBgIndex + 1) % slides.length;
+  slides[profileBgIndex].classList.add('active');
+}
+
+function profileBgStart() {
+  profileBgStop();
+  profileBgTimer = setInterval(profileBgNext, 4000);
+}
+
+function profileBgStop() {
+  if (profileBgTimer) { clearInterval(profileBgTimer); profileBgTimer = null; }
+}
+// ==================== END PROFILE BG CAROUSEL ====================
 
 window.addEventListener('pageshow', function(e) {
   if (e.persisted) window.location.reload(true);
