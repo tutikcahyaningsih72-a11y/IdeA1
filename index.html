@@ -572,6 +572,15 @@
     .btn-open { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 10px; background: var(--grad); color: white; font-size: 11px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; }
     .btn-install { display: inline-flex; align-items: center; gap: 4px; padding: 5px 11px; border-radius: 10px; background: transparent; color: var(--gold); font-size: 11px; font-weight: 700; text-decoration: none; border: 1px solid var(--gold); cursor: pointer; }
 
+    /* Banner Slider */
+    .banner-slider { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:16px; margin-bottom:20px; background:#111; }
+    .banner-track { display:flex; width:100%; height:100%; transition:transform 0.5s ease; }
+    .banner-slide { min-width:100%; height:100%; flex-shrink:0; }
+    .banner-slide img { width:100%; height:100%; object-fit:cover; display:block; border-radius:16px; }
+    .banner-dots { display:flex; justify-content:center; gap:6px; margin-top:8px; margin-bottom:4px; }
+    .banner-dot { width:7px; height:7px; border-radius:50%; background:var(--w20); transition:all 0.3s; cursor:pointer; }
+    .banner-dot.active { background:var(--gold); width:20px; border-radius:4px; }
+
     .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
     .tech-tag  { padding: 3px 9px; background: var(--glass); border: 1px solid var(--glass-b); border-radius: 8px; font-size: 10px; color: var(--w70); font-weight: 500; }
 
@@ -1356,6 +1365,22 @@
       <div class="stat-box"><span class="stat-num">6</span><span class="stat-lbl">Live</span></div>
       <div class="stat-box"><span class="stat-num">Solo</span><span class="stat-lbl">Lokasi</span></div>
       <div class="stat-box"><span class="stat-num">2026</span><span class="stat-lbl">Tahun</span></div>
+    </div>
+
+    <!-- Banner Slider Promosi -->
+    <div class="banner-slider" id="bannerSlider" ontouchstart="bannerTouchStart(event)" ontouchend="bannerTouchEnd(event)">
+      <div class="banner-track" id="bannerTrack">
+        <div class="banner-slide"><img src="images/banner1.png" alt="IdeA1 - Begin Making Better" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="banner-slide"><img src="images/banner2.png" alt="IdeA1 - Agentic AI" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="banner-slide"><img src="images/banner3.png" alt="IdeA1 - Workflow" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="banner-slide"><img src="images/banner4.png" alt="IdeA1 - Digital Ecosystem" loading="lazy" onerror="this.style.display='none'"></div>
+      </div>
+    </div>
+    <div class="banner-dots" id="bannerDots">
+      <div class="banner-dot active" onclick="bannerGoTo(0)"></div>
+      <div class="banner-dot" onclick="bannerGoTo(1)"></div>
+      <div class="banner-dot" onclick="bannerGoTo(2)"></div>
+      <div class="banner-dot" onclick="bannerGoTo(3)"></div>
     </div>
 
     <div class="section-head">
@@ -2856,6 +2881,8 @@ function showScreen(id, anim = true) {
   if (!_initDone || elapsed < 3000) {
     if (badScreens.indexOf(id) !== -1) return;
   }
+  /* Kelola banner slider */
+  if (id === 'home') { bannerStartAuto(); } else { bannerStopAuto(); }
   /* display:none semua screen — paling reliable di Android */
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active', 'slide-in');
@@ -4587,6 +4614,55 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   });
 }
+
+// ==================== BANNER SLIDER ====================
+var bannerIndex = 0;
+var bannerTotal = 4;
+var bannerTimer = null;
+var bannerTouchX = 0;
+
+function bannerGoTo(idx) {
+  bannerIndex = idx;
+  var track = document.getElementById('bannerTrack');
+  if (track) track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  var dots = document.querySelectorAll('.banner-dot');
+  dots.forEach(function(d, i) {
+    d.classList.toggle('active', i === idx);
+  });
+}
+
+function bannerNext() {
+  bannerGoTo((bannerIndex + 1) % bannerTotal);
+}
+
+function bannerStartAuto() {
+  bannerStopAuto();
+  bannerTimer = setInterval(bannerNext, 4000);
+}
+
+function bannerStopAuto() {
+  if (bannerTimer) { clearInterval(bannerTimer); bannerTimer = null; }
+}
+
+function bannerTouchStart(e) {
+  bannerTouchX = e.touches[0].clientX;
+  bannerStopAuto();
+}
+
+function bannerTouchEnd(e) {
+  var dx = e.changedTouches[0].clientX - bannerTouchX;
+  if (Math.abs(dx) > 40) {
+    if (dx < 0) bannerGoTo((bannerIndex + 1) % bannerTotal);
+    else bannerGoTo((bannerIndex - 1 + bannerTotal) % bannerTotal);
+  }
+  bannerStartAuto();
+}
+
+// Mulai slider otomatis saat home tampil
+document.addEventListener('DOMContentLoaded', function() {
+  bannerStartAuto();
+});
+// ==================== END BANNER SLIDER ====================
 
 window.addEventListener('pageshow', function(e) {
   if (e.persisted) window.location.reload(true);
