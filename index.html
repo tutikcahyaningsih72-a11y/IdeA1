@@ -2369,11 +2369,11 @@
     <div class="settings-section">
       <div class="settings-title">Tentang</div>
       <div class="settings-group">
-        <div class="settings-item" onclick="alert('IdeA1 v5.0\nBegin Making Better\n© 2026 IdeA1')">
-          <div class="settings-icon" style="background:rgba(34,197,94,0.12);">ℹ️</div>
+        <div class="settings-item" onclick="showScreen('tentang-kami')">
+          <div class="settings-icon" style="background:rgba(201,168,76,0.12);">🏢</div>
           <div class="settings-label">
-            <div class="settings-label-text">Tentang IdeA1</div>
-            <div class="settings-label-sub">Versi, lisensi, dan kredit</div>
+            <div class="settings-label-text">Tentang Kami</div>
+            <div class="settings-label-sub">Visi, misi, tim & portofolio IdeA1</div>
           </div>
           <span class="settings-arrow">›</span>
         </div>
@@ -2886,6 +2886,9 @@ function showScreen(id, anim = true) {
   }
   /* Kelola banner slider */
   if (id === 'home') { bannerStartAuto(); } else { bannerStopAuto(); }
+  /* Tracking screen sebelumnya untuk back button */
+  if (id === 'tentang-kami') { window._prevScreen = window._currentScreen || 'home'; }
+  window._currentScreen = id;
   /* display:none semua screen — paling reliable di Android */
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active', 'slide-in');
@@ -4805,7 +4808,7 @@ function submitRating() {
 <div id="tentang-kami" class="screen">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:14px;">
-      <button class="back-btn" onclick="showScreen('home')">←</button>
+      <button class="back-btn" onclick="showScreen(window._prevScreen||'home')">←</button>
       <span class="sub-title">Tentang Kami</span>
     </div>
   </div>
