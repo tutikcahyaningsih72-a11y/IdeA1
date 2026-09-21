@@ -585,6 +585,8 @@
 
     .btn-open { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 10px; background: var(--gold); color: #000; font-size: 11px; font-weight: 700; text-decoration: none; border: 1.5px solid var(--gold); cursor: pointer; }
     .btn-install { display: inline-flex; align-items: center; gap: 4px; padding: 5px 11px; border-radius: 10px; background: transparent; color: var(--gold); font-size: 11px; font-weight: 700; text-decoration: none; border: 1px solid var(--gold); cursor: pointer; }
+    .btn-share { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 10px; background: transparent; color: var(--w70); font-size: 11px; font-weight: 700; border: 1px solid var(--glass-b); cursor: pointer; }
+    .btn-share:active { background: rgba(255,255,255,0.05); }
 
     /* Banner Slider */
     .banner-slider { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:16px; margin-bottom:20px; background:#111; }
@@ -1466,7 +1468,7 @@
           <div class="proj-desc">Aplikasi manajemen RT/RW digital untuk warga Kartasura, Solo.</div>
           <div class="proj-footer">
             <span class="badge live"><span class="badge-dot"></span>Live</span>
-            <a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://wargaku-apk.netlify.app','WargaKu')">Instal ↓</button>
+            <a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://wargaku-apk.netlify.app','WargaKu')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://wargaku-apk.netlify.app','WargaKu')">↗ Bagikan</button>
           </div>
         </div>
       </div>
@@ -1487,7 +1489,7 @@
         <div class="proj-body">
           <div class="proj-name">SchoolID</div>
           <div class="proj-desc">Asisten digital manajemen sekolah modern Indonesia.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://schoolidvercelapp.vercel.app','SchoolID')">Instal ↓</button></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://schoolidvercelapp.vercel.app','SchoolID')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://schoolidvercelapp.vercel.app','SchoolID')">↗ Bagikan</button></div>
         </div>
       </div>
       <div class="proj-card c-vedu" onclick="showDetail('vedu')">
@@ -1497,7 +1499,7 @@
         <div class="proj-body">
           <div class="proj-name">VEDU</div>
           <div class="proj-desc">Platform pembelajaran digital dengan AI Tutor & sertifikat.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://vedu-app.vercel.app','VEDU')">Instal ↓</button></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://vedu-app.vercel.app','VEDU')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://vedu-app.vercel.app','VEDU')">↗ Bagikan</button></div>
         </div>
       </div>
       <div class="proj-card c-masjidku" onclick="showDetail('masjidku')">
@@ -1505,7 +1507,7 @@
         <div class="proj-body">
           <div class="proj-name">MasjidKu</div>
           <div class="proj-desc">Panduan agama Islam lengkap dalam genggaman.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://masjid-ku-delta.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://masjid-ku-delta.vercel.app','MasjidKu')">Instal ↓</button></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://masjid-ku-delta.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://masjid-ku-delta.vercel.app','MasjidKu')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://masjid-ku-delta.vercel.app','MasjidKu')">↗ Bagikan</button></div>
         </div>
       </div>
       <div class="proj-card c-jasaku" onclick="showDetail('jasaku')">
@@ -1513,7 +1515,7 @@
         <div class="proj-body">
           <div class="proj-name">JasaKu</div>
           <div class="proj-desc">Marketplace jasa & tukang terpercaya di sekitarmu.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://jasa-ku-solo.vercel.app','JasaKu')">Instal ↓</button></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://jasa-ku-solo.vercel.app','JasaKu')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://jasa-ku-solo.vercel.app','JasaKu')">↗ Bagikan</button></div>
         </div>
       </div>
       <div class="proj-card c-paijo" onclick="showDetail('paijo')">
@@ -1521,7 +1523,7 @@
         <div class="proj-body">
           <div class="proj-name">PaiJO</div>
           <div class="proj-desc">Chatbot AI berbahasa Jawa — Bolo Dewe.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://paijo-app.vercel.app','PaiJO')">Instal ↓</button></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://paijo-app.vercel.app','PaiJO')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://paijo-app.vercel.app','PaiJO')">↗ Bagikan</button></div>
         </div>
       </div>
       <div class="proj-card c-kosku" onclick="showDetail('kosku')">
@@ -1529,7 +1531,7 @@
         <div class="proj-body">
           <div class="proj-name">KosKu Solo</div>
           <div class="proj-desc">Aplikasi pencarian kamar kos Soloraya.</div>
-          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://kosku-solo-app.vercel.app','KosKu Solo')">Instal ↓</button></div>
+          <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://kosku-solo-app.vercel.app','KosKu Solo')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://kosku-solo-app.vercel.app','KosKu Solo')">↗ Bagikan</button></div>
         </div>
       </div>
     </div>
@@ -1584,7 +1586,7 @@
       <div class="proj-body">
         <div class="proj-name">WargaKu</div>
         <div class="proj-desc">Kelola RT/RW digital. Firebase Auth & Firestore, citizen dashboard, admin panel, iuran, arsip digital.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://wargaku-apk.netlify.app','WargaKu')">Instal ↓</button></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://wargaku-apk.netlify.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://wargaku-apk.netlify.app','WargaKu')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://wargaku-apk.netlify.app','WargaKu')">↗ Bagikan</button></div>
         <div class="tech-tags"><span class="tech-tag">Firebase</span><span class="tech-tag">Firestore</span><span class="tech-tag">PWA</span><span class="tech-tag">Netlify</span></div>
       </div>
     </div>
@@ -1602,7 +1604,7 @@
       <div class="proj-body">
         <div class="proj-name">SchoolID</div>
         <div class="proj-desc">Asisten digital sekolah Indonesia. Dashboard guru, siswa, orang tua, absensi, laporan harian.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://schoolidvercelapp.vercel.app','SchoolID')">Instal ↓</button></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://schoolidvercelapp.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://schoolidvercelapp.vercel.app','SchoolID')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://schoolidvercelapp.vercel.app','SchoolID')">↗ Bagikan</button></div>
         <div class="tech-tags"><span class="tech-tag">Supabase</span><span class="tech-tag">PWA</span><span class="tech-tag">AI</span></div>
       </div>
     </div>
@@ -1611,7 +1613,7 @@
       <div class="proj-body">
         <div class="proj-name">VEDU</div>
         <div class="proj-desc">Platform e-learning modern. Video, kuis, sertifikat, dan AI Tutor personal.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://vedu-app.vercel.app','VEDU')">Instal ↓</button></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://vedu-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://vedu-app.vercel.app','VEDU')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://vedu-app.vercel.app','VEDU')">↗ Bagikan</button></div>
         <div class="tech-tags"><span class="tech-tag">Video</span><span class="tech-tag">AI Tutor</span><span class="tech-tag">PWA</span></div>
       </div>
     </div>
@@ -1620,7 +1622,7 @@
       <div class="proj-body">
         <div class="proj-name">MasjidKu</div>
         <div class="proj-desc">Panduan agama Islam lengkap — jadwal sholat, Al-Quran, doa, dan kajian.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://masjid-ku-delta.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://masjid-ku-delta.vercel.app','MasjidKu')">Instal ↓</button></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://masjid-ku-delta.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://masjid-ku-delta.vercel.app','MasjidKu')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://masjid-ku-delta.vercel.app','MasjidKu')">↗ Bagikan</button></div>
       </div>
     </div>
     <div class="proj-card c-jasaku" style="margin-bottom:12px;" onclick="showDetail('jasaku')">
@@ -1628,7 +1630,7 @@
       <div class="proj-body">
         <div class="proj-name">JasaKu</div>
         <div class="proj-desc">Marketplace jasa & tukang — cari tenaga ahli terpercaya di sekitarmu.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://jasa-ku-solo.vercel.app','JasaKu')">Instal ↓</button></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://jasa-ku-solo.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://jasa-ku-solo.vercel.app','JasaKu')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://jasa-ku-solo.vercel.app','JasaKu')">↗ Bagikan</button></div>
       </div>
     </div>
     <div class="proj-card c-paijo" style="margin-bottom:12px;" onclick="showDetail('paijo')">
@@ -1636,7 +1638,7 @@
       <div class="proj-body">
         <div class="proj-name">PaiJO</div>
         <div class="proj-desc">Chatbot AI berbahasa Jawa — teman ngobrol santai, Bolo Dewe.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://paijo-app.vercel.app','PaiJO')">Instal ↓</button></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://paijo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://paijo-app.vercel.app','PaiJO')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://paijo-app.vercel.app','PaiJO')">↗ Bagikan</button></div>
       </div>
     </div>
     <div class="proj-card c-kosku" style="margin-bottom:12px;" onclick="showDetail('kosku')">
@@ -1644,7 +1646,7 @@
       <div class="proj-body">
         <div class="proj-name">KosKu Solo</div>
         <div class="proj-desc">Aplikasi pencarian kamar kos di wilayah Soloraya — cepat, mudah, terpercaya.</div>
-        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://kosku-solo-app.vercel.app','KosKu Solo')">Instal ↓</button></div>
+        <div class="proj-footer"><span class="badge live"><span class="badge-dot"></span>Live</span><a href="https://kosku-solo-app.vercel.app" target="_blank" class="btn-open" onclick="event.stopPropagation()">Buka ↗</a><button class="btn-install" onclick="event.stopPropagation();installApp('https://kosku-solo-app.vercel.app','KosKu Solo')">Instal ↓</button><button class="btn-share" onclick="event.stopPropagation();shareApp('https://kosku-solo-app.vercel.app','KosKu Solo')">↗ Bagikan</button></div>
       </div>
     </div>
   </div>
@@ -3989,6 +3991,85 @@ function installApp(url, nama) {
   }
 }
 
+// ==================== SHARE FUNCTION ====================
+function shareApp(url, nama) {
+  const teks = '🚀 Coba aplikasi ' + nama + ' dari IdeA1 Team!\n\n' +
+    '📱 ' + nama + ' adalah salah satu proyek unggulan IdeA1 — ekosistem digital inovatif dari Solo.\n\n' +
+    '🔗 Link: ' + url + '\n\n' +
+    '✨ Bisa langsung diinstal di HP tanpa App Store!\n\n' +
+    '#IdeA1 #BeginMakingBetter #' + nama.replace(/\s/g,'') + ' #DigitalSolo';
+
+  if (navigator.share) {
+    navigator.share({
+      title: nama + ' — IdeA1',
+      text: teks,
+      url: url
+    }).catch(function() {});
+  } else {
+    // Fallback: copy ke clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(teks).then(function() {
+        showShareToast('✅ Teks berhasil disalin! Tempelkan di WhatsApp, Instagram, atau platform lainnya.');
+      }).catch(function() {
+        showShareFallback(nama, url, teks);
+      });
+    } else {
+      showShareFallback(nama, url, teks);
+    }
+  }
+}
+
+function shareArtikel(judul, id) {
+  const url = 'https://idea1-nine.vercel.app';
+  const teks = '📰 Baca artikel menarik ini di IdeA1!\n\n' +
+    '📌 "' + judul + '"\n\n' +
+    '🔗 Buka di: ' + url + '\n\n' +
+    '#IdeA1 #BeginMakingBetter #Blog #DigitalSolo';
+
+  if (navigator.share) {
+    navigator.share({
+      title: judul + ' — Blog IdeA1',
+      text: teks,
+      url: url
+    }).catch(function() {});
+  } else {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(teks).then(function() {
+        showShareToast('✅ Teks artikel berhasil disalin! Tempelkan di platform pilihanmu.');
+      }).catch(function() {
+        showShareFallback(judul, url, teks);
+      });
+    } else {
+      showShareFallback(judul, url, teks);
+    }
+  }
+}
+
+function showShareToast(pesan) {
+  var toast = document.getElementById('share-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'share-toast';
+    toast.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a1a;border:1px solid var(--gold);color:white;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:9999;max-width:300px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.5);';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = pesan;
+  toast.style.display = 'block';
+  toast.style.opacity = '1';
+  setTimeout(function() {
+    toast.style.opacity = '0';
+    setTimeout(function() { toast.style.display = 'none'; }, 400);
+  }, 3000);
+}
+
+function showShareFallback(nama, url, teks) {
+  var wa = 'https://wa.me/?text=' + encodeURIComponent(teks);
+  if (confirm('Bagikan ' + nama + ' via:\n\n📱 Tekan OK untuk WhatsApp\n\nAtau salin link:\n' + url)) {
+    window.open(wa, '_blank');
+  }
+}
+// ==================== END SHARE FUNCTION ====================
+
 /* --- SETTINGS --- */
 function saveSetting(key, value) {
   localStorage.setItem('idea1_setting_' + key, value);
@@ -4668,11 +4749,7 @@ function renderBookmarks() {
 function shareBlog() {
   const article = ARTICLES.find(a => a.id === currentArticleId);
   if (!article) return;
-  if (navigator.share) {
-    navigator.share({ title: article.title, text: article.excerpt, url: window.location.href });
-  } else {
-    alert('Link disalin! ' + window.location.href);
-  }
+  shareArtikel(article.title, article.id);
 }
 
 /* ============================================
