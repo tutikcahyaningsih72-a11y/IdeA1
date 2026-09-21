@@ -1005,11 +1005,44 @@
       padding: 40px 32px;
       transition: transform 0.4s ease;
       text-align: center;
+      position: relative;
+    }
+    .onboard-bg-icon {
+      position: absolute;
+      font-size: 220px;
+      opacity: 0.04;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+    .onboard-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative; z-index: 1;
+    }
+    .onboard-illus {
+      width: 160px; height: 160px;
+      border-radius: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 72px;
+      margin-bottom: 28px;
+      position: relative; z-index: 1;
+      animation: floatEmoji 3s ease-in-out infinite;
     }
     .onboard-emoji {
       font-size: 80px;
       margin-bottom: 24px;
       animation: floatEmoji 3s ease-in-out infinite;
+      position: relative; z-index: 1;
     }
     @keyframes floatEmoji {
       0%,100% { transform: translateY(0); }
@@ -1019,11 +1052,32 @@
       font-size: 26px; font-weight: 800;
       letter-spacing: -0.5px; margin-bottom: 12px;
       line-height: 1.3;
+      position: relative; z-index: 1;
     }
     .onboard-desc {
       font-size: 14px; color: var(--w70);
       line-height: 1.7; max-width: 300px;
+      position: relative; z-index: 1;
     }
+    .onboard-features {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 20px; width: 100%; max-width: 300px;
+      position: relative; z-index: 1;
+    }
+    .onboard-feature-item {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 10px 14px;
+      text-align: left;
+    }
+    .onboard-feature-icon {
+      font-size: 20px; flex-shrink: 0;
+    }
+    .onboard-feature-text {
+      font-size: 12px; color: var(--w70); line-height: 1.4;
+    }
+    .onboard-feature-text strong { color: white; display: block; font-size: 13px; }
     .onboard-dots {
       display: flex; gap: 8px;
       justify-content: center;
@@ -1035,7 +1089,7 @@
       background: var(--w20); transition: all 0.3s;
     }
     .onboard-dot.active {
-      width: 24px; background: var(--orange);
+      width: 28px; background: var(--gold);
     }
     .onboard-actions {
       display: flex; gap: 12px;
@@ -1051,8 +1105,8 @@
     }
     .onboard-next {
       flex: 2; padding: 14px;
-      background: var(--grad); border: none;
-      border-radius: var(--r16); color: white;
+      background: var(--gold); border: none;
+      border-radius: var(--r16); color: #000;
       font-family: var(--font); font-size: 14px; font-weight: 700;
       cursor: pointer;
     }
@@ -2220,30 +2274,85 @@
 ========================================== -->
 <div id="onboarding" class="screen">
   <div class="onboard-slides" id="onboard-slides">
-    <!-- Slide 1 -->
+
+    <!-- Slide 1: Selamat Datang -->
     <div class="onboard-slide">
-      <div class="onboard-emoji">🚀</div>
+      <div class="onboard-bg-icon">🌐</div>
+      <div class="onboard-badge">✨ Begin Making Better</div>
+      <div class="onboard-illus" style="background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:2px solid rgba(201,168,76,0.3);">🚀</div>
       <div class="onboard-title">Selamat Datang di <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">IdeA1</span></div>
-      <div class="onboard-desc">Pusat ekosistem digital yang menyatukan semua proyek inovatif dalam satu platform.</div>
+      <div class="onboard-desc">Platform ekosistem digital yang menyatukan berbagai aplikasi inovatif karya IdeA1 Team dalam satu genggaman.</div>
     </div>
-    <!-- Slide 2 -->
+
+    <!-- Slide 2: Proyek Unggulan -->
     <div class="onboard-slide">
-      <div class="onboard-emoji">✨</div>
-      <div class="onboard-title">AI Assistant Canggih</div>
-      <div class="onboard-desc">Tanya apapun, generate proposal, terjemahkan teks, dan dapatkan ide bisnis dengan AI IdeA1.</div>
+      <div class="onboard-bg-icon">📱</div>
+      <div class="onboard-badge">🏘️ 8 Proyek Aktif</div>
+      <div class="onboard-title" style="margin-bottom:20px;">Proyek Nyata,<br><span style="color:var(--gold);">Dampak Nyata</span></div>
+      <div class="onboard-features">
+        <div class="onboard-feature-item">
+          <span class="onboard-feature-icon">🏘️</span>
+          <div class="onboard-feature-text"><strong>WargaKu</strong>Manajemen RT/RW digital untuk warga Soloraya</div>
+        </div>
+        <div class="onboard-feature-item">
+          <span class="onboard-feature-icon">🕌</span>
+          <div class="onboard-feature-text"><strong>MasjidKu</strong>Jadwal sholat, Al-Quran & kajian Islam</div>
+        </div>
+        <div class="onboard-feature-item">
+          <span class="onboard-feature-icon">🔧</span>
+          <div class="onboard-feature-text"><strong>JasaKu</strong>Marketplace jasa & tukang terpercaya</div>
+        </div>
+        <div class="onboard-feature-item">
+          <span class="onboard-feature-icon">🎓</span>
+          <div class="onboard-feature-text"><strong>VEDU & SchoolID</strong>Platform pendidikan digital modern</div>
+        </div>
+      </div>
     </div>
-    <!-- Slide 3 -->
+
+    <!-- Slide 3: AI Assistant -->
     <div class="onboard-slide">
-      <div class="onboard-emoji">🏘️</div>
-      <div class="onboard-title">Proyek Nyata, Dampak Nyata</div>
-      <div class="onboard-desc">Dari WargaKu untuk komunitas RT/RW, FIDU untuk sekolah, hingga VEDU untuk belajar — semua ada di sini!</div>
+      <div class="onboard-bg-icon">🤖</div>
+      <div class="onboard-badge">🤖 Powered by AI</div>
+      <div class="onboard-illus" style="background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(139,92,246,0.05));border:2px solid rgba(99,102,241,0.3);">✨</div>
+      <div class="onboard-title">AI Assistant<br><span style="color:var(--gold);">Multi-fungsi</span></div>
+      <div class="onboard-features">
+        <div class="onboard-feature-item">
+          <span class="onboard-feature-icon">💬</span>
+          <div class="onboard-feature-text"><strong>AI Chat</strong>Tanya jawab cerdas kapan saja</div>
+        </div>
+        <div class="onboard-feature-item">
+          <span class="onboard-feature-icon">📝</span>
+          <div class="onboard-feature-text"><strong>AI Proposal</strong>Generate proposal bisnis otomatis</div>
+        </div>
+        <div class="onboard-feature-item">
+          <span class="onboard-feature-icon">🌐</span>
+          <div class="onboard-feature-text"><strong>AI Translate</strong>Terjemahan teks multi bahasa</div>
+        </div>
+      </div>
     </div>
+
+    <!-- Slide 4: Mulai -->
+    <div class="onboard-slide">
+      <div class="onboard-bg-icon">⭐</div>
+      <div class="onboard-badge">🎯 Siap Digunakan</div>
+      <div class="onboard-illus" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(16,185,129,0.05));border:2px solid rgba(34,197,94,0.3);">🎉</div>
+      <div class="onboard-title">Semua Siap!<br><span style="color:var(--gold);">Ayo Mulai</span></div>
+      <div class="onboard-desc">Daftar atau masuk sekarang untuk menikmati semua fitur IdeA1 secara gratis. Bergabunglah bersama komunitas digital Solo!</div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;width:100%;max-width:300px;position:relative;z-index:1;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="color:var(--gold);font-size:16px;">✓</span>Gratis selamanya</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="color:var(--gold);font-size:16px;">✓</span>Bisa diinstal di HP</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="color:var(--gold);font-size:16px;">✓</span>Data aman & terlindungi</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--w70);"><span style="color:var(--gold);font-size:16px;">✓</span>Update fitur secara berkala</div>
+      </div>
+    </div>
+
   </div>
 
   <div class="onboard-dots">
     <div class="onboard-dot active" id="dot-0"></div>
     <div class="onboard-dot" id="dot-1"></div>
     <div class="onboard-dot" id="dot-2"></div>
+    <div class="onboard-dot" id="dot-3"></div>
   </div>
 
   <div class="onboard-actions">
@@ -3748,7 +3857,7 @@ function clearArticleForm() {
 
 /* --- ONBOARDING --- */
 let currentSlide = 0;
-const totalSlides = 3;
+const totalSlides = 4;
 
 function nextSlide() {
   if (currentSlide < totalSlides - 1) {
