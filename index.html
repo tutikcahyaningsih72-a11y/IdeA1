@@ -588,6 +588,51 @@
     .btn-share { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 10px; background: transparent; color: var(--w70); font-size: 11px; font-weight: 700; border: 1px solid var(--glass-b); cursor: pointer; }
     .btn-share:active { background: rgba(255,255,255,0.05); }
 
+    /* GLOBAL SEARCH */
+    .gs-wrap { padding: 12px 16px 0; position: relative; }
+    .gs-input {
+      width: 100%; box-sizing: border-box;
+      background: var(--glass); border: 1.5px solid var(--gold);
+      border-radius: 14px; padding: 12px 44px 12px 44px;
+      color: white; font-size: 15px; font-family: var(--font);
+      outline: none;
+    }
+    .gs-input::placeholder { color: var(--w40); }
+    .gs-ico-left { position: absolute; left: 28px; top: 50%; transform: translateY(-50%); opacity: 0.5; }
+    .gs-clear { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--w40); font-size: 18px; cursor: pointer; padding: 0; }
+    .gs-filters { display: flex; gap: 8px; padding: 12px 16px 0; overflow-x: auto; scrollbar-width: none; }
+    .gs-filters::-webkit-scrollbar { display: none; }
+    .gs-filter-btn {
+      flex-shrink: 0; padding: 5px 14px; border-radius: 999px;
+      background: var(--glass); border: 1px solid var(--glass-b);
+      color: var(--w70); font-size: 12px; font-weight: 600;
+      cursor: pointer; font-family: var(--font);
+    }
+    .gs-filter-btn.active { background: var(--gold); border-color: var(--gold); color: #000; }
+    .gs-section-title { font-size: 11px; font-weight: 700; color: var(--w40); letter-spacing: 1px; text-transform: uppercase; padding: 16px 16px 8px; }
+    .gs-result-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.15s;
+    }
+    .gs-result-item:active { background: rgba(255,255,255,0.04); }
+    .gs-result-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .gs-result-body { flex: 1; min-width: 0; }
+    .gs-result-title { font-size: 14px; font-weight: 700; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gs-result-sub { font-size: 12px; color: var(--w50); margin-top: 2px; }
+    .gs-result-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; flex-shrink: 0; }
+    .gs-tag-proyek { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .gs-tag-artikel { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .gs-tag-fitur { background: rgba(99,102,241,0.12); color: #818cf8; }
+    .gs-empty { text-align: center; padding: 48px 20px; color: var(--w40); }
+    .gs-empty-ico { font-size: 48px; margin-bottom: 12px; }
+    .gs-highlight { color: var(--gold); }
+
     /* Banner Slider */
     .banner-slider { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:16px; margin-bottom:20px; background:#111; }
     .banner-track { display:flex; width:100%; height:100%; transition:transform 0.5s ease; }
@@ -1413,7 +1458,7 @@
       <div class="topbar-name"><span class="ide">Ide</span><span class="a1">A1</span></div>
     </div>
     <div class="topbar-actions">
-      <button class="icon-btn" aria-label="Cari">
+      <button class="icon-btn" aria-label="Cari" onclick="showScreen('global-search')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
       <button class="icon-btn" aria-label="Notifikasi">
@@ -5235,6 +5280,219 @@ function submitRating() {
   </div>
 </div>
 <!-- ==================== END TENTANG KAMI ==================== -->
+
+<!-- ==================== GLOBAL SEARCH SCREEN ==================== -->
+<div id="global-search" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="back-btn" onclick="showScreen('home');gsReset()">←</button>
+      <span class="sub-title">Pencarian</span>
+    </div>
+  </div>
+
+  <!-- Input Search -->
+  <div class="gs-wrap">
+    <span class="gs-ico-left">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </span>
+    <input class="gs-input" type="text" id="gs-input" placeholder="Cari proyek, artikel, fitur..." oninput="gsSearch(this.value)" autocomplete="off">
+    <button class="gs-clear" onclick="gsClear()" id="gs-clear-btn" style="display:none;">✕</button>
+  </div>
+
+  <!-- Filter -->
+  <div class="gs-filters">
+    <button class="gs-filter-btn active" onclick="gsFilter('semua',this)">Semua</button>
+    <button class="gs-filter-btn" onclick="gsFilter('proyek',this)">🏘️ Proyek</button>
+    <button class="gs-filter-btn" onclick="gsFilter('artikel',this)">📰 Artikel</button>
+    <button class="gs-filter-btn" onclick="gsFilter('fitur',this)">⚡ Fitur</button>
+  </div>
+
+  <!-- Hasil -->
+  <div class="scroll-area" style="padding:0;" id="gs-results">
+    <!-- Default: tampilkan semua -->
+    <div class="gs-section-title">🔥 Populer</div>
+    <div id="gs-popular"></div>
+    <div class="gs-section-title">📌 Semua Konten</div>
+    <div id="gs-all"></div>
+  </div>
+</div>
+<!-- ==================== END GLOBAL SEARCH ==================== -->
+
+<script>
+// ==================== GLOBAL SEARCH JS ====================
+var GS_FILTER = 'semua';
+
+var GS_DATA = {
+  proyek: [
+    { nama:'WargaKu', desk:'Manajemen RT/RW digital', icon:'🏘️', warna:'rgba(239,68,68,0.15)', url:'https://wargaku-apk.netlify.app', status:'Live', action: function(){ window.open('https://wargaku-apk.netlify.app','_blank'); } },
+    { nama:'SchoolID', desk:'Asisten manajemen sekolah digital', icon:'📚', warna:'rgba(34,197,94,0.15)', url:'https://schoolidvercelapp.vercel.app', status:'Live', action: function(){ window.open('https://schoolidvercelapp.vercel.app','_blank'); } },
+    { nama:'VEDU', desk:'Platform pembelajaran + AI Tutor', icon:'🎓', warna:'rgba(59,130,246,0.15)', url:'https://vedu-app.vercel.app', status:'Live', action: function(){ window.open('https://vedu-app.vercel.app','_blank'); } },
+    { nama:'MasjidKu', desk:'Panduan agama Islam lengkap', icon:'🕌', warna:'rgba(34,197,94,0.15)', url:'https://masjid-ku-delta.vercel.app', status:'Live', action: function(){ window.open('https://masjid-ku-delta.vercel.app','_blank'); } },
+    { nama:'JasaKu', desk:'Marketplace jasa & tukang terpercaya', icon:'🔧', warna:'rgba(34,197,94,0.15)', url:'https://jasa-ku-solo.vercel.app', status:'Live', action: function(){ window.open('https://jasa-ku-solo.vercel.app','_blank'); } },
+    { nama:'PaiJO', desk:'Chatbot AI berbahasa Jawa', icon:'🤖', warna:'rgba(34,197,94,0.15)', url:'https://paijo-app.vercel.app', status:'Live', action: function(){ window.open('https://paijo-app.vercel.app','_blank'); } },
+    { nama:'KosKu Solo', desk:'Pencarian kamar kos Soloraya', icon:'🏠', warna:'rgba(249,115,22,0.15)', url:'https://kosku-solo-app.vercel.app', status:'Live', action: function(){ window.open('https://kosku-solo-app.vercel.app','_blank'); } },
+    { nama:'FIDU', desk:'Temukan TK & PAUD terbaik di Solo', icon:'🏫', warna:'rgba(239,68,68,0.15)', url:'#', status:'Dev', action: function(){ showScreen('projects'); } },
+  ],
+  fitur: [
+    { nama:'AI Chat', desk:'Tanya jawab cerdas dengan AI', icon:'💬', warna:'rgba(99,102,241,0.15)', action: function(){ showScreen('ai'); } },
+    { nama:'AI Proposal', desk:'Generate proposal bisnis otomatis', icon:'📝', warna:'rgba(99,102,241,0.15)', action: function(){ showScreen('ai'); } },
+    { nama:'AI Translate', desk:'Terjemahan teks multi bahasa', icon:'🌐', warna:'rgba(99,102,241,0.15)', action: function(){ showScreen('ai'); } },
+    { nama:'Blog & Artikel', desk:'Kumpulan artikel edukasi digital', icon:'📰', warna:'rgba(201,168,76,0.15)', action: function(){ showScreen('blog'); } },
+    { nama:'Edit Profil', desk:'Ubah nama, foto, dan bio', icon:'👤', warna:'rgba(201,168,76,0.15)', action: function(){ showScreen('edit-profile'); } },
+    { nama:'Pengaturan', desk:'Tema, notifikasi, install app', icon:'⚙️', warna:'rgba(255,255,255,0.08)', action: function(){ showScreen('settings'); } },
+    { nama:'Tentang Kami', desk:'Visi, misi, tim IdeA1 Team', icon:'🏢', warna:'rgba(201,168,76,0.15)', action: function(){ showScreen('tentang-kami'); } },
+    { nama:'Beri Rating', desk:'Bantu kami berkembang lebih baik', icon:'⭐', warna:'rgba(201,168,76,0.15)', action: function(){ showScreen('rating'); } },
+  ]
+};
+
+function gsInit() {
+  var pop = document.getElementById('gs-popular');
+  var all = document.getElementById('gs-all');
+  if (!pop || !all) return;
+
+  // Popular: 4 proyek teratas
+  pop.innerHTML = GS_DATA.proyek.slice(0,4).map(function(p) {
+    return gsItemHTML(p, 'proyek');
+  }).join('');
+
+  // Semua konten
+  all.innerHTML = gsRenderAll('semua', '');
+}
+
+function gsRenderAll(filter, query) {
+  var html = '';
+  var q = query.toLowerCase();
+
+  function matches(item) {
+    if (!q) return true;
+    return item.nama.toLowerCase().includes(q) || item.desk.toLowerCase().includes(q);
+  }
+
+  if (filter === 'semua' || filter === 'proyek') {
+    var proyek = GS_DATA.proyek.filter(matches);
+    if (proyek.length) {
+      if (filter === 'semua') html += '<div class="gs-section-title">🏘️ Proyek</div>';
+      html += proyek.map(function(p){ return gsItemHTML(p,'proyek'); }).join('');
+    }
+  }
+
+  if (filter === 'semua' || filter === 'artikel') {
+    var arts = (typeof ARTICLES !== 'undefined' ? ARTICLES : []).filter(matches);
+    if (arts.length) {
+      if (filter === 'semua') html += '<div class="gs-section-title">📰 Artikel</div>';
+      html += arts.slice(0,6).map(function(a){
+        return gsArtikelHTML(a, q);
+      }).join('');
+    }
+  }
+
+  if (filter === 'semua' || filter === 'fitur') {
+    var fitur = GS_DATA.fitur.filter(matches);
+    if (fitur.length) {
+      if (filter === 'semua') html += '<div class="gs-section-title">⚡ Fitur</div>';
+      html += fitur.map(function(f){ return gsItemHTML(f,'fitur'); }).join('');
+    }
+  }
+
+  if (!html) {
+    html = '<div class="gs-empty"><div class="gs-empty-ico">🔍</div><div>Tidak ada hasil untuk <strong style="color:white;">"'+query+'"</strong></div><div style="font-size:12px;margin-top:8px;">Coba kata kunci lain</div></div>';
+  }
+  return html;
+}
+
+function gsItemHTML(item, tipe) {
+  var tagClass = tipe === 'proyek' ? 'gs-tag-proyek' : (tipe === 'artikel' ? 'gs-tag-artikel' : 'gs-tag-fitur');
+  var tagLabel = tipe === 'proyek' ? (item.status||'Proyek') : (tipe === 'fitur' ? 'Fitur' : 'Artikel');
+  var idx = GS_DATA[tipe === 'proyek' ? 'proyek' : 'fitur'].indexOf(item);
+  return '<div class="gs-result-item" onclick="gsGo(\''+tipe+'\','+idx+')">' +
+    '<div class="gs-result-icon" style="background:'+item.warna+'">'+item.icon+'</div>' +
+    '<div class="gs-result-body">' +
+      '<div class="gs-result-title">'+item.nama+'</div>' +
+      '<div class="gs-result-sub">'+item.desk+'</div>' +
+    '</div>' +
+    '<span class="gs-result-tag '+tagClass+'">'+tagLabel+'</span>' +
+  '</div>';
+}
+
+function gsArtikelHTML(art, q) {
+  return '<div class="gs-result-item" onclick="gsOpenArtikel(\''+art.id+'\')">' +
+    '<div class="gs-result-icon" style="background:rgba(201,168,76,0.12)">📰</div>' +
+    '<div class="gs-result-body">' +
+      '<div class="gs-result-title">'+art.title+'</div>' +
+      '<div class="gs-result-sub">'+art.category+' · '+art.read_time+'</div>' +
+    '</div>' +
+    '<span class="gs-result-tag gs-tag-artikel">Artikel</span>' +
+  '</div>';
+}
+
+function gsGo(tipe, idx) {
+  var item = GS_DATA[tipe === 'proyek' ? 'proyek' : 'fitur'][idx];
+  if (item && item.action) item.action();
+}
+
+function gsOpenArtikel(id) {
+  var art = ARTICLES.find(function(a){ return a.id === id; });
+  if (art) openArticle(art);
+}
+
+function gsSearch(q) {
+  var clearBtn = document.getElementById('gs-clear-btn');
+  if (clearBtn) clearBtn.style.display = q ? 'block' : 'none';
+
+  var results = document.getElementById('gs-results');
+  if (!results) return;
+
+  if (!q) {
+    results.innerHTML = '<div class="gs-section-title">🔥 Populer</div><div id="gs-popular"></div><div class="gs-section-title">📌 Semua Konten</div><div id="gs-all"></div>';
+    gsInit();
+    return;
+  }
+
+  results.innerHTML = gsRenderAll(GS_FILTER, q);
+}
+
+function gsFilter(filter, btn) {
+  GS_FILTER = filter;
+  document.querySelectorAll('.gs-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var q = document.getElementById('gs-input') ? document.getElementById('gs-input').value : '';
+  gsSearch(q);
+}
+
+function gsClear() {
+  var inp = document.getElementById('gs-input');
+  if (inp) { inp.value = ''; inp.focus(); }
+  var clearBtn = document.getElementById('gs-clear-btn');
+  if (clearBtn) clearBtn.style.display = 'none';
+  gsSearch('');
+}
+
+function gsReset() {
+  GS_FILTER = 'semua';
+  var inp = document.getElementById('gs-input');
+  if (inp) inp.value = '';
+  var clearBtn = document.getElementById('gs-clear-btn');
+  if (clearBtn) clearBtn.style.display = 'none';
+}
+
+// Init saat screen global-search aktif
+var _gsOrig = window.showScreen;
+// Tambahkan ke event showScreen
+(function() {
+  var origShow = showScreen;
+  showScreen = function(id, anim) {
+    origShow(id, anim);
+    if (id === 'global-search') {
+      setTimeout(function() {
+        gsInit();
+        var inp = document.getElementById('gs-input');
+        if (inp) inp.focus();
+      }, 100);
+    }
+  };
+})();
+// ==================== END GLOBAL SEARCH JS ====================
+</script>
 
 </body>
 </html>
