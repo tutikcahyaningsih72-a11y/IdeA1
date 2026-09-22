@@ -1485,11 +1485,13 @@
     </div>
 
     <!-- Search Bar Home -->
-    <button onclick="showScreen('global-search')" style="display:flex;align-items:center;gap:10px;width:100%;background:var(--glass);border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;cursor:pointer;margin-bottom:16px;box-sizing:border-box;position:relative;z-index:2;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <span style="font-size:14px;color:var(--w40);flex:1;text-align:left;">Cari proyek, artikel, fitur...</span>
-      <span style="font-size:11px;color:var(--gold);font-weight:700;background:rgba(201,168,76,0.1);padding:3px 8px;border-radius:6px;">Cari</span>
-    </button>
+    <div style="margin-bottom:16px;">
+      <button onclick="showScreen('global-search')" style="display:flex;align-items:center;gap:10px;width:100%;background:var(--glass);border:1.5px solid var(--gold);border-radius:14px;padding:14px 16px;cursor:pointer;box-sizing:border-box;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span style="font-size:14px;color:var(--w40);flex:1;text-align:left;">Cari proyek, artikel, fitur...</span>
+        <span style="font-size:11px;color:var(--gold);font-weight:700;background:rgba(201,168,76,0.1);padding:3px 8px;border-radius:6px;">Cari</span>
+      </button>
+    </div>
 
     <div class="banner-slider" id="bannerSlider" ontouchstart="bannerTouchStart(event)" ontouchend="bannerTouchEnd(event)">
       <div class="banner-track" id="bannerTrack">
