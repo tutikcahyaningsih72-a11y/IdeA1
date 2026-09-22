@@ -1791,7 +1791,6 @@
         </div>
         <span class="menu-item-arrow">›</span>
       </div>
-
     </div>
 
     <button class="btn-logout" onclick="doLogout()">🚪 Keluar dari Akun</button>
@@ -3077,7 +3076,7 @@ function showScreen(id, anim = true) {
     /* display dihandle oleh .active class via CSS */
   });
   const next = document.getElementById(id);
-  if (!next) return;
+  if (!next) { console.warn('Screen not found:', id); return; }
   next.classList.add('active');
   /* Hapus toggle dari DOM saat settings ditutup */
   if (id !== 'settings') {
@@ -5525,7 +5524,6 @@ var _gsOrig = window.showScreen;
   </div>
   <div class="scroll-area" style="padding:20px;">
 
-    <!-- Header -->
     <div style="text-align:center;margin-bottom:24px;">
       <div style="font-size:40px;margin-bottom:8px;">💬</div>
       <div style="font-size:18px;font-weight:800;color:white;margin-bottom:6px;">Kata Mereka Tentang IdeA1</div>
@@ -5568,13 +5566,11 @@ var _gsOrig = window.showScreen;
           </div>
         </div>
       </div>
-      <div style="text-align:center;margin-top:14px;font-size:12px;color:var(--w40);">Berdasarkan ulasan dari pengguna aktif IdeA1</div>
     </div>
 
     <!-- Kartu Testimoni -->
-    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;" id="testimoni-list">
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
 
-      <!-- Testimoni 1 -->
       <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
           <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ef4444,#f97316);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white;flex-shrink:0;">SR</div>
@@ -5588,7 +5584,6 @@ var _gsOrig = window.showScreen;
         <div style="font-size:11px;color:var(--w30);margin-top:10px;">📱 Pengguna WargaKu · September 2026</div>
       </div>
 
-      <!-- Testimoni 2 -->
       <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
           <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white;flex-shrink:0;">BP</div>
@@ -5598,11 +5593,10 @@ var _gsOrig = window.showScreen;
           </div>
           <div style="color:var(--gold);font-size:13px;">★★★★★</div>
         </div>
-        <div style="font-size:13px;color:var(--w70);line-height:1.7;font-style:italic;">"VEDU sangat membantu belajar dengan AI Tutor yang interaktif. Materi lebih mudah dipahami dan ada sertifikat digitalnya juga. Keren banget buat portofolio!"</div>
+        <div style="font-size:13px;color:var(--w70);line-height:1.7;font-style:italic;">"VEDU sangat membantu belajar dengan AI Tutor yang interaktif. Materi lebih mudah dipahami dan ada sertifikat digitalnya. Keren banget buat portofolio!"</div>
         <div style="font-size:11px;color:var(--w30);margin-top:10px;">📱 Pengguna VEDU · September 2026</div>
       </div>
 
-      <!-- Testimoni 3 -->
       <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
           <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white;flex-shrink:0;">AW</div>
@@ -5616,7 +5610,6 @@ var _gsOrig = window.showScreen;
         <div style="font-size:11px;color:var(--w30);margin-top:10px;">📱 Pengguna JasaKu · September 2026</div>
       </div>
 
-      <!-- Testimoni 4 -->
       <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
           <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white;flex-shrink:0;">DN</div>
@@ -5626,11 +5619,10 @@ var _gsOrig = window.showScreen;
           </div>
           <div style="color:var(--gold);font-size:13px;">★★★★☆</div>
         </div>
-        <div style="font-size:13px;color:var(--w70);line-height:1.7;font-style:italic;">"MasjidKu sangat membantu saya tidak ketinggalan waktu sholat. Jadwal sholat otomatis dan ada kumpulan doa yang lengkap. Aplikasi islami terbaik yang pernah saya pakai!"</div>
+        <div style="font-size:13px;color:var(--w70);line-height:1.7;font-style:italic;">"MasjidKu sangat membantu saya tidak ketinggalan waktu sholat. Jadwal sholat otomatis dan ada kumpulan doa yang lengkap. Aplikasi islami terbaik!"</div>
         <div style="font-size:11px;color:var(--w30);margin-top:10px;">📱 Pengguna MasjidKu · September 2026</div>
       </div>
 
-      <!-- Testimoni 5 -->
       <div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:18px;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
           <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#be185d);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white;flex-shrink:0;">RA</div>
@@ -5640,21 +5632,22 @@ var _gsOrig = window.showScreen;
           </div>
           <div style="color:var(--gold);font-size:13px;">★★★★★</div>
         </div>
-        <div style="font-size:13px;color:var(--w70);line-height:1.7;font-style:italic;">"SchoolID revolusi cara kami mengelola sekolah. Data siswa, laporan, dan komunikasi dengan orang tua jadi jauh lebih efisien. Sangat direkomendasikan untuk sekolah modern!"</div>
+        <div style="font-size:13px;color:var(--w70);line-height:1.7;font-style:italic;">"SchoolID revolusi cara kami mengelola sekolah. Data siswa, laporan, dan komunikasi dengan orang tua jadi jauh lebih efisien. Sangat direkomendasikan!"</div>
         <div style="font-size:11px;color:var(--w30);margin-top:10px;">📱 Pengguna SchoolID · September 2026</div>
       </div>
 
     </div>
 
-    <!-- Tombol Beri Testimoni -->
-    <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:20px;text-align:center;margin-bottom:24px;">
+    <!-- Tombol Beri Ulasan -->
+    <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px;">
       <div style="font-size:20px;margin-bottom:8px;">✍️</div>
       <div style="font-size:14px;font-weight:700;color:white;margin-bottom:6px;">Bagikan Pengalamanmu!</div>
-      <div style="font-size:12px;color:var(--w50);margin-bottom:14px;">Ceritakan pengalamanmu menggunakan IdeA1 dan bantu pengguna lain.</div>
+      <div style="font-size:12px;color:var(--w50);margin-bottom:14px;">Ceritakan pengalamanmu menggunakan IdeA1.</div>
       <button onclick="showScreen('rating')" style="background:var(--gold);border:none;border-radius:12px;padding:12px 28px;color:#000;font-size:13px;font-weight:700;cursor:pointer;">⭐ Tulis Ulasan Sekarang</button>
     </div>
 
-    <div style="height:24px;"></div>
+    <button onclick="showScreen('tentang-kami')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--gold);border-radius:14px;color:var(--gold);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:24px;">← Kembali</button>
+
   </div>
 </div>
 <!-- ==================== END TESTIMONI SCREEN ==================== -->
