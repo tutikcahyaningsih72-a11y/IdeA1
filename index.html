@@ -2445,7 +2445,6 @@
           </div>
           <span class="settings-arrow">›</span>
         </div>
-      </div>
 
     <!-- Install PWA -->
     <div class="settings-section">
@@ -3095,7 +3094,11 @@ function showScreen(id, anim = true) {
   /* Side effects per screen */
   if (id === 'blog')              setTimeout(filterBlog, 50);
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
-  if (id === 'app-settings')          setTimeout(loadSettings, 50);
+  if (id === 'app-settings') {
+    setTimeout(loadSettings, 50);
+    const sc = document.querySelector('#app-settings .scroll-area');
+    if (sc) sc.scrollTop = 0;
+  }
   if (id === 'admin-blog')        setTimeout(renderAdminList, 50);
   if (id === 'admin-dashboard')   setTimeout(refreshAdminStats, 50);
   if (id === 'admin-users')       setTimeout(loadAdminUsers, 50);
