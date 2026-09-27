@@ -2445,6 +2445,8 @@
           </div>
           <span class="settings-arrow">›</span>
         </div>
+      </div>
+    </div>
 
     <!-- Install PWA -->
     <div class="settings-section">
@@ -2560,19 +2562,12 @@
           </div>
           <span class="settings-arrow">›</span>
         </div>
-        <div class="settings-item" onclick="window.open('https://github.com','_blank')">
-          <div class="settings-icon" style="background:rgba(255,255,255,0.08);">🐙</div>
-          <div class="settings-label">
-            <div class="settings-label-text">Source Code</div>
-            <div class="settings-label-sub">Lihat kode di GitHub</div>
-          </div>
-          <span class="settings-arrow">›</span>
-        </div>
-        <div class="settings-item" onclick="rateApp()">
-          <div class="settings-icon" style="background:rgba(200,200,200,0.12);">⭐</div>
+
+        <div class="settings-item" onclick="showScreen('rating')">
+          <div class="settings-icon" style="background:rgba(201,168,76,0.12);">⭐</div>
           <div class="settings-label">
             <div class="settings-label-text">Beri Rating</div>
-            <div class="settings-label-sub">Bantu kami berkembang</div>
+            <div class="settings-label-sub">Bantu kami berkembang lebih baik</div>
           </div>
           <span class="settings-arrow">›</span>
         </div>
@@ -3060,12 +3055,14 @@ const auth = {
 let prevScreen = 'home';
 
 var _initDone = false;
+// Screen yang aman dipanggil kapan saja (tidak perlu tunggu init)
+var safeScreens = ['tentang-kami','testimoni','rating','about','global-search'];
 
 function showScreen(id, anim = true) {
   const elapsed = Date.now() - (window._appStartTime || 0);
   const badScreens = ['app-settings', 'profile', 'admin', 'admin-blog', 'admin-dashboard', 'edit-profile'];
   if (!_initDone || elapsed < 3000) {
-    if (badScreens.indexOf(id) !== -1) return;
+    if (badScreens.indexOf(id) !== -1 && safeScreens.indexOf(id) === -1) return;
   }
   /* Kelola banner slider */
   if (id === 'home') { bannerStartAuto(); } else { bannerStopAuto(); }
@@ -3094,11 +3091,7 @@ function showScreen(id, anim = true) {
   /* Side effects per screen */
   if (id === 'blog')              setTimeout(filterBlog, 50);
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
-  if (id === 'app-settings') {
-    setTimeout(loadSettings, 50);
-    const sc = document.querySelector('#app-settings .scroll-area');
-    if (sc) sc.scrollTop = 0;
-  }
+  if (id === 'app-settings')          setTimeout(loadSettings, 50);
   if (id === 'admin-blog')        setTimeout(renderAdminList, 50);
   if (id === 'admin-dashboard')   setTimeout(refreshAdminStats, 50);
   if (id === 'admin-users')       setTimeout(loadAdminUsers, 50);
