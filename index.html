@@ -2441,7 +2441,7 @@
       </div>
     </div>
 
-    <!-- Install PWA -->
+        <!-- Install PWA -->
     <div class="settings-section">
       <div class="settings-title">Instalasi</div>
       <div class="settings-group">
@@ -3064,7 +3064,7 @@ function showScreen(id, anim = true) {
     if (badScreens.indexOf(id) !== -1 && safeScreens.indexOf(id) === -1) return;
   }
   /* Kelola banner slider */
-  if (id === 'home') { bannerStartAuto(); setTimeout(function(){ if(typeof updateHomeBanners==='function') updateHomeBanners(getBanners()); }, 100); } else { bannerStopAuto(); }
+  if (id === 'home') { bannerStartAuto(); setTimeout(function(){ if(typeof updateHomeBanners==='function'&&typeof getBanners==='function') updateHomeBanners(getBanners()); },100); } else { bannerStopAuto(); }
   /* Kelola profile bg carousel */
   if (id === 'profile') { profileBgStart(); } else { profileBgStop(); }
   /* Init onboarding slides */
@@ -5596,7 +5596,7 @@ function gsReset() {
     <button onclick="showScreen('tentang-kami')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--gold);border-radius:14px;color:var(--gold);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:24px;">← Kembali</button>
   </div>
 </div>
-<!-- ==================== ADMIN BANNER SCREEN ==================== -->
+<!-- ADMIN BANNER SCREEN -->
 <div id="admin-banner" class="screen">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:14px;">
@@ -5607,9 +5607,9 @@ function gsReset() {
   </div>
   <div class="scroll-area" style="padding:16px;">
     <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--w70);line-height:1.6;">
-      🖼️ Banner tampil bergantian di halaman Home. Tap <strong style="color:var(--gold);">+ Tambah</strong> untuk upload gambar baru dari HP. Tap <strong style="color:#ef4444;">Hapus</strong> untuk menghapus.
+      🖼️ Banner tampil bergantian di Home. Tap <strong style="color:var(--gold);">+ Tambah</strong> untuk upload gambar baru. Tap <strong style="color:#ef4444;">Hapus</strong> untuk menghapus.
     </div>
-    <div id="banner-list" style="display:flex;flex-direction:column;gap:12px;">
+    <div id="banner-list">
       <div style="text-align:center;padding:32px;color:var(--w40);">
         <div style="font-size:32px;margin-bottom:8px;">⏳</div>
         <div>Memuat banner...</div>
@@ -5623,7 +5623,7 @@ function gsReset() {
       <div id="banner-preview-wrap" style="display:none;margin-bottom:12px;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#111;">
         <img id="banner-preview-img" style="width:100%;height:100%;object-fit:cover;" alt="Preview">
       </div>
-      <div onclick="document.getElementById('banner-file-input').click()" style="border:2px dashed rgba(201,168,76,0.4);border-radius:12px;padding:24px;text-align:center;cursor:pointer;margin-bottom:12px;" id="banner-upload-area">
+      <div onclick="document.getElementById('banner-file-input').click()" id="banner-upload-area" style="border:2px dashed rgba(201,168,76,0.4);border-radius:12px;padding:24px;text-align:center;cursor:pointer;margin-bottom:12px;">
         <div style="font-size:28px;margin-bottom:6px;">📁</div>
         <div style="font-size:13px;color:var(--gold);font-weight:600;">Tap untuk pilih gambar</div>
         <div style="font-size:11px;color:var(--w40);margin-top:4px;">Rasio 16:9 direkomendasikan</div>
@@ -5632,77 +5632,54 @@ function gsReset() {
       <input id="banner-title-input" type="text" placeholder="Judul banner (opsional)" style="width:100%;box-sizing:border-box;background:var(--glass);border:1px solid var(--glass-b);border-radius:10px;padding:12px 14px;color:white;font-size:13px;font-family:inherit;outline:none;margin-bottom:14px;">
       <div style="display:flex;gap:10px;">
         <button onclick="closeBannerModal()" style="flex:1;padding:13px;background:var(--glass);border:1px solid var(--glass-b);border-radius:12px;color:var(--w70);font-size:14px;font-weight:600;cursor:pointer;">Batal</button>
-        <button onclick="saveBanner()" id="banner-save-btn" style="flex:2;padding:13px;background:var(--gold);border:none;border-radius:12px;color:#000;font-size:14px;font-weight:700;cursor:pointer;">💾 Simpan Banner</button>
+        <button onclick="saveBanner()" id="banner-save-btn" style="flex:2;padding:13px;background:var(--gold);border:none;border-radius:12px;color:#000;font-size:14px;font-weight:700;cursor:pointer;">💾 Simpan</button>
       </div>
       <div id="banner-modal-alert" style="display:none;margin-top:10px;text-align:center;font-size:12px;color:#ef4444;"></div>
     </div>
   </div>
 </div>
-<!-- ==================== END ADMIN BANNER ==================== -->
 
 <script>
-var BANNER_STORAGE_KEY = 'idea1_banners';
-var _bannerBase64 = null;
+var BANNER_STORAGE_KEY='idea1_banners';
+var _bannerBase64=null;
 
-function getBanners() {
-  try {
-    var s = localStorage.getItem(BANNER_STORAGE_KEY);
-    if (s) return JSON.parse(s);
-  } catch(e) {}
-  return [
-    {id:'b1',judul:'IdeA1 - Begin Making Better',src:'1789877093236.png',tipe:'url'},
-    {id:'b2',judul:'Agentic AI',src:'1789877316234.png',tipe:'url'},
-    {id:'b3',judul:'Workflow',src:'1789877490801.png',tipe:'url'},
-    {id:'b4',judul:'Digital Ecosystem',src:'1789877815277.png',tipe:'url'},
-  ];
+function getBanners(){
+  try{var s=localStorage.getItem(BANNER_STORAGE_KEY);if(s)return JSON.parse(s);}catch(e){}
+  return [{id:'b1',judul:'IdeA1 - Begin Making Better',src:'1789877093236.png',tipe:'url'},{id:'b2',judul:'Agentic AI',src:'1789877316234.png',tipe:'url'},{id:'b3',judul:'Workflow',src:'1789877490801.png',tipe:'url'},{id:'b4',judul:'Digital Ecosystem',src:'1789877815277.png',tipe:'url'}];
 }
 
-function saveBanners(banners) {
-  try { localStorage.setItem(BANNER_STORAGE_KEY, JSON.stringify(banners)); return true; }
-  catch(e) { return false; }
+function saveBanners(b){try{localStorage.setItem(BANNER_STORAGE_KEY,JSON.stringify(b));return true;}catch(e){return false;}}
+
+function updateHomeBanners(banners){
+  var track=document.getElementById('bannerTrack');
+  var dots=document.getElementById('bannerDots');
+  if(!track||!dots)return;
+  track.innerHTML=banners.map(function(b){return '<div class="banner-slide"><img src="'+b.src+'" alt="'+(b.judul||'')+'" loading="lazy" onerror="this.style.display=\'none\'"></div>';}).join('');
+  dots.innerHTML=banners.map(function(b,i){return '<div class="banner-dot'+(i===0?' active':'')+'" onclick="bannerGoTo('+i+')"></div>';}).join('');
+  bannerTotal=banners.length;bannerGoTo(0);
 }
 
-function updateHomeBanners(banners) {
-  var track = document.getElementById('bannerTrack');
-  var dotsEl = document.getElementById('bannerDots');
-  if (!track || !dotsEl) return;
-  track.innerHTML = banners.map(function(b) {
-    return '<div class="banner-slide"><img src="'+b.src+'" alt="'+(b.judul||'Banner')+'" loading="lazy" onerror="this.style.display=\'none\'"></div>';
-  }).join('');
-  dotsEl.innerHTML = banners.map(function(b,i) {
-    return '<div class="banner-dot'+(i===0?' active':'')+'" onclick="bannerGoTo('+i+')"></div>';
-  }).join('');
-  bannerTotal = banners.length;
-  bannerGoTo(0);
-}
-
-function renderBannerList() {
-  var list = document.getElementById('banner-list');
-  if (!list) return;
-  var banners = getBanners();
-  if (!banners.length) {
-    list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--w40);"><div style="font-size:32px;margin-bottom:8px;">🖼️</div><div>Belum ada banner</div></div>';
-    return;
-  }
-  list.innerHTML = banners.map(function(b,i) {
-    return '<div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:14px;overflow:hidden;margin-bottom:4px;">'+
-      '<div style="aspect-ratio:16/9;background:#111;overflow:hidden;">'+
-        '<img src="'+b.src+'" style="width:100%;height:100%;object-fit:cover;" alt="'+(b.judul||'Banner')+'" onerror="this.parentElement.innerHTML=\'<div style=\\\"display:flex;align-items:center;justify-content:center;height:80px;color:var(--w30);font-size:11px;\\\">Gambar tidak tersedia</div>\'">'+
-      '</div>'+
+function renderBannerList(){
+  var list=document.getElementById('banner-list');
+  if(!list)return;
+  var banners=getBanners();
+  if(!banners.length){list.innerHTML='<div style="text-align:center;padding:32px;color:var(--w40);"><div style="font-size:32px;margin-bottom:8px;">🖼️</div><div>Belum ada banner</div></div>';return;}
+  list.innerHTML='<div style="display:flex;flex-direction:column;gap:12px;">'+banners.map(function(b,i){
+    return '<div style="background:var(--glass);border:1px solid var(--glass-b);border-radius:14px;overflow:hidden;">'+
+      '<div style="aspect-ratio:16/9;background:#111;overflow:hidden;"><img src="'+b.src+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML=\'<div style=\\\"display:flex;align-items:center;justify-content:center;height:80px;color:var(--w30);font-size:11px;\\\">Tidak tersedia</div>\'"></div>'+
       '<div style="padding:12px 14px;display:flex;align-items:center;justify-content:space-between;">'+
-        '<div><div style="font-size:13px;font-weight:700;color:white;">'+(b.judul||'Banner '+(i+1))+'</div>'+
-        '<div style="font-size:11px;color:var(--w40);">Banner ke-'+(i+1)+' dari '+banners.length+'</div></div>'+
+        '<div><div style="font-size:13px;font-weight:700;color:white;">'+(b.judul||'Banner '+(i+1))+'</div><div style="font-size:11px;color:var(--w40);">Banner ke-'+(i+1)+' dari '+banners.length+'</div></div>'+
         '<div style="display:flex;gap:6px;">'+
           (i>0?'<button onclick="moveBanner('+i+',-1)" style="background:rgba(255,255,255,0.06);border:1px solid var(--glass-b);border-radius:8px;padding:6px 10px;color:var(--w70);font-size:12px;cursor:pointer;">↑</button>':'')+
           (i<banners.length-1?'<button onclick="moveBanner('+i+',1)" style="background:rgba(255,255,255,0.06);border:1px solid var(--glass-b);border-radius:8px;padding:6px 10px;color:var(--w70);font-size:12px;cursor:pointer;">↓</button>':'')+
           '<button onclick="deleteBanner(\''+b.id+'\')" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:6px 10px;color:#ef4444;font-size:12px;font-weight:700;cursor:pointer;">Hapus</button>'+
         '</div>'+
       '</div></div>';
-  }).join('');
+  }).join('')+'</div>';
   updateHomeBanners(banners);
 }
 
-function showAddBanner() {
+function showAddBanner(){
   _bannerBase64=null;
   document.getElementById('banner-modal').style.display='flex';
   document.getElementById('banner-preview-wrap').style.display='none';
@@ -5710,71 +5687,43 @@ function showAddBanner() {
   document.getElementById('banner-file-input').value='';
   document.getElementById('banner-title-input').value='';
   document.getElementById('banner-modal-alert').style.display='none';
-  var btn=document.getElementById('banner-save-btn');
-  btn.disabled=false; btn.textContent='💾 Simpan Banner';
+  var btn=document.getElementById('banner-save-btn');btn.disabled=false;btn.textContent='💾 Simpan';
 }
 
-function closeBannerModal() {
-  document.getElementById('banner-modal').style.display='none';
-}
+function closeBannerModal(){document.getElementById('banner-modal').style.display='none';}
 
-function previewBanner(input) {
-  var file=input.files[0];
-  if (!file) return;
-  if (file.size>2*1024*1024) {
-    var al=document.getElementById('banner-modal-alert');
-    al.style.display='block'; al.textContent='⚠️ Ukuran gambar maksimal 2MB!'; return;
-  }
+function previewBanner(input){
+  var file=input.files[0];if(!file)return;
+  if(file.size>2*1024*1024){var al=document.getElementById('banner-modal-alert');al.style.display='block';al.textContent='⚠️ Maks 2MB!';return;}
   var reader=new FileReader();
-  reader.onload=function(e) {
+  reader.onload=function(e){
     var img=new Image();
-    img.onload=function() {
-      var canvas=document.createElement('canvas');
-      var ratio=Math.min(1200/img.width,1);
-      canvas.width=img.width*ratio; canvas.height=img.height*ratio;
+    img.onload=function(){
+      var canvas=document.createElement('canvas');var ratio=Math.min(1200/img.width,1);
+      canvas.width=img.width*ratio;canvas.height=img.height*ratio;
       canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
       _bannerBase64=canvas.toDataURL('image/jpeg',0.8);
       document.getElementById('banner-preview-img').src=_bannerBase64;
       document.getElementById('banner-preview-wrap').style.display='block';
       document.getElementById('banner-upload-area').style.display='none';
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
+    };img.src=e.target.result;
+  };reader.readAsDataURL(file);
 }
 
-function saveBanner() {
-  if (!_bannerBase64) {
-    var al=document.getElementById('banner-modal-alert');
-    al.style.display='block'; al.textContent='⚠️ Pilih gambar terlebih dahulu!'; return;
-  }
+function saveBanner(){
+  if(!_bannerBase64){var al=document.getElementById('banner-modal-alert');al.style.display='block';al.textContent='⚠️ Pilih gambar dulu!';return;}
   var judul=document.getElementById('banner-title-input').value.trim()||'Banner Baru';
-  var btn=document.getElementById('banner-save-btn');
-  btn.disabled=true; btn.textContent='⏳ Menyimpan...';
-  var banners=getBanners();
-  banners.push({id:'b'+Date.now(),judul:judul,src:_bannerBase64,tipe:'base64'});
-  if (saveBanners(banners)) {
-    btn.textContent='✅ Tersimpan!';
-    setTimeout(function(){ closeBannerModal(); renderBannerList(); _bannerBase64=null; },1000);
-  } else {
-    var al=document.getElementById('banner-modal-alert');
-    al.style.display='block'; al.textContent='⚠️ Gagal menyimpan. Storage penuh?';
-    btn.disabled=false; btn.textContent='💾 Simpan Banner';
-  }
+  var btn=document.getElementById('banner-save-btn');btn.disabled=true;btn.textContent='⏳ Menyimpan...';
+  var banners=getBanners();banners.push({id:'b'+Date.now(),judul:judul,src:_bannerBase64,tipe:'base64'});
+  if(saveBanners(banners)){btn.textContent='✅ Tersimpan!';setTimeout(function(){closeBannerModal();renderBannerList();_bannerBase64=null;},1000);}
+  else{var al=document.getElementById('banner-modal-alert');al.style.display='block';al.textContent='⚠️ Gagal. Storage penuh?';btn.disabled=false;btn.textContent='💾 Simpan';}
 }
 
-function deleteBanner(id) {
-  if (!confirm('Hapus banner ini?')) return;
-  saveBanners(getBanners().filter(function(b){return b.id!==id;}));
-  renderBannerList();
-}
+function deleteBanner(id){if(!confirm('Hapus banner ini?'))return;saveBanners(getBanners().filter(function(b){return b.id!==id;}));renderBannerList();}
 
-function moveBanner(idx,dir) {
-  var banners=getBanners();
-  var ni=idx+dir;
-  if (ni<0||ni>=banners.length) return;
-  var t=banners[idx]; banners[idx]=banners[ni]; banners[ni]=t;
-  saveBanners(banners); renderBannerList();
+function moveBanner(idx,dir){
+  var banners=getBanners();var ni=idx+dir;if(ni<0||ni>=banners.length)return;
+  var t=banners[idx];banners[idx]=banners[ni];banners[ni]=t;saveBanners(banners);renderBannerList();
 }
 </script>
 
