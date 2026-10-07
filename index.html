@@ -1203,6 +1203,63 @@
     }
 
     /* SETTINGS SCREEN */
+    /* ===== WORKSPACE ===== */
+    .ws-status { display:flex; align-items:center; gap:6px; font-size:11px; font-weight:600; color:var(--w40); }
+    .ws-dot { width:7px; height:7px; border-radius:50%; background:var(--w40); }
+    .ws-status.ok .ws-dot { background:var(--green); }
+    .ws-status.sync .ws-dot { background:var(--gold); }
+    .ws-tabs { display:flex; gap:6px; padding:4px; margin:0 20px 16px; background:var(--bg2); border:1px solid var(--glass-b); border-radius:var(--r16); }
+    .ws-tab { flex:1; padding:10px 8px; border-radius:11px; border:none; background:none; color:var(--w40); font-family:var(--font); font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:7px; }
+    .ws-tab svg { width:16px; height:16px; }
+    .ws-tab.active { background:rgba(201,168,76,0.14); color:var(--gold); }
+    .ws-pane { padding:0 20px; }
+    .ws-input { width:100%; background:var(--bg2); border:1px solid var(--glass-b); border-radius:var(--r12); color:var(--white); font-family:var(--font); font-size:16px; padding:13px 14px; outline:none; box-sizing:border-box; }
+    .ws-input:focus { border-color:var(--gold); }
+    .ws-input-title { font-weight:700; margin-bottom:12px; }
+    .ws-textarea { min-height:55vh; resize:none; line-height:1.55; }
+    .ws-search { margin-bottom:14px; }
+    .ws-card { background:var(--bg2); border:1px solid var(--glass-b); border-radius:var(--r16); padding:14px 16px; margin-bottom:10px; cursor:pointer; }
+    .ws-card:active { background:var(--bg3); }
+    .ws-card-title { font-size:14px; font-weight:700; margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .ws-card-body { font-size:12.5px; color:var(--w70); line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; word-break:break-word; }
+    .ws-card-date { font-size:11px; color:var(--w40); margin-top:8px; }
+    .ws-empty { text-align:center; padding:36px 24px; color:var(--w40); }
+    .ws-empty-ico { width:52px; height:52px; margin:0 auto 14px; border-radius:15px; background:rgba(201,168,76,0.12); display:flex; align-items:center; justify-content:center; }
+    .ws-empty-ico svg { width:24px; height:24px; }
+    .ws-empty b { display:block; color:var(--white); font-size:15px; margin-bottom:4px; }
+    .ws-empty span { font-size:12.5px; line-height:1.5; }
+    .ws-btn { margin-top:16px; padding:11px 22px; border-radius:var(--r12); border:none; background:var(--gold-grad); color:#000; font-family:var(--font); font-size:13px; font-weight:700; cursor:pointer; }
+    .ws-fab { position:absolute; right:20px; bottom:calc(88px + var(--safe-b)); width:54px; height:54px; border-radius:17px; border:none; background:var(--gold-grad); color:#000; display:none; align-items:center; justify-content:center; cursor:pointer; z-index:15; box-shadow:0 6px 20px rgba(201,168,76,0.35); }
+    .ws-fab svg { width:24px; height:24px; }
+    .ws-add { display:flex; gap:8px; margin-bottom:12px; }
+    .ws-add .ws-input { flex:1; }
+    .ws-add-btn { width:48px; flex-shrink:0; border-radius:var(--r12); border:none; background:var(--gold-grad); color:#000; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+    .ws-add-btn svg { width:20px; height:20px; }
+    .ws-filters { display:flex; gap:8px; margin-bottom:14px; }
+    .ws-chip { padding:7px 14px; border-radius:20px; border:1px solid var(--glass-b); background:none; color:var(--w70); font-family:var(--font); font-size:12px; font-weight:600; cursor:pointer; }
+    .ws-chip.active { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,0.1); }
+    .ws-todo { display:flex; align-items:center; gap:12px; background:var(--bg2); border:1px solid var(--glass-b); border-radius:var(--r16); padding:12px 14px; margin-bottom:8px; }
+    .ws-check { width:24px; height:24px; flex-shrink:0; border-radius:8px; border:1.8px solid var(--w40); background:none; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; }
+    .ws-check svg { width:14px; height:14px; opacity:0; }
+    .ws-todo.done .ws-check { background:var(--gold); border-color:var(--gold); }
+    .ws-todo.done .ws-check svg { opacity:1; }
+    .ws-todo-text { flex:1; font-size:14px; line-height:1.4; word-break:break-word; }
+    .ws-todo.done .ws-todo-text { color:var(--w40); text-decoration:line-through; }
+    .ws-x { width:30px; height:30px; flex-shrink:0; border:none; background:none; color:var(--w40); display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:8px; }
+    .ws-x svg { width:16px; height:16px; }
+    .ws-x:active { background:rgba(239,68,68,0.15); color:var(--red); }
+    .ws-count { display:flex; align-items:center; justify-content:space-between; font-size:12px; color:var(--w40); margin:4px 2px 0; }
+    .ws-link { background:none; border:none; color:var(--gold); font-family:var(--font); font-size:12px; font-weight:600; cursor:pointer; padding:4px 0; }
+    .ws-soon { margin:22px 20px 0; padding:14px 16px; border:1px dashed var(--glass-b); border-radius:var(--r16); }
+    .ws-soon-title { font-size:12px; font-weight:700; color:var(--w70); margin-bottom:10px; }
+    .ws-soon-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .ws-soon-chip { display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; background:var(--glass); font-size:12px; color:var(--w40); font-weight:600; }
+    .ws-soon-chip svg { width:13px; height:13px; }
+    .ws-sheet { position:absolute; top:0; left:0; right:0; bottom:0; z-index:40; background:var(--bg); display:none; flex-direction:column; }
+    .ws-sheet.open { display:flex; }
+    .ws-save { padding:9px 18px; border-radius:var(--r12); border:none; background:var(--gold-grad); color:#000; font-family:var(--font); font-size:13px; font-weight:700; cursor:pointer; }
+    .ws-del { width:100%; margin-top:16px; padding:12px; border-radius:var(--r12); border:1px solid rgba(239,68,68,0.35); background:rgba(239,68,68,0.08); color:var(--red); font-family:var(--font); font-size:13px; font-weight:700; cursor:pointer; }
+
     .settings-section {
       margin: 0 20px 20px;
     }
@@ -1609,7 +1666,7 @@
 
   <nav class="bottom-nav">
     <div class="nav-item active" onclick="setNav(this,'home')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="nav-lbl">Home</span></div>
-    <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-item" onclick="showScreen('workspace')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg></span><span class="nav-lbl">Workspace</span></div>
     <div class="nav-ai" onclick="showScreen('ai')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2z"/><path d="M19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14z" opacity="0.7"/><path d="M5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7L5 14z" opacity="0.7"/></svg></div>
     <div class="nav-item" onclick="openBlog()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="nav-lbl">Akun</span></div>
@@ -1698,8 +1755,76 @@
     </div>
   </div>
   <nav class="bottom-nav">
+    <div class="nav-item active" onclick="showScreen('home')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="nav-lbl">Home</span></div>
+    <div class="nav-item" onclick="showScreen('workspace')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg></span><span class="nav-lbl">Workspace</span></div>
+    <div class="nav-ai" onclick="showScreen('ai')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2z"/><path d="M19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14z" opacity="0.7"/><path d="M5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7L5 14z" opacity="0.7"/></svg></div>
+    <div class="nav-item" onclick="openBlog()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span><span class="nav-lbl">Blog</span></div>
+    <div class="nav-item" onclick="goToProfile()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="nav-lbl">Akun</span></div>
+  </nav>
+</div>
+
+
+<!-- ==========================================
+     WORKSPACE SCREEN (Tahap 1: Catatan & To-do)
+========================================== -->
+<div id="workspace" class="screen">
+  <div class="topbar">
+    <span class="sub-title">Workspace</span>
+    <span class="ws-status" id="ws-status"><span class="ws-dot"></span><span id="ws-status-text"></span></span>
+  </div>
+  <div class="scroll-area" style="padding-top:16px;">
+    <div id="ws-gate" class="ws-empty" style="display:none;">
+      <div class="ws-empty-ico"><svg viewBox="0 0 24 24" stroke="var(--gold)" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></div>
+      <b>Masuk untuk memakai Workspace</b>
+      <span>Catatan dan tugasmu tersimpan di akun, jadi tetap ada saat kamu ganti HP.</span><br>
+      <button class="ws-btn" onclick="showScreen('login')">Masuk</button>
+    </div>
+    <div id="ws-main">
+      <div class="ws-tabs">
+        <button class="ws-tab active" id="ws-tab-notes" onclick="wsTab('notes')"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>Catatan</button>
+        <button class="ws-tab" id="ws-tab-todo" onclick="wsTab('todo')"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 12.5l2.7 2.7L16.2 9.5"/></svg>To-do List</button>
+      </div>
+      <div class="ws-pane" id="ws-pane-notes">
+        <input class="ws-input ws-search" id="ws-search" type="search" placeholder="Cari catatan" oninput="wsRenderNotes()">
+        <div id="ws-notes-list"></div>
+      </div>
+      <div class="ws-pane" id="ws-pane-todo" style="display:none;">
+        <div class="ws-add">
+          <input class="ws-input" id="ws-todo-input" type="text" maxlength="200" placeholder="Tambah tugas baru" onkeydown="if(event.key==='Enter')wsAddTodo()">
+          <button class="ws-add-btn" onclick="wsAddTodo()" aria-label="Tambah tugas"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        </div>
+        <div class="ws-filters">
+          <button class="ws-chip active" id="ws-f-all" onclick="wsFilter('all')">Semua</button>
+          <button class="ws-chip" id="ws-f-active" onclick="wsFilter('active')">Aktif</button>
+          <button class="ws-chip" id="ws-f-done" onclick="wsFilter('done')">Selesai</button>
+        </div>
+        <div id="ws-todo-list"></div>
+        <div class="ws-count" id="ws-todo-count"></div>
+      </div>
+      <div class="ws-soon">
+        <div class="ws-soon-title">Segera hadir</div>
+        <div class="ws-soon-row"><span class="ws-soon-chip"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Draft Project</span><span class="ws-soon-chip"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/></svg>Kanban</span><span class="ws-soon-chip"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 12h16M4 18h8"/></svg>Timeline</span><span class="ws-soon-chip"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Reminder</span></div>
+      </div>
+    </div>
+  </div>
+  <button class="ws-fab" id="ws-fab" onclick="wsNewNote()" aria-label="Catatan baru"><svg viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button>
+  <div class="ws-sheet" id="ws-sheet">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="back-btn" onclick="wsCloseSheet()" aria-label="Kembali">←</button>
+        <span class="sub-title" id="ws-sheet-title">Catatan baru</span>
+      </div>
+      <button class="ws-save" onclick="wsSaveNote()">Simpan</button>
+    </div>
+    <div class="scroll-area" style="padding:16px 20px;">
+      <input class="ws-input ws-input-title" id="ws-note-title" type="text" maxlength="120" placeholder="Judul catatan">
+      <textarea class="ws-input ws-textarea" id="ws-note-body" placeholder="Tulis idemu di sini"></textarea>
+      <button class="ws-del" id="ws-note-del" onclick="wsDeleteNote()" style="display:none;">Hapus catatan</button>
+    </div>
+  </div>
+  <nav class="bottom-nav">
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="nav-lbl">Home</span></div>
-    <div class="nav-item active"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-item active"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg></span><span class="nav-lbl">Workspace</span></div>
     <div class="nav-ai" onclick="showScreen('ai')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2z"/><path d="M19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14z" opacity="0.7"/><path d="M5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7L5 14z" opacity="0.7"/></svg></div>
     <div class="nav-item" onclick="openBlog()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="nav-lbl">Akun</span></div>
@@ -1799,7 +1924,7 @@
   </div>
   <nav class="bottom-nav">
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="nav-lbl">Home</span></div>
-    <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-item" onclick="showScreen('workspace')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg></span><span class="nav-lbl">Workspace</span></div>
     <div class="nav-ai" onclick="showScreen('ai')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2z"/><path d="M19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14z" opacity="0.7"/><path d="M5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7L5 14z" opacity="0.7"/></svg></div>
     <div class="nav-item" onclick="openBlog()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item active"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="nav-lbl">Akun</span></div>
@@ -2242,7 +2367,7 @@
 
   <nav class="bottom-nav">
     <div class="nav-item" onclick="showScreen('home')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span class="nav-lbl">Home</span></div>
-    <div class="nav-item" onclick="showScreen('projects')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="nav-lbl">Proyek</span></div>
+    <div class="nav-item" onclick="showScreen('workspace')"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg></span><span class="nav-lbl">Workspace</span></div>
     <div class="nav-ai" onclick="showScreen('ai')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2z"/><path d="M19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14z" opacity="0.7"/><path d="M5 14l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7L5 14z" opacity="0.7"/></svg></div>
     <div class="nav-item active"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span><span class="nav-lbl">Blog</span></div>
     <div class="nav-item" onclick="goToProfile()"><span class="nav-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="nav-lbl">Akun</span></div>
@@ -3098,6 +3223,7 @@ function showScreen(id, anim = true) {
   }
   /* Side effects per screen */
   if (id === 'blog')              setTimeout(filterBlog, 50);
+  if (id === 'workspace')         setTimeout(wsOpen, 50);
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
   if (id === 'app-settings')          setTimeout(loadSettings, 50);
   if (id === 'admin-blog')        setTimeout(renderAdminList, 50);
@@ -3126,6 +3252,182 @@ function setNav(el, screenId) {
   nav.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
   showScreen(screenId, false);
+}
+
+/* ===== WORKSPACE (Tahap 1: Catatan & To-do) ===== */
+var WS = { tab:'notes', filter:'all', key:null, editing:null, syncing:false, again:false,
+           data:{notes:[],todos:[],delN:[],delT:[]} };
+function wsEsc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function wsId(){
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){ var r=Math.random()*16|0; return (c==='x'?r:(r&3|8)).toString(16); });
+}
+function wsLoad(){
+  WS.data={notes:[],todos:[],delN:[],delT:[]};
+  try { var raw=localStorage.getItem(WS.key); if(raw){ var d=JSON.parse(raw);
+    WS.data={notes:d.notes||[],todos:d.todos||[],delN:d.delN||[],delT:d.delT||[]}; } } catch(e){}
+}
+function wsSave(){ try { localStorage.setItem(WS.key, JSON.stringify(WS.data)); } catch(e){} }
+function wsStatus(state){
+  var el=document.getElementById('ws-status'), tx=document.getElementById('ws-status-text'); if(!el||!tx) return;
+  el.className='ws-status '+(state==='ok'?'ok':state==='sync'?'sync':'');
+  tx.textContent = state==='ok' ? 'Tersinkron' : state==='sync' ? 'Menyinkronkan' : 'Tersimpan di HP';
+}
+function wsOpen(){
+  var user=auth.getSession();
+  var gate=document.getElementById('ws-gate'), main=document.getElementById('ws-main'), fab=document.getElementById('ws-fab');
+  wsCloseSheet();
+  if(!user){ gate.style.display='block'; main.style.display='none'; fab.style.display='none'; wsStatus('local'); return; }
+  gate.style.display='none'; main.style.display='block';
+  WS.key='idea1_ws_v1_'+(user.id||user.email||'tamu');
+  wsLoad(); wsTab(WS.tab); wsSync();
+}
+function wsTab(t){
+  WS.tab=t;
+  document.getElementById('ws-tab-notes').classList.toggle('active',t==='notes');
+  document.getElementById('ws-tab-todo').classList.toggle('active',t==='todo');
+  document.getElementById('ws-pane-notes').style.display = t==='notes' ? 'block' : 'none';
+  document.getElementById('ws-pane-todo').style.display  = t==='todo'  ? 'block' : 'none';
+  document.getElementById('ws-fab').style.display = t==='notes' ? 'flex' : 'none';
+  wsRender();
+}
+function wsRender(){ if(WS.tab==='notes') wsRenderNotes(); else wsRenderTodos(); }
+
+/* --- Catatan --- */
+function wsDate(iso){ try { return new Date(iso).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}); } catch(e){ return ''; } }
+function wsRenderNotes(){
+  var box=document.getElementById('ws-notes-list'); if(!box) return;
+  var q=(document.getElementById('ws-search').value||'').toLowerCase().trim();
+  var list=WS.data.notes.slice().sort(function(a,b){ return (b.updated_at||'').localeCompare(a.updated_at||''); })
+    .filter(function(n){ return !q || (n.title||'').toLowerCase().indexOf(q)>=0 || (n.body||'').toLowerCase().indexOf(q)>=0; });
+  if(!list.length){
+    box.innerHTML='<div class="ws-empty"><div class="ws-empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg></div>'
+      +'<b>'+(q?'Catatan tidak ditemukan':'Belum ada catatan')+'</b><span>'+(q?'Coba kata kunci lain.':'Ketuk tombol + untuk menulis ide pertamamu.')+'</span></div>';
+    return;
+  }
+  box.innerHTML=list.map(function(n){
+    return '<div class="ws-card" onclick="wsEditNote(\''+n.id+'\')"><div class="ws-card-title">'+wsEsc(n.title||'Tanpa judul')+'</div>'
+      +(n.body?'<div class="ws-card-body">'+wsEsc(n.body)+'</div>':'')+'<div class="ws-card-date">'+wsDate(n.updated_at)+'</div></div>';
+  }).join('');
+}
+function wsOpenSheet(){ document.getElementById('ws-sheet').classList.add('open'); }
+function wsCloseSheet(){ var sh=document.getElementById('ws-sheet'); if(sh) sh.classList.remove('open'); WS.editing=null; }
+function wsNewNote(){
+  WS.editing=null;
+  document.getElementById('ws-sheet-title').textContent='Catatan baru';
+  document.getElementById('ws-note-title').value=''; document.getElementById('ws-note-body').value='';
+  document.getElementById('ws-note-del').style.display='none';
+  wsOpenSheet(); setTimeout(function(){ document.getElementById('ws-note-title').focus(); },120);
+}
+function wsEditNote(id){
+  var n=WS.data.notes.filter(function(x){ return x.id===id; })[0]; if(!n) return;
+  WS.editing=id;
+  document.getElementById('ws-sheet-title').textContent='Edit catatan';
+  document.getElementById('ws-note-title').value=n.title||''; document.getElementById('ws-note-body').value=n.body||'';
+  document.getElementById('ws-note-del').style.display='block';
+  wsOpenSheet();
+}
+function wsSaveNote(){
+  var title=document.getElementById('ws-note-title').value.trim(), body=document.getElementById('ws-note-body').value.trim();
+  if(!title && !body){ wsCloseSheet(); return; }
+  var now=new Date().toISOString();
+  if(WS.editing){
+    var n=WS.data.notes.filter(function(x){ return x.id===WS.editing; })[0];
+    if(n){ n.title=title; n.body=body; n.updated_at=now; n._dirty=true; }
+  } else {
+    WS.data.notes.push({id:wsId(),title:title,body:body,updated_at:now,_dirty:true});
+  }
+  wsSave(); wsCloseSheet(); wsRenderNotes(); wsSync();
+  if(typeof showToast==='function') showToast('Catatan disimpan');
+}
+function wsDeleteNote(){
+  if(!WS.editing) return;
+  if(!confirm('Hapus catatan ini?')) return;
+  var id=WS.editing;
+  WS.data.notes=WS.data.notes.filter(function(x){ return x.id!==id; });
+  WS.data.delN.push(id);
+  wsSave(); wsCloseSheet(); wsRenderNotes(); wsSync();
+}
+
+/* --- To-do --- */
+var WS_CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+var WS_XICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+function wsFilter(f){
+  WS.filter=f;
+  ['all','active','done'].forEach(function(k){ document.getElementById('ws-f-'+k).classList.toggle('active',k===f); });
+  wsRenderTodos();
+}
+function wsRenderTodos(){
+  var box=document.getElementById('ws-todo-list'), cnt=document.getElementById('ws-todo-count'); if(!box) return;
+  var all=WS.data.todos.slice().sort(function(a,b){ return (a.done===b.done?0:(a.done?1:-1)) || (b.created_at||'').localeCompare(a.created_at||''); });
+  var list=all.filter(function(t){ return WS.filter==='all' || (WS.filter==='done'?t.done:!t.done); });
+  var nDone=all.filter(function(t){ return t.done; }).length, nAct=all.length-nDone;
+  if(!list.length){
+    var msg = WS.filter==='done' ? ['Belum ada tugas selesai','Tugas yang kamu centang akan muncul di sini.']
+            : WS.filter==='active' ? ['Semua tugas selesai','Tambahkan tugas baru di atas.']
+            : ['Belum ada tugas','Tambahkan tugas pertamamu di atas.'];
+    box.innerHTML='<div class="ws-empty"><b>'+msg[0]+'</b><span>'+msg[1]+'</span></div>';
+  } else {
+    box.innerHTML=list.map(function(t){
+      return '<div class="ws-todo'+(t.done?' done':'')+'"><button class="ws-check" onclick="wsToggleTodo(\''+t.id+'\')" aria-label="Tandai selesai">'+WS_CHECK+'</button>'
+        +'<div class="ws-todo-text">'+wsEsc(t.text)+'</div><button class="ws-x" onclick="wsDeleteTodo(\''+t.id+'\')" aria-label="Hapus tugas">'+WS_XICO+'</button></div>';
+    }).join('');
+  }
+  cnt.innerHTML = all.length ? '<span>'+nAct+' aktif, '+nDone+' selesai</span>'+(nDone?'<button class="ws-link" onclick="wsClearDone()">Hapus yang selesai</button>':'') : '';
+}
+function wsAddTodo(){
+  var inp=document.getElementById('ws-todo-input'), text=inp.value.trim(); if(!text) return;
+  WS.data.todos.push({id:wsId(),text:text,done:false,created_at:new Date().toISOString(),_dirty:true});
+  inp.value=''; wsSave(); wsRenderTodos(); wsSync();
+}
+function wsToggleTodo(id){
+  var t=WS.data.todos.filter(function(x){ return x.id===id; })[0]; if(!t) return;
+  t.done=!t.done; t._dirty=true; wsSave(); wsRenderTodos(); wsSync();
+}
+function wsDeleteTodo(id){
+  WS.data.todos=WS.data.todos.filter(function(x){ return x.id!==id; });
+  WS.data.delT.push(id); wsSave(); wsRenderTodos(); wsSync();
+}
+function wsClearDone(){
+  var ids=WS.data.todos.filter(function(t){ return t.done; }).map(function(t){ return t.id; });
+  if(!ids.length || !confirm('Hapus '+ids.length+' tugas yang sudah selesai?')) return;
+  WS.data.todos=WS.data.todos.filter(function(t){ return !t.done; });
+  WS.data.delT=WS.data.delT.concat(ids); wsSave(); wsRenderTodos(); wsSync();
+}
+
+/* --- Sinkron ke Supabase (tabel ws_notes & ws_todos) --- */
+async function wsSync(){
+  if(WS.syncing){ WS.again=true; return; }
+  var user=auth.getSession();
+  if(!auth.hasSupabase() || !user || !user.id){ wsStatus('local'); return; }
+  WS.syncing=true; wsStatus('sync');
+  try {
+    var d=WS.data, uid=user.id, r;
+    if(d.delN.length){ r=await _sb.from('ws_notes').delete().in('id',d.delN); if(r.error) throw r.error; d.delN=[]; }
+    if(d.delT.length){ r=await _sb.from('ws_todos').delete().in('id',d.delT); if(r.error) throw r.error; d.delT=[]; }
+    var dn=d.notes.filter(function(n){ return n._dirty; }), dt=d.todos.filter(function(t){ return t._dirty; });
+    if(dn.length){
+      r=await _sb.from('ws_notes').upsert(dn.map(function(n){ return {id:n.id,user_id:uid,title:n.title,body:n.body,updated_at:n.updated_at}; }));
+      if(r.error) throw r.error; dn.forEach(function(n){ delete n._dirty; });
+    }
+    if(dt.length){
+      r=await _sb.from('ws_todos').upsert(dt.map(function(t){ return {id:t.id,user_id:uid,text:t.text,done:!!t.done,created_at:t.created_at}; }));
+      if(r.error) throw r.error; dt.forEach(function(t){ delete t._dirty; });
+    }
+    var rn=await _sb.from('ws_notes').select('*').eq('user_id',uid); if(rn.error) throw rn.error;
+    var rt=await _sb.from('ws_todos').select('*').eq('user_id',uid); if(rt.error) throw rt.error;
+    var keepN=WS.data.notes.filter(function(n){ return n._dirty; }), keepT=WS.data.todos.filter(function(t){ return t._dirty; });
+    var kn=keepN.map(function(n){ return n.id; }), kt=keepT.map(function(t){ return t.id; });
+    WS.data.notes=rn.data.filter(function(x){ return kn.indexOf(x.id)<0 && WS.data.delN.indexOf(x.id)<0; })
+      .map(function(x){ return {id:x.id,title:x.title||'',body:x.body||'',updated_at:x.updated_at}; }).concat(keepN);
+    WS.data.todos=rt.data.filter(function(x){ return kt.indexOf(x.id)<0 && WS.data.delT.indexOf(x.id)<0; })
+      .map(function(x){ return {id:x.id,text:x.text,done:!!x.done,created_at:x.created_at}; }).concat(keepT);
+    wsSave(); wsRender(); wsStatus(keepN.length||keepT.length||WS.data.delN.length||WS.data.delT.length ? 'local' : 'ok');
+  } catch(e){
+    console.warn('Workspace: sinkron gagal -', e && e.message); wsStatus('local');
+  }
+  WS.syncing=false;
+  if(WS.again){ WS.again=false; wsSync(); }
 }
 
 function goToProfile() {
