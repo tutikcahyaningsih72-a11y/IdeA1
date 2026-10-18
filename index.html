@@ -1208,8 +1208,11 @@
     .ws-dot { width:7px; height:7px; border-radius:50%; background:var(--w40); }
     .ws-status.ok .ws-dot { background:var(--green); }
     .ws-status.sync .ws-dot { background:var(--gold); }
-    .ws-tabs { display:flex; gap:6px; padding:4px; margin:0 20px 16px; background:var(--bg2); border:1px solid var(--glass-b); border-radius:var(--r16); }
-    .ws-tab { flex:1; min-width:0; padding:9px 2px 8px; border-radius:11px; border:none; background:none; color:var(--w40); font-family:var(--font); font-size:11px; font-weight:700; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
+    .ws-status { cursor:pointer; }
+    .ws-status.err .ws-dot { background:var(--red); }
+    .ws-status.err { color:var(--red); }
+    .ws-tabs { display:flex; gap:2px; padding:3px; margin:0 20px 16px; background:var(--bg2); border:1px solid var(--glass-b); border-radius:var(--r16); }
+    .ws-tab { flex:1; min-width:0; padding:9px 2px 8px; border-radius:11px; border:none; background:none; color:var(--w40); font-family:var(--font); font-size:10.5px; font-weight:700; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
     .ws-tab svg { width:19px; height:19px; }
     .ws-tab.active { background:rgba(201,168,76,0.14); color:var(--gold); }
     .ws-pane { padding:0 20px; }
@@ -1276,6 +1279,47 @@
     .ws-todo-main { flex:1; min-width:0; cursor:pointer; }
     .ws-todo-sub { font-size:11.5px; color:var(--w40); margin-top:3px; }
     .ws-todo-sub.late { color:var(--red); }
+
+    @media (max-width:340px) { .ws-tab { font-size:9.5px; } .ws-tab svg { width:17px; height:17px; } }
+    .ws-tab span { max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .ws-seg { display:flex; gap:4px; padding:3px; margin-bottom:14px; background:var(--bg2); border:1px solid var(--glass-b); border-radius:12px; }
+    .ws-seg button { flex:1; padding:8px; border:none; border-radius:9px; background:none; color:var(--w40); font-family:var(--font); font-size:12px; font-weight:700; cursor:pointer; }
+    .ws-seg button.active { background:rgba(201,168,76,0.14); color:var(--gold); }
+    .ws-kan { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; margin:0 -20px; padding:0 20px 12px; scroll-padding-left:20px; -webkit-overflow-scrolling:touch; }
+    .ws-col { flex:0 0 80%; scroll-snap-align:start; background:var(--glass); border:1px solid var(--glass-b); border-radius:var(--r16); padding:12px; min-height:160px; box-sizing:border-box; }
+    .ws-col-h { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+    .ws-col-n { flex:1; font-size:12px; font-weight:700; color:var(--w40); }
+    .ws-col-add { width:30px; height:30px; border-radius:9px; border:1px solid var(--glass-b); background:none; color:var(--gold); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; }
+    .ws-col-add svg { width:16px; height:16px; }
+    .ws-col-empty { font-size:12px; color:var(--w40); text-align:center; padding:22px 0; border:1px dashed var(--glass-b); border-radius:14px; }
+    .ws-kcard { background:var(--bg2); border:1px solid var(--glass-b); border-radius:14px; margin-bottom:10px; overflow:hidden; }
+    .ws-kbody { padding:12px 14px; cursor:pointer; }
+    .ws-kbody .ws-card-title { white-space:normal; }
+    .ws-kmv { display:flex; border-top:1px solid var(--glass-b); }
+    .ws-mv { flex:1; padding:10px 6px; border:none; background:none; color:var(--gold); font-family:var(--font); font-size:12px; font-weight:700; cursor:pointer; }
+    .ws-mv + .ws-mv { border-left:1px solid var(--glass-b); }
+    .ws-mv:active { background:rgba(201,168,76,0.1); }
+    .ws-due.late { color:var(--red); }
+    .ws-legend { display:flex; gap:16px; font-size:11.5px; color:var(--w40); margin:0 2px 8px; }
+    .ws-legend span { display:flex; align-items:center; gap:6px; }
+    .ws-tl-row { display:flex; gap:10px; align-items:stretch; cursor:pointer; }
+    .ws-tl-row.past { opacity:.55; }
+    .ws-tl-date { width:34px; text-align:center; padding-top:12px; flex-shrink:0; }
+    .ws-tl-date b { display:block; font-size:17px; line-height:1.1; }
+    .ws-tl-date span { font-size:10.5px; color:var(--w40); text-transform:uppercase; }
+    .ws-tl-rail { position:relative; width:16px; flex-shrink:0; }
+    .ws-tl-rail::before { content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; margin-left:-1px; background:var(--glass-b); }
+    .ws-tl-rail .ws-tl-dot { position:absolute; left:50%; top:16px; margin-left:-6px; }
+    .ws-tl-dot { width:12px; height:12px; border-radius:50%; display:inline-block; border:2px solid var(--gold); background:var(--gold); box-sizing:border-box; }
+    .ws-tl-dot.rem { border-color:#60a5fa; background:#60a5fa; }
+    .ws-tl-row.done .ws-tl-dot { background:var(--bg); }
+    .ws-tl-card { flex:1; min-width:0; background:var(--bg2); border:1px solid var(--glass-b); border-radius:14px; padding:11px 14px; margin:4px 0; }
+    .ws-tl-title { font-size:14px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .ws-tl-row.done .ws-tl-title { text-decoration:line-through; color:var(--w40); }
+    .ws-tl-sub { font-size:11.5px; color:var(--w40); margin-top:3px; }
+    .ws-today { display:flex; align-items:center; gap:10px; margin:10px 0; }
+    .ws-today::before, .ws-today::after { content:""; flex:1; height:1px; background:var(--gold); opacity:.5; }
+    .ws-today span { font-size:11px; font-weight:800; color:var(--gold); letter-spacing:.8px; text-transform:uppercase; }
 
     .settings-section {
       margin: 0 20px 20px;
@@ -1787,7 +1831,7 @@
 <div id="workspace" class="screen">
   <div class="topbar">
     <span class="sub-title">Workspace</span>
-    <span class="ws-status" id="ws-status"><span class="ws-dot"></span><span id="ws-status-text"></span></span>
+    <span class="ws-status" id="ws-status" onclick="wsStatusInfo()"><span class="ws-dot"></span><span id="ws-status-text"></span></span>
   </div>
   <div class="scroll-area" style="padding-top:16px;">
     <div id="ws-gate" class="ws-empty" style="display:none;">
@@ -1802,6 +1846,7 @@
         <button class="ws-tab" id="ws-tab-todo" onclick="wsTab('todo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 12.5l2.7 2.7L16.2 9.5"/></svg><span>To-do</span></button>
         <button class="ws-tab" id="ws-tab-drafts" onclick="wsTab('drafts')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Draft</span></button>
         <button class="ws-tab" id="ws-tab-rem" onclick="wsTab('reminders')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span>Reminder</span></button>
+        <button class="ws-tab" id="ws-tab-time" onclick="wsTab('timeline')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Timeline</span></button>
       </div>
       <div class="ws-pane" id="ws-pane-notes">
         <input class="ws-input ws-search" id="ws-search" type="search" placeholder="Cari catatan" oninput="wsRenderNotes()">
@@ -1821,17 +1866,21 @@
         <div class="ws-count" id="ws-todo-count"></div>
       </div>
       <div class="ws-pane" id="ws-pane-drafts" style="display:none;">
+        <div class="ws-seg">
+          <button id="ws-dv-list" onclick="wsDView('list')">Daftar</button>
+          <button id="ws-dv-kan" onclick="wsDView('kan')">Kanban</button>
+        </div>
         <div class="ws-filters" id="ws-d-filters"></div>
         <div id="ws-drafts-list"></div>
+        <div class="ws-kan" id="ws-kan" style="display:none;"></div>
       </div>
       <div class="ws-pane" id="ws-pane-reminders" style="display:none;">
         <div id="ws-noti-box"></div>
         <div id="ws-rem-list"></div>
         <div class="ws-hint">Pengingat muncul saat IdeA1 sedang terbuka. Jika aplikasi ditutup, notifikasi bisa tidak muncul.</div>
       </div>
-      <div class="ws-soon">
-        <div class="ws-soon-title">Segera hadir</div>
-        <div class="ws-soon-row"><span class="ws-soon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/></svg>Kanban</span><span class="ws-soon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 12h16M4 18h8"/></svg>Timeline</span></div>
+      <div class="ws-pane" id="ws-pane-timeline" style="display:none;">
+        <div id="ws-tl"></div>
       </div>
     </div>
   </div>
@@ -1863,6 +1912,9 @@
       <textarea class="ws-input ws-textarea ws-textarea-s" id="ws-d-desc" placeholder="Deskripsi singkat: apa tujuan dan manfaatnya?"></textarea>
       <div class="ws-label">Status</div>
       <div class="ws-filters" id="ws-d-status"></div>
+      <div class="ws-label">Target selesai (opsional)</div>
+      <input class="ws-input" id="ws-d-due" type="date">
+      <button class="ws-link" type="button" onclick="document.getElementById('ws-d-due').value=''">Kosongkan target</button>
       <div class="ws-label">Catatan terkait</div>
       <div class="ws-filters" id="ws-d-notes" style="flex-wrap:wrap;"></div>
       <button class="ws-del" id="ws-d-del" onclick="wsDeleteDraft()" style="display:none;">Hapus draft</button>
@@ -3321,7 +3373,7 @@ function setNav(el, screenId) {
 }
 
 /* ===== WORKSPACE (Catatan, To-do, Draft Project, Reminder) ===== */
-var WS = { tab:'notes', filter:'all', dFilter:'all', key:null, syncing:false, again:false,
+var WS = { tab:'notes', filter:'all', dFilter:'all', key:null, syncing:false, again:false, errs:{}, dView:(function(){ try { return localStorage.getItem('idea1_ws_dview')==='kan'?'kan':'list'; } catch(e){ return 'list'; } })(),
            editing:null, editingD:null, editingR:null, dStatus:'ide', dNotes:[], rOrig:'',
            data:null };
 var WS_STATUS = { ide:'Ide', dikerjakan:'Dikerjakan', selesai:'Selesai' };
@@ -3333,8 +3385,8 @@ var WS_COLS = {
     to:function(n,u){ return {id:n.id,user_id:u,text:n.text,done:!!n.done,created_at:n.created_at}; },
     from:function(x){ return {id:x.id,text:x.text,done:!!x.done,created_at:x.created_at}; } },
   drafts: { t:'ws_drafts', del:'delD',
-    to:function(n,u){ return {id:n.id,user_id:u,title:n.title,descr:n.desc||'',status:n.status||'ide',note_ids:n.note_ids||[],updated_at:n.updated_at}; },
-    from:function(x){ return {id:x.id,title:x.title||'',desc:x.descr||'',status:x.status||'ide',note_ids:Array.isArray(x.note_ids)?x.note_ids:[],updated_at:x.updated_at}; } },
+    to:function(n,u){ return {id:n.id,user_id:u,title:n.title,descr:n.desc||'',status:n.status||'ide',note_ids:n.note_ids||[],due_date:n.due||null,updated_at:n.updated_at}; },
+    from:function(x){ return {id:x.id,title:x.title||'',desc:x.descr||'',status:x.status||'ide',note_ids:Array.isArray(x.note_ids)?x.note_ids:[],due:x.due_date||'',updated_at:x.updated_at}; } },
   reminders: { t:'ws_reminders', del:'delR',
     to:function(n,u){ return {id:n.id,user_id:u,title:n.title,remind_at:n.remind_at,done:!!n.done,created_at:n.created_at}; },
     from:function(x){ return {id:x.id,title:x.title||'',remind_at:x.remind_at,done:!!x.done,created_at:x.created_at}; } }
@@ -3355,8 +3407,16 @@ function wsLoad(){
 function wsSave(){ try { localStorage.setItem(WS.key, JSON.stringify(WS.data)); } catch(e){} }
 function wsStatus(state){
   var el=document.getElementById('ws-status'), tx=document.getElementById('ws-status-text'); if(!el||!tx) return;
-  el.className='ws-status '+(state==='ok'?'ok':state==='sync'?'sync':'');
-  tx.textContent = state==='ok' ? 'Tersinkron' : state==='sync' ? 'Menyinkronkan' : 'Tersimpan di HP';
+  el.className='ws-status '+(state==='ok'?'ok':state==='sync'?'sync':state==='err'?'err':'');
+  tx.textContent = state==='ok' ? 'Tersinkron' : state==='sync' ? 'Menyinkronkan' : state==='err' ? 'Gagal sinkron, ketuk' : 'Tersimpan di HP';
+}
+function wsStatusInfo(){
+  var e=WS.errs||{}, ks=Object.keys(e), u=auth.getSession(), msg;
+  if(ks.length) msg='Sinkron gagal pada tabel:\n'+ks.map(function(k){ return '- '+k+': '+e[k]; }).join('\n')+'\n\nData tetap aman di HP.';
+  else if(!auth.hasSupabase() || !u || !u.id) msg='Belum terhubung ke akun online, jadi data hanya tersimpan di HP.';
+  else if(navigator.onLine===false) msg='Tidak ada koneksi internet. Data tersimpan di HP dan dikirim saat tersambung.';
+  else msg='Semua data sudah tersinkron ke akun.';
+  alert(msg);
 }
 function wsKeyFor(user){ return 'idea1_ws_v1_'+(user.id||user.email||'tamu'); }
 function wsOpen(){
@@ -3370,17 +3430,19 @@ function wsOpen(){
 }
 function wsTab(t){
   WS.tab=t;
-  [['notes','notes'],['todo','todo'],['drafts','drafts'],['rem','reminders']].forEach(function(p){
+  [['notes','notes'],['todo','todo'],['drafts','drafts'],['rem','reminders'],['time','timeline']].forEach(function(p){
     document.getElementById('ws-tab-'+p[0]).classList.toggle('active',t===p[1]);
     document.getElementById('ws-pane-'+p[1]).style.display = t===p[1] ? 'block' : 'none';
   });
-  document.getElementById('ws-fab').style.display = t==='todo' ? 'none' : 'flex';
+  document.getElementById('ws-fab').style.display = (t==='todo'||t==='timeline') ? 'none' : 'flex';
   wsRender();
+  if(t==='timeline') setTimeout(wsScrollToday,80);
 }
 function wsRender(){
   if(WS.tab==='notes') wsRenderNotes();
   else if(WS.tab==='todo') wsRenderTodos();
   else if(WS.tab==='drafts') wsRenderDrafts();
+  else if(WS.tab==='timeline') wsRenderTimeline();
   else wsRenderReminders();
 }
 function wsFab(){
@@ -3511,6 +3573,12 @@ function wsClearDone(){
 function wsDraftFilter(f){ WS.dFilter=f; wsRenderDrafts(); }
 function wsRenderDrafts(){
   var box=document.getElementById('ws-drafts-list'), fl=document.getElementById('ws-d-filters'); if(!box) return;
+  var isKan=(WS.dView==='kan');
+  document.getElementById('ws-dv-list').classList.toggle('active',!isKan);
+  document.getElementById('ws-dv-kan').classList.toggle('active',isKan);
+  box.style.display=isKan?'none':'block'; fl.style.display=isKan?'none':'flex';
+  document.getElementById('ws-kan').style.display=isKan?'flex':'none';
+  if(isKan){ wsRenderKanban(); return; }
   var D=WS.data.drafts;
   var opts=[['all','Semua']].concat(Object.keys(WS_STATUS).map(function(k){ return [k,WS_STATUS[k]]; }));
   fl.innerHTML=opts.map(function(o){
@@ -3528,7 +3596,7 @@ function wsRenderDrafts(){
     var nn=(d.note_ids||[]).filter(function(x){ return ids.indexOf(x)>=0; }).length, st=WS_STATUS[d.status]?d.status:'ide';
     return '<div class="ws-card" onclick="wsEditDraft(\''+d.id+'\')"><div class="ws-card-title">'+wsEsc(d.title||'Tanpa nama')+'</div>'
       +(d.desc?'<div class="ws-card-body">'+wsEsc(d.desc)+'</div>':'')
-      +'<div class="ws-meta"><span class="ws-pill '+st+'">'+WS_STATUS[st]+'</span>'+(nn?'<span>'+nn+' catatan</span>':'')+'<span>'+wsDate(d.updated_at)+'</span></div></div>';
+      +'<div class="ws-meta"><span class="ws-pill '+st+'">'+WS_STATUS[st]+'</span>'+(nn?'<span>'+nn+' catatan</span>':'')+wsDueChip(d)+'<span>'+wsDate(d.updated_at)+'</span></div></div>';
   }).join('');
 }
 function wsPickStatus(k){ WS.dStatus=k; wsRenderDraftForm(); }
@@ -3546,8 +3614,9 @@ function wsRenderDraftForm(){
     return '<button class="ws-chip'+(WS.dNotes.indexOf(n.id)>=0?' active':'')+'" onclick="wsToggleDNote(\''+n.id+'\')">'+t+'</button>';
   }).join('') : '<span class="ws-hint" style="margin:0;">Belum ada catatan. Tulis catatan dulu di tab Catatan.</span>';
 }
-function wsNewDraft(){
-  WS.editingD=null; WS.dStatus='ide'; WS.dNotes=[];
+function wsNewDraft(st){
+  WS.editingD=null; WS.dStatus=(typeof st==='string' && WS_STATUS[st])?st:'ide'; WS.dNotes=[];
+  document.getElementById('ws-d-due').value='';
   document.getElementById('ws-dsheet-title').textContent='Draft baru';
   document.getElementById('ws-d-title').value=''; document.getElementById('ws-d-desc').value='';
   document.getElementById('ws-d-del').style.display='none';
@@ -3558,22 +3627,23 @@ function wsEditDraft(id){
   WS.editingD=id; WS.dStatus=WS_STATUS[d.status]?d.status:'ide'; WS.dNotes=(d.note_ids||[]).slice();
   document.getElementById('ws-dsheet-title').textContent='Edit draft';
   document.getElementById('ws-d-title').value=d.title||''; document.getElementById('ws-d-desc').value=d.desc||'';
+  document.getElementById('ws-d-due').value=d.due||'';
   document.getElementById('ws-d-del').style.display='block';
   wsRenderDraftForm(); wsShow('ws-dsheet');
 }
 function wsSaveDraft(){
-  var title=document.getElementById('ws-d-title').value.trim(), desc=document.getElementById('ws-d-desc').value.trim();
+  var title=document.getElementById('ws-d-title').value.trim(), desc=document.getElementById('ws-d-desc').value.trim(), due=document.getElementById('ws-d-due').value||'';
   if(!title){ if(typeof showToast==='function') showToast('Isi nama proyek dulu','#ef4444'); return; }
   var now=new Date().toISOString(), id=WS.editingD;
   var valid=WS.data.notes.map(function(n){ return n.id; });
   var linked=WS.dNotes.filter(function(x){ return valid.indexOf(x)>=0; });
   if(id){
     var d=WS.data.drafts.filter(function(x){ return x.id===id; })[0];
-    if(d){ d.title=title; d.desc=desc; d.status=WS.dStatus; d.note_ids=linked; d.updated_at=now; d._dirty=true; }
+    if(d){ d.title=title; d.desc=desc; d.status=WS.dStatus; d.note_ids=linked; d.due=due; d.updated_at=now; d._dirty=true; }
   } else {
-    WS.data.drafts.push({id:wsId(),title:title,desc:desc,status:WS.dStatus,note_ids:linked,updated_at:now,_dirty:true});
+    WS.data.drafts.push({id:wsId(),title:title,desc:desc,status:WS.dStatus,note_ids:linked,due:due,updated_at:now,_dirty:true});
   }
-  wsSave(); wsCloseSheet(); wsRenderDrafts(); wsSync();
+  wsSave(); wsCloseSheet(); wsRender(); wsSync();
   if(typeof showToast==='function') showToast('Draft disimpan');
 }
 function wsDeleteDraft(){
@@ -3581,8 +3651,85 @@ function wsDeleteDraft(){
   if(!confirm('Hapus draft ini?')) return;
   var id=WS.editingD;
   WS.data.drafts=WS.data.drafts.filter(function(x){ return x.id!==id; });
-  WS.data.delD.push(id); wsSave(); wsCloseSheet(); wsRenderDrafts(); wsSync();
+  WS.data.delD.push(id); wsSave(); wsCloseSheet(); wsRender(); wsSync();
 }
+
+/* ---------- Kanban ---------- */
+var WS_ORDER=['ide','dikerjakan','selesai'];
+function wsDayStart(t){ var x=new Date(t); x.setHours(0,0,0,0); return x.getTime(); }
+function wsDueDate(due){ return new Date(due+'T00:00:00'); }
+function wsDueChip(d){
+  if(!d.due) return '';
+  var dt=wsDueDate(d.due); if(isNaN(dt.getTime())) return '';
+  var late=(d.status!=='selesai' && dt.getTime()<wsDayStart(Date.now()));
+  return '<span class="ws-due'+(late?' late':'')+'">Target '+dt.toLocaleDateString('id-ID',{day:'numeric',month:'short'})+'</span>';
+}
+function wsDView(v){
+  WS.dView=v; try { localStorage.setItem('idea1_ws_dview',v); } catch(e){}
+  wsRenderDrafts();
+}
+function wsRenderKanban(){
+  var box=document.getElementById('ws-kan'); if(!box) return;
+  var ids=WS.data.notes.map(function(n){ return n.id; });
+  box.innerHTML=WS_ORDER.map(function(st,i){
+    var list=WS.data.drafts.filter(function(d){ return (WS_STATUS[d.status]?d.status:'ide')===st; })
+      .sort(function(a,b){ return (b.updated_at||'').localeCompare(a.updated_at||''); });
+    var cards=list.map(function(d){
+      var nn=(d.note_ids||[]).filter(function(x){ return ids.indexOf(x)>=0; }).length;
+      var meta=(nn||d.due) ? '<div class="ws-meta">'+(nn?'<span>'+nn+' catatan</span>':'')+wsDueChip(d)+'</div>' : '';
+      var btns='';
+      if(i>0) btns+='<button class="ws-mv" onclick="wsMoveDraft(\''+d.id+'\',\''+WS_ORDER[i-1]+'\')">\u2039 '+WS_STATUS[WS_ORDER[i-1]]+'</button>';
+      if(i<2) btns+='<button class="ws-mv" onclick="wsMoveDraft(\''+d.id+'\',\''+WS_ORDER[i+1]+'\')">'+WS_STATUS[WS_ORDER[i+1]]+' \u203a</button>';
+      return '<div class="ws-kcard"><div class="ws-kbody" onclick="wsEditDraft(\''+d.id+'\')"><div class="ws-card-title">'+wsEsc(d.title||'Tanpa nama')+'</div>'
+        +(d.desc?'<div class="ws-card-body">'+wsEsc(d.desc)+'</div>':'')+meta+'</div><div class="ws-kmv">'+btns+'</div></div>';
+    }).join('');
+    return '<div class="ws-col"><div class="ws-col-h"><span class="ws-pill '+st+'">'+WS_STATUS[st]+'</span><span class="ws-col-n">'+list.length+'</span>'
+      +'<button class="ws-col-add" onclick="wsNewDraft(\''+st+'\')" aria-label="Tambah draft di '+WS_STATUS[st]+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>'
+      +(cards||'<div class="ws-col-empty">Belum ada draft</div>')+'</div>';
+  }).join('');
+}
+function wsMoveDraft(id,st){
+  var d=WS.data.drafts.filter(function(x){ return x.id===id; })[0]; if(!d || !WS_STATUS[st]) return;
+  d.status=st; d.updated_at=new Date().toISOString(); d._dirty=true;
+  wsSave(); wsRender(); wsSync();
+  if(typeof showToast==='function') showToast('Dipindahkan ke '+WS_STATUS[st]);
+}
+
+/* ---------- Timeline ---------- */
+function wsRenderTimeline(){
+  var box=document.getElementById('ws-tl'); if(!box) return;
+  var items=[];
+  WS.data.drafts.forEach(function(d){
+    if(!d.due) return; var dt=wsDueDate(d.due); if(isNaN(dt.getTime())) return;
+    items.push({k:'draft',id:d.id,t:dt.getTime(),title:d.title||'Tanpa nama',sub:'Target selesai \u00b7 '+WS_STATUS[WS_STATUS[d.status]?d.status:'ide'],done:d.status==='selesai'});
+  });
+  WS.data.reminders.forEach(function(r){
+    var dt=new Date(r.remind_at); if(isNaN(dt.getTime())) return;
+    items.push({k:'rem',id:r.id,t:dt.getTime(),title:r.title||'Pengingat',sub:'Pengingat \u00b7 '+wsPad(dt.getHours())+':'+wsPad(dt.getMinutes()),done:!!r.done});
+  });
+  items.sort(function(a,b){ return a.t-b.t; });
+  var noDue=WS.data.drafts.filter(function(d){ return !d.due; }).length;
+  if(!items.length){
+    box.innerHTML=wsEmptyBox('<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/>','Timeline masih kosong','Buat pengingat, atau isi target selesai pada draft, lalu muncul di sini.')
+      +(noDue?'<div class="ws-hint" style="text-align:center;">'+noDue+' draft belum punya target selesai.</div>':'');
+    return;
+  }
+  var today=wsDayStart(Date.now()), html='<div class="ws-legend"><span><i class="ws-tl-dot"></i>Target proyek</span><span><i class="ws-tl-dot rem"></i>Pengingat</span></div>';
+  var marker='<div class="ws-today" id="ws-today"><span>Hari ini</span></div>', placed=false, lastMonth='';
+  items.forEach(function(it){
+    if(!placed && it.t>=today){ html+=marker; placed=true; }
+    var dt=new Date(it.t), month=dt.toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+    if(month!==lastMonth){ html+='<div class="ws-sec">'+month+'</div>'; lastMonth=month; }
+    html+='<div class="ws-tl-row'+(it.t<today?' past':'')+(it.done?' done':'')+'" onclick="'+(it.k==='draft'?'wsEditDraft':'wsEditRem')+'(\''+it.id+'\')">'
+      +'<div class="ws-tl-date"><b>'+dt.getDate()+'</b><span>'+dt.toLocaleDateString('id-ID',{weekday:'short'})+'</span></div>'
+      +'<div class="ws-tl-rail"><i class="ws-tl-dot'+(it.k==='rem'?' rem':'')+'"></i></div>'
+      +'<div class="ws-tl-card"><div class="ws-tl-title">'+wsEsc(it.title)+'</div><div class="ws-tl-sub">'+it.sub+'</div></div></div>';
+  });
+  if(!placed) html+=marker;
+  if(noDue) html+='<div class="ws-hint">'+noDue+' draft belum punya target selesai, jadi tidak tampil di sini.</div>';
+  box.innerHTML=html;
+}
+function wsScrollToday(){ var el=document.getElementById('ws-today'); if(el && el.scrollIntoView) el.scrollIntoView({block:'center'}); }
 
 /* ---------- Reminder ---------- */
 function wsNotiGet(){ try { return JSON.parse(localStorage.getItem(WS.key+'_noti')||'{}'); } catch(e){ return {}; } }
@@ -3658,17 +3805,17 @@ function wsSaveRem(){
   } else {
     WS.data.reminders.push({id:wsId(),title:title,remind_at:iso,done:false,created_at:new Date().toISOString(),_dirty:true});
   }
-  wsSave(); wsCloseSheet(); wsRenderReminders(); wsSync();
+  wsSave(); wsCloseSheet(); wsRender(); wsSync();
   if(typeof showToast==='function') showToast('Pengingat disimpan');
 }
 function wsToggleRem(id){
   var r=WS.data.reminders.filter(function(x){ return x.id===id; })[0]; if(!r) return;
-  r.done=!r.done; r._dirty=true; wsSave(); wsRenderReminders(); wsSync();
+  r.done=!r.done; r._dirty=true; wsSave(); wsRender(); wsSync();
 }
 function wsRemoveRem(id){
   WS.data.reminders=WS.data.reminders.filter(function(x){ return x.id!==id; });
   WS.data.delR.push(id); var nt=wsNotiGet(); delete nt[id]; wsNotiSet(nt);
-  wsSave(); wsRenderReminders(); wsSync();
+  wsSave(); wsRender(); wsSync();
 }
 function wsDeleteRemId(id){ wsRemoveRem(id); }
 function wsDeleteRem(){
@@ -3721,14 +3868,14 @@ async function wsSyncCol(k,uid){
 async function wsSync(){
   if(WS.syncing){ WS.again=true; return; }
   var user=auth.getSession();
-  if(!auth.hasSupabase() || !user || !user.id){ wsStatus('local'); return; }
-  WS.syncing=true; wsStatus('sync');
+  if(!auth.hasSupabase() || !user || !user.id){ WS.errs={}; wsStatus('local'); return; }
+  WS.syncing=true; wsStatus('sync'); WS.errs={};
   var allOk=true;
   for(var k in WS_COLS){
     try { var ok=await wsSyncCol(k,user.id); if(!ok) allOk=false; }
-    catch(e){ allOk=false; console.warn('Workspace: sinkron '+k+' gagal -', e && e.message); }
+    catch(e){ allOk=false; WS.errs[WS_COLS[k].t]=(e && (e.message||e.details)) || String(e); console.warn('Workspace: sinkron '+k+' gagal -', e && e.message); }
   }
-  wsSave(); wsRender(); wsStatus(allOk?'ok':'local');
+  wsSave(); wsRender(); wsStatus(allOk?'ok':(Object.keys(WS.errs).length?'err':'local'));
   WS.syncing=false;
   if(WS.again){ WS.again=false; wsSync(); }
 }
