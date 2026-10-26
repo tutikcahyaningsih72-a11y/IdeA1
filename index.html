@@ -3337,7 +3337,7 @@ function showScreen(id, anim = true) {
     }, 100);
   }
   /* Tracking screen sebelumnya untuk back button */
-  if (id === 'tentang-kami') { window._prevScreen = window._currentScreen || 'home'; }
+  if ((id === 'tentang-kami' || id === 'testimoni' || id === 'rating') && window._currentScreen !== id) { window._prevScreen = window._currentScreen || 'home'; }
   window._currentScreen = id;
   /* display:none semua screen — paling reliable di Android */
   document.querySelectorAll('.screen').forEach(s => {
@@ -5810,7 +5810,7 @@ window.addEventListener('pageshow', function(e) {
 <div id="rating" class="screen">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:14px;">
-      <button class="back-btn" onclick="showScreen('profile')"><svg class="ic"><use href="#i-arrowl"/></svg></button>
+      <button class="back-btn" onclick="showScreen(window._prevScreen||'profile')"><svg class="ic"><use href="#i-arrowl"/></svg></button>
       <span class="sub-title">Beri Rating</span>
     </div>
   </div>
@@ -5834,7 +5834,7 @@ window.addEventListener('pageshow', function(e) {
     </div>
     <div id="rating-alert" style="display:none;border-radius:12px;padding:14px;text-align:center;font-size:13px;margin-bottom:16px;"></div>
     <button onclick="submitRating()" id="rating-submit-btn" style="width:100%;padding:15px;background:var(--grad);border:none;border-radius:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;">Kirim Rating</button>
-    <button onclick="showScreen('profile')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--glass-b);border-radius:14px;color:var(--w70);font-size:14px;font-weight:600;cursor:pointer;">Batal</button>
+    <button onclick="showScreen(window._prevScreen||'profile')" style="width:100%;padding:14px;background:var(--glass);border:1px solid var(--glass-b);border-radius:14px;color:var(--w70);font-size:14px;font-weight:600;cursor:pointer;">Batal</button>
     <div style="height:24px;"></div>
   </div>
 </div>
@@ -5886,7 +5886,7 @@ function submitRating() {
     al.style.display = 'none';
     btn.disabled = false;
     btn.textContent = 'Kirim Rating';
-    showScreen('profile');
+    showScreen(window._prevScreen||'profile');
   }, 2500);
 }
 </script>
@@ -6296,7 +6296,7 @@ function gsReset() {
 <div id="testimoni" class="screen">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:14px;">
-      <button class="back-btn" onclick="showScreen('tentang-kami')"><svg class="ic"><use href="#i-arrowl"/></svg></button>
+      <button class="back-btn" onclick="showScreen(window._prevScreen||'app-settings')"><svg class="ic"><use href="#i-arrowl"/></svg></button>
       <span class="sub-title">Testimoni User</span>
     </div>
   </div>
