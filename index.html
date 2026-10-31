@@ -4857,12 +4857,12 @@ async function toggleUserRole(userId, currentRole, badgeEl) {
   if (!confirm(`${label}?`)) return;
 
   try {
-    const { error } = await _sb.from('profiles').update({ role: newRole }).eq('id', userId);
+    const { error } = await _sb.rpc('admin_set_role', { target: userId, new_role: newRole });
     if (error) throw error;
     showToast(`Role diubah jadi ${newRole === 'admin' ? 'Admin' : 'User'}`);
     loadAdminUsers();
   } catch(e) {
-    alert('Gagal ubah role: ' + e.message + '\\n\\nPastikan SQL RLS untuk admin sudah dijalankan di Supabase.');
+    alert('Gagal ubah role: ' + (e && e.message ? e.message : e));
   }
 }
 
