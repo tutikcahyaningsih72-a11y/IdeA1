@@ -1376,6 +1376,26 @@
     .tpl-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px; background:rgba(201,168,76,0.15); color:var(--gold); }
     .tpl-badge.off { background:rgba(239,68,68,0.15); color:var(--red); }
 
+    /* ===== KARTU TEMPLATE PROMPT DI BERANDA ===== */
+    .tplh { margin: 0 20px 22px; padding: 18px; border-radius: var(--r24); cursor: pointer; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(201,168,76,0.24) 0%, rgba(201,168,76,0.07) 48%, rgba(10,10,10,0.92) 100%), var(--bg2);
+      border: 1px solid rgba(201,168,76,0.5); box-shadow: 0 8px 28px rgba(201,168,76,0.14); }
+    .tplh:active { transform: scale(0.985); }
+    .tplh::after { content: ''; position: absolute; top: -50px; right: -50px; width: 170px; height: 170px; background: radial-gradient(circle, rgba(201,168,76,0.22) 0%, transparent 70%); pointer-events: none; }
+    .tplh-top { display: flex; gap: 14px; align-items: flex-start; position: relative; z-index: 1; }
+    .tplh-icon { width: 56px; height: 56px; border-radius: 17px; background: var(--gold-grad); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; box-shadow: 0 6px 18px rgba(201,168,76,0.35); }
+    .tplh-icon .ic { color: #000; }
+    .tplh-text { min-width: 0; }
+    .tplh-badge { font-size: 10.5px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; color: var(--gold); }
+    .tplh-title { font-size: 21px; font-weight: 800; letter-spacing: -0.3px; margin: 3px 0 4px; }
+    .tplh-desc { font-size: 12.5px; color: var(--w70); line-height: 1.55; }
+    .tplh-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; position: relative; z-index: 1; }
+    .tplh-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 20px; border: 1px solid rgba(201,168,76,0.35); background: rgba(0,0,0,0.35); color: var(--gold); font-size: 12px; font-weight: 700; }
+    .tplh-chip:active { background: rgba(201,168,76,0.18); }
+    .tplh-chip .ic { color: var(--gold); }
+    .tplh-cta { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px; border: none; border-radius: 14px; background: var(--gold-grad); color: #000; font-family: var(--font); font-size: 14px; font-weight: 800; cursor: pointer; position: relative; z-index: 1; }
+    .tplh-cta .ic { color: #000; }
+
     .settings-section {
       margin: 0 20px 20px;
     }
@@ -1659,6 +1679,24 @@
       <div class="stat-box"><span class="stat-num">2026</span><span class="stat-lbl">Tahun</span></div>
     </div>
 
+    <div class="tplh" onclick="tplGo()">
+      <div class="tplh-top">
+        <div class="tplh-icon"><svg class="ic"><use href="#i-layout"/></svg></div>
+        <div class="tplh-text">
+          <div class="tplh-badge">✦ Baru · <span id="tplh-count">Siap pakai</span></div>
+          <div class="tplh-title">Template Prompt</div>
+          <div class="tplh-desc">Poster promosi, rencana mengajar, bahan belajar, dan alat kerja. Pilih, salin, lalu tempel di AI favoritmu.</div>
+        </div>
+      </div>
+      <div class="tplh-chips">
+        <span class="tplh-chip" onclick="event.stopPropagation();tplGo('Promosi Usaha')"><svg class="ic"><use href="#i-rocket"/></svg> Promosi Usaha</span>
+        <span class="tplh-chip" onclick="event.stopPropagation();tplGo('Guru dan Sekolah')"><svg class="ic"><use href="#i-cap"/></svg> Guru dan Sekolah</span>
+        <span class="tplh-chip" onclick="event.stopPropagation();tplGo('Belajar')"><svg class="ic"><use href="#i-book"/></svg> Belajar</span>
+        <span class="tplh-chip" onclick="event.stopPropagation();tplGo('Kerja Harian')"><svg class="ic"><use href="#i-briefcase"/></svg> Kerja Harian</span>
+      </div>
+      <button class="tplh-cta" type="button">Lihat Semua Template <svg class="ic"><use href="#i-arrowr"/></svg></button>
+    </div>
+
     <div class="banner-slider" id="bannerSlider" ontouchstart="bannerTouchStart(event)" ontouchend="bannerTouchEnd(event)">
       <div class="banner-track" id="bannerTrack">
         <div class="banner-slide"><img src="1789877093236.png" alt="IdeA1 - Begin Making Better" loading="lazy" onerror="this.style.display='none'"></div>
@@ -1757,7 +1795,7 @@
       </div>
     </div>
 
-    <div class="ai-card" onclick="alert('AI Assistant — Segera hadir!')">
+    <div class="ai-card" onclick="showScreen('ai')">
       <div class="ai-icon"><svg class="ic"><use href="#i-sparkles"/></svg></div>
       <div class="ai-body">
         <div class="ai-title">AI Assistant</div>
@@ -3524,6 +3562,7 @@ function showScreen(id, anim = true) {
   if (id === 'blog')              setTimeout(filterBlog, 50);
   if (id === 'workspace')         setTimeout(wsOpen, 50);
   if (id === 'templates')         setTimeout(tplOpenList, 50);
+  if (id === 'home')              setTimeout(tplHomeInit, 150);
   if (id === 'admin-templates')   setTimeout(tplAdminOpen, 50);
   if (id === 'bookmarks')         setTimeout(renderBookmarks, 50);
   if (id === 'app-settings')          setTimeout(loadSettings, 50);
@@ -4120,7 +4159,7 @@ function tplRender() {
   var box = document.getElementById('tpl-list'), chips = document.getElementById('tpl-chips'); if (!box) return;
   var items = TPL.items.filter(function (t) { return t.active !== false; });
   TPL.catList = tplCats(items);
-  if (TPL.cat !== 'Semua' && TPL.catList.indexOf(TPL.cat) < 0) TPL.cat = 'Semua';
+  if (TPL.cat !== 'Semua' && TPL.catList.length && TPL.catList.indexOf(TPL.cat) < 0) TPL.cat = 'Semua';
   chips.innerHTML = '<button class="ws-chip' + (TPL.cat === 'Semua' ? ' active' : '') + '" onclick="tplSetCat(-1)">Semua</button>' +
     TPL.catList.map(function (c, i) { return '<button class="ws-chip' + (TPL.cat === c ? ' active' : '') + '" onclick="tplSetCat(' + i + ')">' + wsEsc(c) + '</button>'; }).join('');
   var q = (document.getElementById('tpl-search').value || '').toLowerCase().trim();
@@ -4196,6 +4235,27 @@ function tplErrMsg(e) {
   if (/Bucket not found/i.test(m)) return 'Tempat penyimpanan foto belum dibuat di Supabase.';
   if (/mime|size|too large|exceeded/i.test(m)) return 'Foto ditolak server (format atau ukuran).';
   return m;
+}
+/* ----- kartu Template Prompt di Beranda ----- */
+function tplGo(cat) {
+  TPL.cat = cat || 'Semua';
+  var q = document.getElementById('tpl-search'); if (q) q.value = '';
+  showScreen('templates');
+}
+async function tplHomeInit() {
+  var el = document.getElementById('tplh-count'); if (!el) return;
+  var setN = function (list) {
+    var n = list.filter(function (t) { return t.active !== false; }).length;
+    if (n) el.textContent = n + ' template';
+  };
+  setN(tplCached());
+  if (!auth.hasSupabase() || TPL.homeSynced) return;
+  TPL.homeSynced = true;
+  try {
+    var d = await tplFetch();
+    try { localStorage.setItem(TPL_CACHE_KEY, JSON.stringify(d.filter(function (t) { return t.active !== false; }))); } catch (e) {}
+    setN(d);
+  } catch (e) { TPL.homeSynced = false; }
 }
 function tplIsAdmin() { var u = auth.getSession(); return !!(u && auth.isAdmin(u)); }
 async function tplAdminOpen() {
