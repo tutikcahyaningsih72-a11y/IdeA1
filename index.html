@@ -1375,6 +1375,15 @@
     .tpl-a-meta { font-size:11.5px; color:var(--w40); margin-top:3px; display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
     .tpl-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px; background:rgba(201,168,76,0.15); color:var(--gold); }
     .tpl-badge.off { background:rgba(239,68,68,0.15); color:var(--red); }
+    .tpl-f-head { display:flex; align-items:center; gap:10px; margin:18px 0 12px; }
+    .tpl-f-head .ws-label { flex:1; }
+    .tpl-f-count { font-size:11.5px; color:var(--w40); }
+    .tpl-f-row { margin-bottom:14px; }
+    .tpl-f-label { display:block; font-size:12.5px; font-weight:700; color:var(--w70); margin-bottom:6px; }
+    .tpl-opts { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .tpl-fv { color:var(--white); background:rgba(201,168,76,0.22); border-radius:5px; padding:0 3px; font-weight:700; }
+    .tpl-edit { width:100%; min-height:300px; box-sizing:border-box; background:var(--bg2); border:1px solid var(--gold); border-radius:14px; padding:14px; color:var(--white); font-family:var(--font); font-size:16px; line-height:1.6; outline:none; resize:vertical; }
+    .tpl-edit-actions { display:flex; gap:18px; margin:0 2px 16px; }
 
     /* ===== KARTU TEMPLATE PROMPT DI BERANDA ===== */
     .tplh { margin: 0 20px 22px; padding: 18px; border-radius: var(--r24); cursor: pointer; position: relative; overflow: hidden;
@@ -2077,9 +2086,15 @@
       <span class="tpl-cat" id="tpl-d-cat"></span>
       <div class="tpl-d-title" id="tpl-d-title"></div>
       <div class="tpl-d-desc" id="tpl-d-desc"></div>
+      <div id="tpl-d-form"></div>
       <div class="ws-label">Prompt</div>
       <div class="tpl-prompt" id="tpl-d-prompt"></div>
-      <div class="tpl-hint">Bagian berwarna emas dalam tanda [ ] adalah isian. Ganti dengan data Anda sebelum dipakai.</div>
+      <textarea id="tpl-d-edit" class="tpl-edit" style="display:none;" spellcheck="false"></textarea>
+      <div class="tpl-hint" id="tpl-d-hint" style="margin-bottom:6px;"></div>
+      <div class="tpl-edit-actions">
+        <button type="button" class="ws-link" id="tpl-d-editbtn" onclick="tplToggleEdit()">Edit teks prompt</button>
+        <button type="button" class="ws-link" id="tpl-d-resetbtn" style="display:none;color:var(--red);" onclick="tplResetOverride()">Kembalikan ke asli</button>
+      </div>
       <button class="tpl-btn primary" onclick="tplCopy()"><svg class="ic"><use href="#i-copy"/></svg> Salin Prompt</button>
       <button class="tpl-btn" onclick="tplSaveToWs()"><svg class="ic"><use href="#i-save"/></svg> Simpan ke Workspace</button>
       <div class="ws-label">Tempel di</div>
@@ -2125,7 +2140,8 @@
     <label class="input-label" style="margin-top:14px;">Deskripsi singkat</label>
     <input id="tpl-e-descr" class="input-field" type="text" maxlength="300" placeholder="Satu kalimat tentang manfaatnya">
     <label class="input-label" style="margin-top:14px;">Isi prompt</label>
-    <textarea id="tpl-e-prompt" class="input-field" rows="9" maxlength="4000" placeholder="Tulis prompt. Pakai [kurung siku] untuk bagian yang harus diisi pengguna." style="min-height:200px;line-height:1.55;"></textarea>
+    <textarea id="tpl-e-prompt" class="input-field" rows="9" maxlength="4000" placeholder="Tulis prompt lengkap. Bagian yang harus diisi pengguna ditulis dalam [kurung siku]." style="min-height:200px;line-height:1.55;"></textarea>
+    <div class="tpl-hint" style="margin-top:6px;">Cara menulis isian: <strong>[nama usaha]</strong> untuk isian biasa, <strong>[ukuran, contoh 1080 x 1350]</strong> untuk memberi contoh, dan <strong>[santai / ramah / profesional]</strong> untuk pilihan. Prompt tanpa kurung siku tetap bisa dipakai apa adanya.</div>
     <label class="input-label" style="margin-top:14px;">Foto contoh hasil (opsional)</label>
     <div id="tpl-e-img-wrap" style="display:none;margin-bottom:8px;">
       <img id="tpl-e-img" alt="" style="width:100%;max-height:220px;object-fit:cover;border-radius:14px;border:1px solid var(--glass-b);">
@@ -4116,7 +4132,7 @@ function artKey(v){
 function artIco(v){ return '<svg class="ic"><use href="#i-' + artKey(v) + '"/></svg>'; }
 
 /* ===== PUSTAKA TEMPLATE (prompt siap pakai) ===== */
-var TPL = { items: [], adminItems: [], cat: 'Semua', catList: [], current: null, edit: null, img: null, saving: false, failed: false };
+var TPL = { items: [], adminItems: [], cat: 'Semua', catList: [], current: null, edit: null, img: null, saving: false, failed: false, fields: [], override: null, manual: false };
 var TPL_DEFAULT_CATS = ['Promosi Usaha', 'Guru dan Sekolah', 'Belajar', 'Kerja Harian'];
 var TPL_CACHE_KEY = 'idea1_tpl_cache_v1';
 var TPL_COLS = 'id,title,category,descr,prompt,image_url,image_path,featured,active,sort_order,created_at,updated_at';
@@ -4186,18 +4202,155 @@ function tplRender() {
 }
 
 /* ---------- detail ---------- */
-function tplHighlight(text) {
-  return wsEsc(text).replace(/\[([^\]\n]{1,80})\]/g, '<span class="tpl-ph">[$1]</span>');
+/* ----- Template bentuk isian ----- */
+var TPL_FILL_KEY = 'idea1_tpl_fill_v1';
+var TPL_REUSE = ['nama usaha', 'nama produk', 'jenis usaha', 'kota', 'nomor', 'target pasar', 'nama sekolah atau kelas'];
+var TPL_TOKEN_RE = /\[([^\]\n]{1,100})\]/g;
+function tplClean(t) { return String(t == null ? '' : t).replace(/[\u2066-\u2069\u202a-\u202e\u200e\u200f\u200b]/g, ''); }
+function tplTrim(x) { return String(x).replace(/^[\s,.;:"“”]+|[\s,.;:"“”]+$/g, '').trim(); }
+function tplCap(x) { return x ? x.charAt(0).toUpperCase() + x.slice(1) : x; }
+function tplMemGet() { try { return JSON.parse(localStorage.getItem(TPL_FILL_KEY) || '{}'); } catch (e) { return {}; } }
+function tplMemSet(o) { try { localStorage.setItem(TPL_FILL_KEY, JSON.stringify(o)); } catch (e) {} }
+function tplCtxLabel(before) {
+  var line = before.split('\n').pop();
+  var m = line.match(/([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ ]{2,38}):\s*["“]?$/);
+  if (m) return tplTrim(m[1]);
+  return tplTrim(line.replace(/["“(]+$/, '').trim().split(/\s+/).slice(-2).join(' '));
+}
+function tplParseFields(prompt) {
+  var seen = {}, fields = [], re = new RegExp(TPL_TOKEN_RE.source, 'g'), m;
+  while ((m = re.exec(prompt))) {
+    var raw = m[1]; if (seen[raw]) continue; seen[raw] = 1;
+    var ctx = tplCtxLabel(prompt.slice(Math.max(0, m.index - 70), m.index));
+    var f = { raw: raw, label: '', example: '', options: null, multi: false, value: '' };
+    var ci = raw.toLowerCase().indexOf('contoh');
+    if (ci >= 0) {
+      f.label = tplTrim(raw.slice(0, ci)) || ctx || 'Isian';
+      f.example = tplTrim(raw.slice(ci + 6));
+    } else if (raw.indexOf(' / ') >= 0) {
+      f.options = raw.split('/').map(tplTrim).filter(Boolean); f.label = ctx || 'Pilih salah satu';
+    } else if (raw.indexOf(',') >= 0 && / atau /.test(raw) && raw.length < 70) {
+      f.options = raw.split(/,| atau /).map(tplTrim).filter(Boolean); f.label = ctx || 'Pilih salah satu';
+    } else { f.label = raw; }
+    f.multi = /tempel|daftar|catatan/i.test(raw) || f.example.length > 60;
+    fields.push(f);
+  }
+  return fields;
+}
+function tplSubst(fn) {
+  var t = TPL.current; if (!t) return '';
+  var text = tplClean(t.prompt), byRaw = {};
+  TPL.fields.forEach(function (f) { byRaw[f.raw] = f; });
+  var out = '', last = 0, re = new RegExp(TPL_TOKEN_RE.source, 'g'), m;
+  while ((m = re.exec(text))) {
+    out += fn.text(text.slice(last, m.index));
+    var f = byRaw[m[1]], v = f && f.value.trim();
+    out += v ? fn.filled(v) : fn.empty(m[0]);
+    last = m.index + m[0].length;
+  }
+  return out + fn.text(text.slice(last));
+}
+function tplFilledText() { var id = function (x) { return x; }; return tplSubst({ text: id, filled: id, empty: id }); }
+function tplFilledHtml() {
+  return tplSubst({ text: wsEsc, filled: function (v) { return '<span class="tpl-fv">' + wsEsc(v) + '</span>'; }, empty: function (tok) { return '<span class="tpl-ph">' + wsEsc(tok) + '</span>'; } });
+}
+function tplCurrentText() { return TPL.override !== null ? TPL.override : tplFilledText(); }
+function tplUpdatePreview() {
+  var pv = document.getElementById('tpl-d-prompt'); if (!pv) return;
+  pv.innerHTML = TPL.override !== null ? wsEsc(TPL.override) : tplFilledHtml();
+  var c = document.getElementById('tpl-f-count');
+  if (c) { var n = TPL.fields.filter(function (f) { return f.value.trim(); }).length; c.textContent = n + ' dari ' + TPL.fields.length + ' terisi'; }
+}
+function tplRenderForm() {
+  var box = document.getElementById('tpl-d-form'); if (!box) return;
+  var F = TPL.fields;
+  if (!F.length || TPL.override !== null) { box.innerHTML = ''; return; }
+  box.innerHTML = '<div class="tpl-f-head"><span class="ws-label" style="margin:0;">Isi data Anda</span><span id="tpl-f-count" class="tpl-f-count"></span><button type="button" class="ws-link" onclick="tplClearFill()">Kosongkan</button></div>' +
+    F.map(function (f, i) {
+      var ph = f.example ? 'Contoh: ' + f.example : (f.options ? 'Pilih atau ketik sendiri' : 'Ketik di sini');
+      var inp = f.multi
+        ? '<textarea id="tpl-f-' + i + '" class="input-field" rows="3" placeholder="' + wsEsc(ph) + '" oninput="tplSetVal(' + i + ',this.value)">' + wsEsc(f.value) + '</textarea>'
+        : '<input id="tpl-f-' + i + '" class="input-field" type="text" placeholder="' + wsEsc(ph) + '" value="' + wsEsc(f.value) + '" oninput="tplSetVal(' + i + ',this.value)">';
+      var opts = f.options ? '<div class="tpl-opts">' + f.options.map(function (o, j) { return '<button type="button" class="ws-chip" onclick="tplPickOpt(' + i + ',' + j + ')">' + wsEsc(o) + '</button>'; }).join('') + '</div>' : '';
+      return '<div class="tpl-f-row"><label class="tpl-f-label" for="tpl-f-' + i + '">' + wsEsc(tplCap(f.label)) + '</label>' + inp + opts + '</div>';
+    }).join('');
+}
+function tplRemember(f) {
+  var key = f.label.toLowerCase();
+  if (f.options || TPL_REUSE.indexOf(key) < 0) return;
+  var mem = tplMemGet(); if (f.value.trim()) mem[key] = f.value.trim(); else delete mem[key]; tplMemSet(mem);
+}
+function tplSetVal(i, v) { var f = TPL.fields[i]; if (!f) return; f.value = v; tplRemember(f); tplUpdatePreview(); }
+function tplPickOpt(i, j) {
+  var f = TPL.fields[i]; if (!f) return;
+  f.value = f.options[j]; var el = document.getElementById('tpl-f-' + i); if (el) el.value = f.value;
+  tplUpdatePreview();
+}
+function tplClearFill() {
+  TPL.fields.forEach(function (f) { f.value = ''; tplRemember(f); });
+  tplRenderForm(); tplUpdatePreview();
+}
+function tplSyncEditUi() {
+  var editing = TPL.manual, hasOv = TPL.override !== null;
+  document.getElementById('tpl-d-edit').style.display = editing ? 'block' : 'none';
+  document.getElementById('tpl-d-prompt').style.display = editing ? 'none' : 'block';
+  document.getElementById('tpl-d-form').style.display = editing ? 'none' : 'block';
+  document.getElementById('tpl-d-editbtn').textContent = editing ? 'Selesai mengedit' : 'Edit teks prompt';
+  document.getElementById('tpl-d-resetbtn').style.display = (hasOv || editing) ? 'inline-block' : 'none';
+  var hint = document.getElementById('tpl-d-hint');
+  hint.textContent = editing ? 'Ubah teks sesuai kebutuhan. Hasilnya yang akan disalin.'
+    : hasOv ? 'Teks sudah Anda ubah sendiri. Ketuk "Kembalikan ke asli" untuk memakai isian lagi.'
+    : TPL.fields.length ? 'Isi kolom di atas, hasilnya langsung tampil di sini. Bagian emas dalam [ ] belum diisi.'
+    : 'Template ini siap pakai. Ketuk "Edit teks prompt" bila ingin menyesuaikan sebelum disalin.';
+}
+function tplToggleEdit() {
+  var ta = document.getElementById('tpl-d-edit');
+  if (!TPL.manual) { ta.value = tplCurrentText(); TPL.manual = true; tplSyncEditUi(); ta.focus(); }
+  else {
+    TPL.manual = false;
+    if (ta.value !== tplFilledText()) TPL.override = ta.value;          /* simpan hanya bila memang diubah */
+    tplRenderForm(); tplUpdatePreview(); tplSyncEditUi();
+  }
+}
+function tplResetOverride() {
+  TPL.manual = false; TPL.override = null;
+  tplRenderForm(); tplUpdatePreview(); tplSyncEditUi();
 }
 function tplOpen(id) {
   var t = TPL.items.concat(TPL.adminItems).filter(function (x) { return x.id === id; })[0]; if (!t) return;
-  TPL.current = t;
+  TPL.current = t; TPL.override = null; TPL.manual = false;
+  TPL.fields = tplParseFields(tplClean(t.prompt));
+  var mem = tplMemGet();
+  TPL.fields.forEach(function (f) { var k = f.label.toLowerCase(); if (!f.options && TPL_REUSE.indexOf(k) >= 0 && mem[k]) f.value = mem[k]; });
   document.getElementById('tpl-d-hero').innerHTML = t.image_url ? '<img src="' + wsEsc(t.image_url) + '" alt="">' : tplIcon(t.category);
   document.getElementById('tpl-d-cat').textContent = t.category || '';
   document.getElementById('tpl-d-title').textContent = t.title || '';
   var d = document.getElementById('tpl-d-desc'); d.textContent = t.descr || ''; d.style.display = t.descr ? 'block' : 'none';
-  document.getElementById('tpl-d-prompt').innerHTML = tplHighlight(t.prompt || '');
+  tplRenderForm(); tplUpdatePreview(); tplSyncEditUi();
   showScreen('template-detail');
+}
+function tplCopy() {
+  var t = TPL.current; if (!t) return;
+  var text = tplClean(TPL.manual ? document.getElementById('tpl-d-edit').value : tplCurrentText());
+  var empty = (TPL.override === null && !TPL.manual) ? TPL.fields.filter(function (f) { return !f.value.trim(); }).length : 0;
+  var done = function (ok) {
+    if (!ok) tplToast('Gagal menyalin. Tekan lama pada teks prompt untuk menyalin.', '#ef4444');
+    else if (empty) tplToast('Prompt disalin, tapi masih ada ' + empty + ' isian kosong.', '#c9a84c');
+    else tplToast('Prompt disalin. Tempel di ChatGPT, Gemini, atau Claude.');
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () { done(true); }).catch(function () { done(tplCopyFallback(text)); });
+  } else { done(tplCopyFallback(text)); }
+}
+function tplSaveToWs() {
+  var t = TPL.current; if (!t) return;
+  var user = auth.getSession();
+  if (!user) { tplToast('Masuk dulu untuk menyimpan ke Workspace', '#ef4444'); return; }
+  var text = tplClean(TPL.manual ? document.getElementById('tpl-d-edit').value : tplCurrentText());
+  WS.key = wsKeyFor(user); wsLoad();
+  WS.data.notes.push({ id: wsId(), title: t.title, body: text, updated_at: new Date().toISOString(), _dirty: true });
+  wsSave(); wsSync();
+  tplToast('Disimpan ke Catatan di Workspace');
 }
 function tplCopyFallback(text) {
   try {
@@ -4207,26 +4360,6 @@ function tplCopyFallback(text) {
     var ok = document.execCommand('copy'); document.body.removeChild(ta); return ok;
   } catch (e) { return false; }
 }
-function tplCopy() {
-  var t = TPL.current; if (!t) return;
-  var done = function (ok) {
-    if (ok) tplToast('Prompt disalin. Tempel di ChatGPT, Gemini, atau Claude.');
-    else tplToast('Gagal menyalin. Tekan lama pada teks prompt untuk menyalin.', '#ef4444');
-  };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(t.prompt).then(function () { done(true); }).catch(function () { done(tplCopyFallback(t.prompt)); });
-  } else { done(tplCopyFallback(t.prompt)); }
-}
-function tplSaveToWs() {
-  var t = TPL.current; if (!t) return;
-  var user = auth.getSession();
-  if (!user) { tplToast('Masuk dulu untuk menyimpan ke Workspace', '#ef4444'); return; }
-  WS.key = wsKeyFor(user); wsLoad();
-  WS.data.notes.push({ id: wsId(), title: t.title, body: t.prompt, updated_at: new Date().toISOString(), _dirty: true });
-  wsSave(); wsSync();
-  tplToast('Disimpan ke Catatan di Workspace');
-}
-
 /* ---------- Kelola Template (admin) ---------- */
 function tplErrMsg(e) {
   var m = (e && (e.message || e.details)) || String(e);
