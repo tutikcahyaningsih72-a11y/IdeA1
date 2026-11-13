@@ -1647,10 +1647,45 @@
       <input id="forgot-email" class="input-field" type="email" placeholder="email@kamu.com">
     </div>
 
-    <button class="btn-primary" onclick="doForgot()">Kirim Link Reset</button>
+    <button class="btn-primary" id="btn-forgot" onclick="doForgot()">Kirim Link Reset</button>
 
     <div class="auth-footer">
       Ingat password? <span onclick="showScreen('login')">Kembali masuk</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================
+     RESET PASSWORD SCREEN (setelah klik link di email)
+========================================== -->
+<div id="reset-password" class="screen auth-screen">
+  <div class="auth-wrap">
+    <div class="auth-title" style="margin-top:56px;">Buat Password Baru <svg class="ic"><use href="#i-key"/></svg></div>
+    <div class="auth-sub">Masukkan password baru untuk akun kamu.</div>
+
+    <div id="reset-alert" class="alert-box error"></div>
+
+    <div class="input-group">
+      <label class="input-label">Password baru</label>
+      <div class="input-wrap">
+        <input id="reset-pass" class="input-field has-toggle" type="password" placeholder="Minimal 6 karakter" autocomplete="new-password">
+        <button class="input-toggle" onclick="togglePass('reset-pass', this)"><svg class="ic"><use href="#i-eye"/></svg></button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Ulangi password baru</label>
+      <div class="input-wrap">
+        <input id="reset-pass2" class="input-field has-toggle" type="password" placeholder="Ketik ulang password" autocomplete="new-password">
+        <button class="input-toggle" onclick="togglePass('reset-pass2', this)"><svg class="ic"><use href="#i-eye"/></svg></button>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="btn-reset" onclick="doResetPassword()">Simpan Password Baru</button>
+
+    <div class="auth-footer">
+      Batal? <span onclick="cancelReset()">Kembali masuk</span>
     </div>
   </div>
 </div>
@@ -3385,6 +3420,10 @@ function initSupabase() {
     }
     _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     _sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        window._recovering = true;
+        if (_initDone) showScreen('reset-password', false);
+      }
       if (session?.user) {
         currentUser = {
           name: session.user.user_metadata?.name || session.user.email.split('@')[0],
@@ -4592,16 +4631,82 @@ async function doRegister() {
   }
 }
 
-function doForgot() {
-  const email = document.getElementById('forgot-email').value;
-  const alert = document.getElementById('forgot-alert');
-  if (!email || !email.includes('@')) {
-    showAlert(alert, 'error', 'Masukkan email yang valid');
-    alert.classList.remove('success'); alert.classList.add('error','show');
+async function doForgot() {
+  const email = (document.getElementById('forgot-email').value || '').trim();
+  const alertEl = document.getElementById('forgot-alert');
+  const btn = document.getElementById('btn-forgot');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showAlert(alertEl, 'error', 'Masukkan email yang valid');
     return;
   }
-  alert.className = 'alert-box success show';
-  alert.textContent = 'Link reset telah dikirim ke ' + email + ' (simulasi)';
+  if (!(auth.hasSupabase() && _sb)) {
+    showAlert(alertEl, 'error', 'Layanan belum tersambung. Coba lagi beberapa saat.');
+    return;
+  }
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  try {
+    const { error } = await _sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + '/app.html' });
+    if (error) {
+      const m = (error.message || '').toLowerCase();
+      let msg = 'Gagal mengirim link reset. Coba lagi nanti.';
+      if (error.status === 429 || m.includes('rate limit') || m.includes('security purposes')) msg = 'Terlalu sering meminta link. Tunggu sekitar satu menit, lalu coba lagi.';
+      else if (m.includes('not authorized')) msg = 'Email ini belum bisa dikirimi pesan. Hubungi admin IdeA1.';
+      showAlert(alertEl, 'error', msg);
+    } else {
+      alertEl.className = 'alert-box success show';
+      alertEl.textContent = 'Jika ' + email + ' terdaftar, link reset sudah dikirim. Cek juga folder Spam.';
+    }
+  } catch (e) {
+    showAlert(alertEl, 'error', 'Terjadi kesalahan: ' + e.message);
+  }
+  btn.innerHTML = 'Kirim Link Reset';
+  btn.disabled = false;
+}
+
+async function doResetPassword() {
+  const p1 = document.getElementById('reset-pass').value;
+  const p2 = document.getElementById('reset-pass2').value;
+  const alertEl = document.getElementById('reset-alert');
+  const btn = document.getElementById('btn-reset');
+  if (p1.length < 6) { showAlert(alertEl, 'error', 'Password minimal 6 karakter'); return; }
+  if (p1 !== p2) { showAlert(alertEl, 'error', 'Konfirmasi password tidak sama'); return; }
+  if (!(auth.hasSupabase() && _sb)) { showAlert(alertEl, 'error', 'Layanan belum tersambung. Coba lagi.'); return; }
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  try {
+    const { error } = await _sb.auth.updateUser({ password: p1 });
+    if (error) {
+      const m = (error.message || '').toLowerCase();
+      let msg = 'Gagal menyimpan password. Coba lagi.';
+      if (m.includes('different') || m.includes('same')) msg = 'Password baru harus berbeda dari password lama.';
+      else if (m.includes('session') || m.includes('expired') || m.includes('jwt')) msg = 'Link sudah kedaluwarsa. Minta link reset yang baru.';
+      else if (m.includes('weak') || m.includes('password')) msg = 'Password terlalu lemah. Coba kombinasi yang lebih panjang.';
+      showAlert(alertEl, 'error', msg);
+    } else {
+      alertEl.className = 'alert-box success show';
+      alertEl.textContent = 'Password berhasil diubah. Silakan masuk dengan password baru.';
+      window._recovering = false;
+      document.getElementById('reset-pass').value = '';
+      document.getElementById('reset-pass2').value = '';
+      try { history.replaceState(null, '', location.pathname); } catch (e) {}
+      try { await _sb.auth.signOut(); } catch (e) {}
+      currentUser = null;
+      setTimeout(function () { showScreen('login', false); }, 1800);
+    }
+  } catch (e) {
+    showAlert(alertEl, 'error', 'Terjadi kesalahan: ' + e.message);
+  }
+  btn.innerHTML = 'Simpan Password Baru';
+  btn.disabled = false;
+}
+
+async function cancelReset() {
+  window._recovering = false;
+  try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  try { if (_sb) await _sb.auth.signOut(); } catch (e) {}
+  currentUser = null;
+  showScreen('login', false);
 }
 
 async function doLogout() {
@@ -6241,7 +6346,16 @@ setTimeout(async () => {
 
     const onboarded = localStorage.getItem('idea1_onboarded');
     _initDone = true;
-    if (!onboarded) {
+    const urlHash = location.hash || '';
+    if (window._recovering || urlHash.indexOf('type=recovery') !== -1) {
+      window._recovering = true;
+      showScreen('reset-password', false);
+    } else if (/error_code=|error=access_denied/.test(urlHash)) {
+      try { history.replaceState(null, '', location.pathname); } catch (e) {}
+      showScreen('forgot', false);
+      const fa = document.getElementById('forgot-alert');
+      if (fa) showAlert(fa, 'error', 'Link reset sudah kedaluwarsa atau tidak valid. Minta link yang baru.');
+    } else if (!onboarded) {
       showScreen('onboarding', false);
     } else if (currentUser) {
       updateHomeGreeting(currentUser);
